@@ -54,7 +54,8 @@
     - qutebrowser
     - ranger
     # - rustscan
-    - tty-clock
+    - signal
+    # - tty-clock
     - zathura
   tasks:
     - name: install misc pkgs

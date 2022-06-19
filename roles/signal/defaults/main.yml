@@ -1,0 +1,10 @@
+---
+signal:
+  repo:
+    url: "https://updates.signal.org/desktop/apt"
+    key: "updates.signal.org/desktop/apt/keys.asc"
+    keyring: "/usr/share/keyrings/signal-desktop-keyring.gpg"
+    arch: "amd64"
+    release: "xenial"
+
+  
