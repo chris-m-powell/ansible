@@ -1,0 +1,5 @@
+---
+protonmail_bridge:
+    pubkey: "proton.me/download/bridge_pubkey.gpg"
+    policy: "proton.me/download/bridge.pol"
+    deb: "proton.me/download/bridge/protonmail-bridge_2.1.3-1_amd64.deb"

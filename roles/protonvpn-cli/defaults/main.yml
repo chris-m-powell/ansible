@@ -1,5 +1,5 @@
 ---
-protonvpn:
+protonvpn_cli:
   pkg: "protonvpn.com/download/protonvpn-stable-release_1.0.1-1_all.deb"
   config:
     dir: "~/.config/protonvpn"

@@ -2,11 +2,11 @@
 - block:
     - import_tasks: "install.yml"
       tags:
-        - protonvpn-install
+        - protonvpn-cli-install
     - import_tasks: "configure.yml"
       tags:
-        - protonvpn-configure
+        - protonvpn-cli-configure
   rescue:
     - meta: flush_handlers
   tags:
-    - protonvpn
+    - protonvpn-cli

@@ -3,19 +3,19 @@
   run_once: true
   assert:
     that:
-      - protonvpn.pkg is defined
+      - protonvpn_cli.pkg is defined
     quiet: true
 
 - name: install | setup repository 
   block: 
-    - name: install | download ProtonVPN stable release repository installer 
+    - name: install | download Proton VPN stable release repository installer 
       get_url:
-        url: "{{ 'https://' + protonvpn.pkg }}" 
+        url: "{{ 'https://' + protonvpn_cli.pkg }}" 
         dest: /tmp 
         validate_certs: true
       register: pkg 
 
-    - name: install | setup ProtonVPN stable release repository
+    - name: install | setup Proton VPN stable release repository
       apt:
         state: present
         deb: "{{ pkg.dest }}" 
@@ -33,7 +33,7 @@
   when:
     - '"protonvpn-stable-release" not in ansible_facts.packages'
 
-- name: install | install or update ProtonVPN CLI
+- name: install | install or update Proton VPN CLI
   apt:
     update_cache: true
     state: latest

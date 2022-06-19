@@ -3,7 +3,7 @@
   run_once: true
   assert:
     that:
-      - protonvpn.config.dir is defined
+      - protonvpn_cli.config.dir is defined
     quiet: true
 
 - name: configure | deploy configurations
@@ -11,10 +11,10 @@
   block:
     - name: configure | create necessary directories
       file:
-        path: "{{ protonvpn.config.dir }}" 
+        path: "{{ protonvpn_cli.config.dir }}" 
         state: directory
 
     - name: configure | deploy config file
       copy:
         src: user_configurations.json 
-        dest: "{{ protonvpn.config.dir }}"
+        dest: "{{ protonvpn_cli.config.dir }}"

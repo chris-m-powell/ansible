@@ -1,0 +1,9 @@
+---
+- block:
+    - import_tasks: "install.yml"
+      tags:
+        - protonmail-bridge-install
+  rescue:
+    - meta: flush_handlers
+  tags:
+    - protonmail-bridge

@@ -50,7 +50,8 @@
     - ncmpcpp
     - neofetch
     - neovim
-    - protonvpn
+    - protonmail-bridge
+    - protonvpn-cli
     - qutebrowser
     - ranger
     - signal
