@@ -1,0 +1,9 @@
+---
+- block:
+    - import_tasks: "install.yml"
+      tags:
+        - latex-install
+  rescue:
+    - meta: flush_handlers
+  tags:
+    - latex 

@@ -1,0 +1,75 @@
+---
+- name: Ensure host is POP!_OS 
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Validate parameters
+      run_once: true
+      assert:
+        that:
+          - user is defined
+        quiet: true
+
+    - name: Group by distribution
+      group_by:
+        key: "{{ ansible_distribution }}"
+      changed_when: false
+  tags:
+    - always
+
+- name: Deploy custom configuration 
+  hosts: Pop!_OS
+  become: true
+  gather_facts: false
+  handlers:
+    - import_tasks: "{{ playbook_dir + '/includes/handlers.yml' }}"
+  pre_tasks:
+    - block:
+        - name: Gather package facts 
+          package_facts:
+            manager: apt
+
+        - name: Gather service facts
+          service_facts:
+
+        - name: Update APT cache
+          apt:
+            update_cache: true
+      tags:
+        - always
+  roles:
+    - alacritty
+    - bpytop
+    - cava
+    - crt
+    - dircolors
+    - gotop
+    # - gtk
+    - latex
+    - mpd
+    - ncmpcpp
+    - neofetch
+    - neovim
+    - qutebrowser
+    - ranger
+    # - rustscan
+    - tty-clock
+    - zathura
+  tasks:
+    - name: install misc pkgs
+      apt:
+        state: latest
+        pkg: 
+          - antiword
+          - cmatrix
+          - docx2txt
+          - libsox-fmt-all
+          - lynis
+          - ncdu
+          - sox
+          - tree
+      tags:
+        - misc-pkgs
+      notify:
+        - apt-get clean

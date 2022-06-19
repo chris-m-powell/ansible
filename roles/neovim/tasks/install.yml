@@ -1,0 +1,15 @@
+---
+- name: install | validate task list parameters
+  run_once: true
+  assert:
+    that:
+    quiet: true
+
+- name: install | install package updates
+  apt:
+    state: latest
+    pkg:
+      - python3-pip 
+      - neovim 
+  notify:
+    - apt-get clean
