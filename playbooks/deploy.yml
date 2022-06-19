@@ -45,17 +45,16 @@
     - crt
     - dircolors
     - gotop
-    # - gtk
     - latex
     - mpd
     - ncmpcpp
     - neofetch
     - neovim
+    - protonvpn
     - qutebrowser
     - ranger
-    # - rustscan
     - signal
-    # - tty-clock
+    - tty-clock
     - zathura
   tasks:
     - name: install misc pkgs
@@ -67,6 +66,7 @@
           - docx2txt
           - libsox-fmt-all
           - lynis
+          - htop
           - ncdu
           - sox
           - tree

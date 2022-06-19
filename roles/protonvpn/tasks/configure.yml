@@ -1,0 +1,20 @@
+---
+- name: configure | validate task list parameters
+  run_once: true
+  assert:
+    that:
+      - protonvpn.config.dir is defined
+    quiet: true
+
+- name: configure | deploy configurations
+  become_user: "{{ user }}"
+  block:
+    - name: configure | create necessary directories
+      file:
+        path: "{{ protonvpn.config.dir }}" 
+        state: directory
+
+    - name: configure | deploy config file
+      copy:
+        src: user_configurations.json 
+        dest: "{{ protonvpn.config.dir }}"
