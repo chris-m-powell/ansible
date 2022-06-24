@@ -77,6 +77,9 @@ Plug 'Shougo/unite.vim' | Plug 'Shougo/vimfiler.vim'
     autocmd FileType vimfiler setlocal cursorline
     map <silent> <C-f> :VimFilerExplorer -split -parent -toggle -simple -winwidth=30 -no-quit<CR>
 {% endif %}
+{% if neovim.plugins.himalaya.enable %}
+Plug 'soywod/himalaya', {'rtp': 'vim'}
+{% endif %}
 call plug#end()
 {% endif %}
 

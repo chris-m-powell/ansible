@@ -35,6 +35,10 @@ neovim:
       repo: "github.com/Shougo/vimfiler.vim.git"
       dest: "~/.local/share/nvim/plugged/vimfiler.vim"
       enable: true
+    himalaya:
+      repo: "github.com/soywod/himalaya.git"
+      dest: "~/.local/share/nvim/plugged/himalaya.vim"
+      enable: true
   config:
     dir: "~/.config/nvim"
     set:

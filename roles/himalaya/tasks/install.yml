@@ -1,0 +1,48 @@
+---
+- name: install | validate task list parameters
+  run_once: true
+  assert:
+    that:
+      - himalaya.dependency.libssl
+    quiet: true
+
+- name: install | install OpenSSL dependencies
+  block:
+    - name: install | download libssl and libcrypt libraries
+      get_url:
+        url: "{{ 'http://' + himalaya.dependency.libssl }}"
+        dest: /tmp
+      register: libssl
+
+    - name: install | instal libssl and libcrypt libraries
+      apt:
+        state: present
+        deb: "{{ libssl.dest }}"
+      when:
+        - not ansible_check_mode
+
+    - name: install | remove artifacts
+      file:
+        path: "{{ libssl.dest }}"
+        state: absent
+  when:
+    - '"libssl1.1" not in ansible_facts.packages'
+
+- name: install |  install pass
+  apt:
+    state: latest
+    pkg:
+      - pass
+  notify:
+    - apt-get clean
+
+- name: install | extract binary from remote archive
+  become_user: "{{ user }}"
+  unarchive:
+    src: "{{ 'https://' + himalaya.installer }}"
+    dest: ~/.local/bin
+    mode: 0755
+    remote_src: true
+    list_files: true
+    include:
+      - himalaya
