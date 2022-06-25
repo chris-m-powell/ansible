@@ -43,6 +43,7 @@ function display_help() {
   echo -e "\tcrt              \tTerminal emulator mimicking old cathode display"
   echo -e "\tdircolors        \tColor setup for ls"
   echo -e "\tgotop            \System activity monitoring tool"
+  echo -e "\tgtk              \tApply GTK preferences"
   echo -e "\thimalaya         \tCLI for email management"
   echo -e "\tlatex            \tHigh-quality typesetting system"
   echo -e "\tmpd              \tAudio playback daemon with client-server architecture"

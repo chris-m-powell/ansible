@@ -1,0 +1,32 @@
+---
+- name: install | validate task list parameters
+  run_once: true
+  assert:
+    that:
+      - gtk.theme is defined
+      - gtk.wallpaper is defined
+    quiet: true
+
+- name:
+  become_user: "{{ user }}"
+  block:
+    - name: install | create necessary directories
+      file:
+        path: "{{ item }}" 
+        state: directory
+      loop:
+        - ~/.themes
+        - ~/.local/share/backgrounds 
+
+    - name: install | clone project repository
+      git:
+        repo: "{{ 'https://' + item.repo }}"
+        dest: "{{ item.dest }}"
+        depth: 1
+        single_branch: true
+      loop: "{{ gtk.theme }}"
+
+    - name: install | deploy wallpaper
+      copy:
+        src: "{{ gtk.wallpaper }}"
+        dest: ~/.local/share/backgrounds 

@@ -1,0 +1,21 @@
+---
+- name: configure | validate task list parameters
+  run_once: true
+  assert:
+    that:
+    quiet: true
+
+- name: install | get user home directory
+  become_user: "{{ user }}"
+  shell: echo ${HOME}
+  changed_when: false
+  register: home
+
+- name: configure | set gsettings 
+  gsetting:
+    user: "{{ user }}"
+    settings:
+      org.gnome.desktop.interface.gtk-theme: "'Nordic'"
+      org.gnome.desktop.wm.preferences.theme: "'Nordic'"
+      org.gnome.desktop.background.picture-uri-dark: "'{{ background }}'" 
+      org.gnome.desktop.background.picture-uri-dark: "'{{ 'file://' + home.stdout + '/.local/share/backgrounds/nord.jpg' }}'" 
