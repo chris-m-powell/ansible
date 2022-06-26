@@ -56,6 +56,7 @@
     - protonvpn-cli
     - qutebrowser
     - ranger
+    - rustscan
     - signal
     - tty-clock
     - zathura
@@ -71,6 +72,7 @@
           - lynis
           - htop
           - ncdu
+          - nmap
           - sox
           - tree
       tags:
