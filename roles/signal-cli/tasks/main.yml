@@ -1,0 +1,9 @@
+---
+- block:
+    - import_tasks: "install.yml"
+      tags:
+        - signal-cli-install
+  rescue:
+    - meta: flush_handlers
+  tags:
+    - signal-cli

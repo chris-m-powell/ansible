@@ -3,23 +3,23 @@
   run_once: true
   assert:
     that:
-      - signal.repo.key
-      - signal.repo.keyring
-      - signal.repo.url
-      - signal.repo.arch
-      - signal.repo.release
+      - signal_desktop.repo.key
+      - signal_desktop.repo.keyring
+      - signal_desktop.repo.url
+      - signal_desktop.repo.arch
+      - signal_desktop.repo.release
     quiet: true
 
 - name: install | check if repository keyring exists
   stat:
-    path: "{{ signal.repo.keyring }}"
+    path: "{{ signal_desktop.repo.keyring }}"
   register: repo_keyring
 
 - name: install | import repository key
   block:
     - name: install | download ASCII-armored OpenPGP repository key
       get_url:
-        url: "{{ 'https://' + signal.repo.key }}" 
+        url: "{{ 'https://' + signal_desktop.repo.key }}" 
         dest: /tmp
       register: repo_key
 
@@ -30,7 +30,7 @@
     - name: install | import GPG key binary to keyring
       copy:
         content: "{{ output.stdout }}"
-        dest: "{{ signal.repo.keyring }}" 
+        dest: "{{ signal_desktop.repo.keyring }}" 
 
     - name: install | remove artifacts 
       file:
@@ -40,15 +40,15 @@
     - not repo_keyring.stat.exists
 
 - name: install | add repository to APT source list
-  ansible.builtin.apt_repository:
+  apt_repository:
     repo: >
       deb
-      [arch={{ signal.repo.arch }} signed-by={{ signal.repo.keyring }}]
-      {{ signal.repo.url }}
-      {{ signal.repo.release }}
+      [arch={{ signal_desktop.repo.arch }} signed-by={{ signal_desktop.repo.keyring }}]
+      {{ signal_desktop.repo.url }}
+      {{ signal_desktop.repo.release }}
       main
     state: present
-    filename: "{{ 'signal' + signal.repo.release }}"
+    filename: "{{ 'signal' + signal_desktop.repo.release }}"
 
 - name: install | install package updates
   apt:

@@ -1,7 +1,9 @@
 ---
 - block:
     - import_tasks: "install.yml"
+      tags:
+        - signal-desktop-install
   rescue:
     - meta: flush_handlers
   tags:
-    - signal 
+    - signal-desktop

@@ -57,7 +57,8 @@
     - qutebrowser
     - ranger
     - rustscan
-    - signal
+    - signal-cli
+    - signal-desktop
     - tty-clock
     - zathura
   tasks:
@@ -73,6 +74,7 @@
           - htop
           - ncdu
           - nmap
+          - rkhunter
           - sox
           - tree
       tags:

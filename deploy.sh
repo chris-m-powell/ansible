@@ -55,7 +55,8 @@ function display_help() {
   echo -e "\tqutebrowser      \tKeyboard-driven, vim-like browser based on PyQt5"
   echo -e "\tranger           \tTerminal-based, visual file manager inspired by Vim"
   echo -e "\trustcan          \tThe modern-day port scanner"
-  echo -e "\tsignal           \tPrivate messaging from your desktop"
+  echo -e "\tsignal-cli       \tCLI for the Signal messenger"
+  echo -e "\tsignal-desktop   \tPrivate messaging from your desktop"
   echo -e "\ttty-clock        \tSimple terminal clock"
   echo -e "\tzathura          \tLightweight document viewer"
   exit 1

@@ -37,7 +37,7 @@ neovim:
       enable: true
     himalaya:
       repo: "github.com/soywod/himalaya.git"
-      dest: "~/.local/share/nvim/plugged/himalaya.vim"
+      dest: "~/.local/share/nvim/plugged/himalaya"
       enable: true
   config:
     dir: "~/.config/nvim"

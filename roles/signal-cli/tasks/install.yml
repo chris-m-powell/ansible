@@ -1,0 +1,30 @@
+---
+- name: install | validate task list parameters
+  run_once: true
+  assert:
+    that:
+      - signal_cli.pkg is defined
+    quiet: true
+
+- name: install | install dependencies
+  apt:
+    state: latest
+    pkg:
+      - openjdk-18-jre
+      - qrencode
+  notify:
+    - apt-get clean
+
+- name: install | extract remote archive
+  unarchive:
+    src: "{{ 'https://' + signal_cli.pkg }}"
+    dest: /opt 
+    remote_src: true
+    list_files: true
+  register: archive
+
+- name:
+  file:
+    src: "{{ '/opt/' + archive.files[0] + '/bin/signal-cli' }}"
+    dest: /usr/local/bin/signal-cli
+    state: link

@@ -1,0 +1,3 @@
+---
+signal_cli:
+  pkg: "github.com/AsamK/signal-cli/releases/download/v0.10.8/signal-cli-0.10.8-Linux.tar.gz"
