@@ -38,6 +38,7 @@ function display_help() {
   echo -e "\nSUPPORTED TAGS:\n"
   echo -e "\tall              \tApply all custom configurations"
   echo -e "\talacritty        \tFast, cross-platform, OpenGL terminal emulator"
+  echo -e "\tbitwarden-cli    \tFull-featured CLI to access and manage Bitwarden vault"
   echo -e "\tbpytop           \tSystem activity monitoring tool"
   echo -e "\tcava             \tTerminal-based audio visualizer"
   echo -e "\tcrt              \tTerminal emulator mimicking old cathode display"

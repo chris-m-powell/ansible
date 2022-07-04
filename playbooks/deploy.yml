@@ -41,6 +41,7 @@
   roles:
     - alacritty
     - bpytop
+    - bitwarden-cli
     - cava
     - crt
     - dircolors

@@ -1,0 +1,3 @@
+---
+bitwarden_cli:
+  pkg: "vault.bitwarden.com/download/?app=cli&platform=linux"

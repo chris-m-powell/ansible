@@ -2,8 +2,8 @@
 - block:
     - import_tasks: "install.yml"
       tags:
-        - gotop-install
+        - bitwarden-cli-install
   rescue:
     - meta: flush_handlers
   tags:
-    - gotop
+    - bitwarden-cli
