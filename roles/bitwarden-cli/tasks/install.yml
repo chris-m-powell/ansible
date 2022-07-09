@@ -14,3 +14,11 @@
     remote_src: true
     list_files: true
     mode: +x
+
+- name: install | install package updates
+  apt:
+    state: latest
+    pkg:
+      - jq
+  notify:
+    - apt-get clean
