@@ -40,20 +40,25 @@
       when:
         - neovim.vim_plug.enable
         
-    - name: configure | install plug-in updates
-      git:
-        repo: "{{ 'https://' + item.value.repo }}"
-        dest: "{{ item.value.dest }}"
-        force: true
-        depth: 1
-        single_branch: true
-      when:
-        - item.value.enable
-        - neovim.vim_plug.enable
-        - neovim.vim_plug.preinstall_plugins
-      loop: "{{ neovim.plugins | dict2items }}"
+    # - name: configure | install plug-in updates
+    #   git:
+    #     repo: "{{ 'https://' + item.value.repo }}"
+    #     dest: "{{ item.value.dest }}"
+    #     force: true
+    #     depth: 1
+    #     single_branch: true
+    #   when:
+    #     - item.value.enable
+    #     - neovim.vim_plug.enable
+    #     - neovim.vim_plug.preinstall_plugins
+    #   loop: "{{ neovim.plugins | dict2items }}"
+    
+    # - name: configure | render config from template
+    #   template:
+    #     src: init.vim.j2
+    #     dest: "{{ neovim.config.dir + '/init.vim' }}"
 
-    - name: configure | render config from template
-      template:
-        src: init.vim.j2
+    - name: configure | deploy init
+      copy:
+        src: init.vim
         dest: "{{ neovim.config.dir + '/init.vim' }}"

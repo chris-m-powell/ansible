@@ -5,6 +5,11 @@
     that:
     quiet: true
 
+- name: install | add nightly build APT repository
+  apt_repository:
+    repo: 'ppa:neovim-ppa/unstable'
+    state: present
+
 - name: install | install package updates
   apt:
     state: latest
