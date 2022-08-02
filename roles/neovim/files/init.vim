@@ -13,8 +13,10 @@ Plug('shaunsingh/nord.nvim')
 Plug('francoiscabrol/ranger.vim')
 Plug('rbgrouleff/bclose.vim')
 Plug('soywod/himalaya', {['rtp'] = 'vim'})
-Plug('terrortylor/nvim-comment')
+Plug('numToStr/comment.nvim')
 Plug('romgrk/barbar.nvim')
+Plug('kyazdani42/nvim-tree.lua')
+Plug('lukas-reineke/indent-blankline.nvim')
 vim.call('plug#end')
 
 vim.g.mapleader = " "
@@ -64,17 +66,56 @@ vim.opt.cursorline = true
 vim.opt.whichwrap:append('h')
 vim.opt.whichwrap:append('l')
 
+require('indent_blankline').setup {}
+
+require('nvim-tree').setup({
+  sort_by = "case_sensitive",
+  view = {
+    adaptive_size = true,
+    mappings = {
+      list = {
+        { key = "h", action = "dir_up" },
+        { key = "l", action = "dir_down" },
+      },
+    },
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
+
+local nvim_tree_events = require('nvim-tree.events')
+local bufferline_state = require('bufferline.state')
+
+local function get_tree_size()
+  return vim.api.nvim_win_get_width(0)
+end
+nvim_tree_events.on_tree_open(function()
+  bufferline_state.set_offset(get_tree_size())
+end)
+
+nvim_tree_events.on_tree_resize(function()
+  bufferline_state.set_offset(get_tree_size())
+end)
+
+nvim_tree_events.on_tree_close(function()
+  bufferline_state.set_offset(0)
+end)
+
 vim.g.nord_contrast = false
 vim.g.nord_borders = true
 vim.g.nord_disable_background = true
-vim.g.nord_italic = false
+vim.g.nord_italic = true
 vim.g.nord_uniform_diff_background = true
 require('nord').set()
 
 require('bufferline').setup {
   animation = true,
-  auto_hide = true,
-  tabpages = false,
+  auto_hide = false,
+  tabpages = true,
   closable = false,
   clickable = true,
   icons = 'numbers',
@@ -85,16 +126,7 @@ require('bufferline').setup {
   insert_at_end = true,
 }
 
-require('nvim_comment').setup {
-  marker_padding = true,
-  comment_empty = true,
-  comment_empty_trim_whitespace = true,
-  create_mappings = true,
-  line_mapping = "gcc",
-  operator_mapping = "gc",
-  comment_chunk_text_object = "ic",
-  hook = nil
-}
+require('Comment').setup()
 
 require('lualine').setup {
   options = {
@@ -107,7 +139,7 @@ require('lualine').setup {
       winbar = {},
     },
     always_divide_middle = true,
-    globalstatus = false,
+    globalstatus = true,
     refresh = {
       statusline = 1000,
       tabline = 1000,
@@ -126,8 +158,7 @@ require('lualine').setup {
           info  = 'DiagnosticInfo',
           hint  = 'DiagnosticHint',
         },
-        symbols = { error = 'E', warn  = 'W', info  = 'I', hint  = 'H'
-        },
+        symbols = { error = 'E', warn  = 'W', info  = 'I', hint  = 'H' },
         colored = true,
         update_in_insert = false,
         always_visible = false,
