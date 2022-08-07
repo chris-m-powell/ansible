@@ -17,5 +17,4 @@
     settings:
       org.gnome.desktop.interface.gtk-theme: "'Nordic'"
       org.gnome.desktop.wm.preferences.theme: "'Nordic'"
-      org.gnome.desktop.background.picture-uri-dark: "'{{ background }}'" 
       org.gnome.desktop.background.picture-uri-dark: "'{{ 'file://' + home.stdout + '/.local/share/backgrounds/nord.jpg' }}'" 
