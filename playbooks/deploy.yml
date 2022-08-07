@@ -4,13 +4,6 @@
   gather_facts: true
   become: true
   tasks:
-    - name: Validate parameters
-      run_once: true
-      assert:
-        that:
-          - user is defined
-        quiet: true
-
     - name: Group by distribution
       group_by:
         key: "{{ ansible_distribution }}"
@@ -24,6 +17,10 @@
   gather_facts: false
   handlers:
     - import_tasks: "{{ playbook_dir + '/includes/handlers.yml' }}"
+  vars_prompt:
+    - name: user
+      prompt: Enter local username
+      private: false
   pre_tasks:
     - block:
         - name: Gather package facts 
@@ -58,7 +55,6 @@
     - qutebrowser
     - ranger
     - rustscan
-    - signal-cli
     - signal-desktop
     - tty-clock
     - zathura
@@ -72,7 +68,6 @@
           - docx2txt
           - libsox-fmt-all
           - lynis
-          - htop
           - ncdu
           - nmap
           - rkhunter

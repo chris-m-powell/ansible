@@ -1,10 +1,3 @@
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-lua << END
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.local/share/nvim/plugged')
 Plug('dense-analysis/ale')
@@ -13,10 +6,10 @@ Plug('shaunsingh/nord.nvim')
 Plug('francoiscabrol/ranger.vim')
 Plug('rbgrouleff/bclose.vim')
 Plug('soywod/himalaya', {['rtp'] = 'vim'})
-Plug('numToStr/comment.nvim')
 Plug('romgrk/barbar.nvim')
-Plug('kyazdani42/nvim-tree.lua')
 Plug('lukas-reineke/indent-blankline.nvim')
+Plug('kyazdani42/nvim-tree.lua')
+-- Plug('numToStr/comment.nvim')
 vim.call('plug#end')
 
 vim.g.mapleader = " "
@@ -126,7 +119,7 @@ require('bufferline').setup {
   insert_at_end = true,
 }
 
-require('Comment').setup()
+-- require('Comment').setup()
 
 require('lualine').setup {
   options = {
@@ -240,8 +233,7 @@ vim.cmd([[au BufRead *.pdf,*.jpg,*.png,*.gif sil exe "!xdg-open " . shellescape(
 vim.cmd([[au FocusGained,BufEnter * checktime]])
 
 -- no line numbers in Terminal
-vim.cmd[[au TermOpen * setlocal nonumber norelativenumber]]
+vim.cmd([[au TermOpen * setlocal nonumber norelativenumber]])
 
 -- insert mode in Terminal
 -- vim.cmd[[au BufEnter * if &buftype == 'terminal' | :startinsert! | endif]]
-END
