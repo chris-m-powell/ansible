@@ -1,5 +1,5 @@
 set selection-clipboard clipboard
-set sandbox strict
+#set sandbox strict
 
 set notification-error-bg       "#2E3440"
 set notification-error-fg       "#BF616A"
