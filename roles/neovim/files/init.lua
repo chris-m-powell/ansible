@@ -8,7 +8,6 @@ Plug('rbgrouleff/bclose.vim')
 Plug('soywod/himalaya', {['rtp'] = 'vim'})
 Plug('romgrk/barbar.nvim')
 Plug('lukas-reineke/indent-blankline.nvim')
--- Plug('kyazdani42/nvim-tree.lua')
 -- Plug('numToStr/comment.nvim')
 vim.call('plug#end')
 
@@ -61,42 +60,7 @@ vim.opt.whichwrap:append('l')
 
 require('indent_blankline').setup {}
 
--- require('nvim-tree').setup({
---   sort_by = "case_sensitive",
---   view = {
---     adaptive_size = true,
---     mappings = {
---       list = {
---         { key = "h", action = "dir_up" },
---         { key = "l", action = "dir_down" },
---       },
---     },
---   },
---   renderer = {
---     group_empty = true,
---   },
---   filters = {
---     dotfiles = true,
---   },
--- })
-
--- local nvim_tree_events = require('nvim-tree.events')
 local bufferline_state = require('bufferline.state')
-
--- local function get_tree_size()
---   return vim.api.nvim_win_get_width(0)
--- end
--- nvim_tree_events.on_tree_open(function()
---   bufferline_state.set_offset(get_tree_size())
--- end)
--- 
--- nvim_tree_events.on_tree_resize(function()
---   bufferline_state.set_offset(get_tree_size())
--- end)
--- 
--- nvim_tree_events.on_tree_close(function()
---   bufferline_state.set_offset(0)
--- end)
 
 vim.g.nord_contrast = false
 vim.g.nord_borders = true
@@ -180,50 +144,29 @@ require('lualine').setup {
   extensions = {}
 }
 
-function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
-end
-
-function nmap(shortcut, command)
-  map('n', shortcut, command)
-end
-
-function tmap(shortcut, command)
-  map('t', shortcut, command)
-end
-
-function vmap(shortcut, command)
-  map('v', shortcut, command)
-end
-
-
-nmap('<leader>j', ':bprevious<CR>')
-nmap('<leader>k', ':bnext<CR>')
-nmap('<Leader>qq',':bdelete!<CR>')
-nmap('<leader>e', ':edit<SPACE>')
-nmap('<leader>ww', ':write!<CR>')
-
-nmap('<C-h>', ':split<CR>')
-nmap('<C-l>', ':vsplit<CR>')
-nmap('<C-q>', ':close!<CR>')
-nmap('<C-j>', '<C-w>W')
-nmap('<C-k>', '<C-w>w')
-nmap('<C-x>', '<C-w>x')
-nmap('<C-down>', ':resize -1<CR>')
-nmap('<C-up>', ':resize +1<CR>')
-nmap('<C-left>', ':vertical resize -1<CR>')
-nmap('<C-right>', ':vertical resize +1<CR>')
-
-nmap('<leader><CR>', ':nohlsearch<CR>')
-nmap('<ESC>', ':nohlsearch<CR>')
-
-tmap('<ESC>', '<C-\\><C-n><CR>')
-
-nmap('<leader>pp',':setlocal paste!<CR>')
-nmap('<leader>ss',':setlocal spell!<CR>')
-nmap('<leader>cd',':cd %:p:h<CR>:pwd<CR>')
-
-nmap('<leader>b',':terminal bpytop<CR>:startinsert!<CR>')
+vim.api.nvim_set_keymap('n', '<leader>j', ':bprevious<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>k', ':bnext<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>qq',':bdelete!<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>e', ':edit<SPACE>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>ww', ':write!<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-h>', ':split<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-l>', ':vsplit<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-q>', ':close!<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-h>', ':split<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>W', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>w', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-x>', '<C-w>x', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-down>', ':resize -1<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-up>', ':resize +1<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-left>', ':vertical resize -1<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-right>', ':vertical resize +1<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><CR>', ':nohlsearch<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<ESC>', ':nohlsearch<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>pp',':setlocal paste!<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ss',':setlocal spell!<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>cd',':cd %:p:h<CR>:pwd<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<ESC>', '<C-\\><C-n><CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>t', ':terminal<SPACE>', { noremap = true, silent = false })
 
 -- return to last edit positions
 vim.cmd([[au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]])
