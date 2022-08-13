@@ -8,7 +8,7 @@ Plug('rbgrouleff/bclose.vim')
 Plug('soywod/himalaya', {['rtp'] = 'vim'})
 Plug('romgrk/barbar.nvim')
 Plug('lukas-reineke/indent-blankline.nvim')
-Plug('kyazdani42/nvim-tree.lua')
+-- Plug('kyazdani42/nvim-tree.lua')
 -- Plug('numToStr/comment.nvim')
 vim.call('plug#end')
 
@@ -61,42 +61,42 @@ vim.opt.whichwrap:append('l')
 
 require('indent_blankline').setup {}
 
-require('nvim-tree').setup({
-  sort_by = "case_sensitive",
-  view = {
-    adaptive_size = true,
-    mappings = {
-      list = {
-        { key = "h", action = "dir_up" },
-        { key = "l", action = "dir_down" },
-      },
-    },
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
+-- require('nvim-tree').setup({
+--   sort_by = "case_sensitive",
+--   view = {
+--     adaptive_size = true,
+--     mappings = {
+--       list = {
+--         { key = "h", action = "dir_up" },
+--         { key = "l", action = "dir_down" },
+--       },
+--     },
+--   },
+--   renderer = {
+--     group_empty = true,
+--   },
+--   filters = {
+--     dotfiles = true,
+--   },
+-- })
 
-local nvim_tree_events = require('nvim-tree.events')
+-- local nvim_tree_events = require('nvim-tree.events')
 local bufferline_state = require('bufferline.state')
 
-local function get_tree_size()
-  return vim.api.nvim_win_get_width(0)
-end
-nvim_tree_events.on_tree_open(function()
-  bufferline_state.set_offset(get_tree_size())
-end)
-
-nvim_tree_events.on_tree_resize(function()
-  bufferline_state.set_offset(get_tree_size())
-end)
-
-nvim_tree_events.on_tree_close(function()
-  bufferline_state.set_offset(0)
-end)
+-- local function get_tree_size()
+--   return vim.api.nvim_win_get_width(0)
+-- end
+-- nvim_tree_events.on_tree_open(function()
+--   bufferline_state.set_offset(get_tree_size())
+-- end)
+-- 
+-- nvim_tree_events.on_tree_resize(function()
+--   bufferline_state.set_offset(get_tree_size())
+-- end)
+-- 
+-- nvim_tree_events.on_tree_close(function()
+--   bufferline_state.set_offset(0)
+-- end)
 
 vim.g.nord_contrast = false
 vim.g.nord_borders = true
@@ -222,6 +222,8 @@ tmap('<ESC>', '<C-\\><C-n><CR>')
 nmap('<leader>pp',':setlocal paste!<CR>')
 nmap('<leader>ss',':setlocal spell!<CR>')
 nmap('<leader>cd',':cd %:p:h<CR>:pwd<CR>')
+
+nmap('<leader>b',':terminal bpytop<CR>:startinsert!<CR>')
 
 -- return to last edit positions
 vim.cmd([[au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]])

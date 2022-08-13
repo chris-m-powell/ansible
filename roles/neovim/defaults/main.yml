@@ -31,8 +31,8 @@ neovim:
     indent_blankline:
       repo: "github.com/lukas-reineke/indent-blankline.nvim.git"
       dest: "indent-blankline.nvim"
-    nvim_tree:
-      repo: "github.com/kyazdani42/nvim-tree.lua.git"
-      dest: "nvim-tree.lua"
+      #    nvim_tree:
+      #      repo: "github.com/kyazdani42/nvim-tree.lua.git"
+      #      dest: "nvim-tree.lua"
   config:
     dir: "~/.config/nvim"
