@@ -1,18 +1,18 @@
+-- plug-ins
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.local/share/nvim/plugged')
 Plug('dense-analysis/ale')
 Plug('nvim-lualine/lualine.nvim')
 Plug('shaunsingh/nord.nvim')
-Plug('francoiscabrol/ranger.vim')
-Plug('rbgrouleff/bclose.vim')
+Plug('kyazdani42/nvim-tree.lua')
 Plug('soywod/himalaya', {['rtp'] = 'vim'})
 Plug('romgrk/barbar.nvim')
 Plug('lukas-reineke/indent-blankline.nvim')
--- Plug('numToStr/comment.nvim')
+Plug('numToStr/comment.nvim')
 vim.call('plug#end')
 
+-- basic options
 vim.g.mapleader = " "
-
 vim.opt.timeoutlen  = 500
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
@@ -57,11 +57,74 @@ vim.opt.autoread = true
 vim.opt.cursorline = true
 vim.opt.whichwrap:append('h')
 vim.opt.whichwrap:append('l')
+vim.opt.termguicolors = true
 
+-- indent_blankline
 require('indent_blankline').setup {}
 
-local bufferline_state = require('bufferline.state')
+-- nvim-tree
+require('nvim-tree').setup({
+  sort_by = "case_sensitive",
+  hijack_netrw = true,
+  sync_root_with_cwd = true,
+  reload_on_bufenter = true,
+  respect_buf_cwd = true,
+  view = {
+    adaptive_size = false,
+    mappings = {
+      custom_only = false,
+      list = {
+        { key = "h", action = "dir_up" },
+        { key = "l", action = "dir_down" },
+        { key = "l", action = "edit" },
+        { key = "l", action = "edit_in_place" },
+        { key = "cw", action = "rename" },
+        { key = "yy", action = "copy" },
+        { key = "dd", action = "cut" },
+        { key = "pp", action = "paste" },
+        { key = "ii", action = "toggle_file_info" },
+        { key = "zh", action = "toggle_dotfiles" },
+        { key = "t", action = "toggle_mark" },
+      },
+    },
+  },
+  renderer = {
+    highlight_opened_files = "all",
+    indent_markers = {
+      enable = true,
+      icons = {
+        corner = "└",
+        edge = "│",
+        item = "├",
+        none = " ",
+      }
+    },
+    icons = {
+      show = {
+        file = false,
+        folder = false,
+        folder_arrow = false,
+        git = false,
+      },
+    },
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
 
+local function toggle_replace()
+  local view = require"nvim-tree.view"
+  if view.is_visible() then
+    view.close()
+  else
+    require"nvim-tree".open_replacing_current_buffer()
+  end
+end
+
+vim.keymap.set('n', '<leader>f', toggle_replace)
+
+-- nord
 vim.g.nord_contrast = false
 vim.g.nord_borders = true
 vim.g.nord_disable_background = true
@@ -69,6 +132,7 @@ vim.g.nord_italic = true
 vim.g.nord_uniform_diff_background = true
 require('nord').set()
 
+-- barbar
 require('bufferline').setup {
   animation = true,
   auto_hide = false,
@@ -83,8 +147,10 @@ require('bufferline').setup {
   insert_at_end = true,
 }
 
--- require('Comment').setup()
+-- comment
+require('Comment').setup()
 
+-- lualine
 require('lualine').setup {
   options = {
     icons_enabled = false,
@@ -167,6 +233,8 @@ vim.api.nvim_set_keymap('n', '<leader>ss',':setlocal spell!<CR>', { noremap = tr
 vim.api.nvim_set_keymap('n', '<leader>cd',':cd %:p:h<CR>:pwd<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('t', '<ESC>', '<C-\\><C-n><CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>t', ':terminal<SPACE>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>wh', '<C-w>W<C-w>K<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>wl', '<C-w>w<C-w>H<CR>', { noremap = true, silent = false })
 
 -- return to last edit positions
 vim.cmd([[au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]])
@@ -179,6 +247,3 @@ vim.cmd([[au FocusGained,BufEnter * checktime]])
 
 -- no line numbers in Terminal
 vim.cmd([[au TermOpen * setlocal nonumber norelativenumber]])
-
--- insert mode in Terminal
--- vim.cmd[[au BufEnter * if &buftype == 'terminal' | :startinsert! | endif]]

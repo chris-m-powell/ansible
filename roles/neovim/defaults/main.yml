@@ -16,12 +16,9 @@ neovim:
     nord:
       repo: "github.com/shaunsingh/nord.nvim.git"
       dest: "nord.nvim"
-    ranger:
-      repo: "github.com/francoiscabrol/ranger.vim.git"
-      dest: "ranger.vim"
-    bclose:
-      repo: "github.com/rbgrouleff/bclose.vim.git"
-      dest: "bclose.vim"
+    nvim_tree:
+      repo: "github.com/kyazdani42/nvim-tree.lua.git"
+      dest: "nvim-tree.lua"
     himalaya:
       repo: "github.com/soywod/himalaya.git"
       dest: "himalaya"
@@ -31,8 +28,8 @@ neovim:
     indent_blankline:
       repo: "github.com/lukas-reineke/indent-blankline.nvim.git"
       dest: "indent-blankline.nvim"
-      #    nvim_tree:
-      #      repo: "github.com/kyazdani42/nvim-tree.lua.git"
-      #      dest: "nvim-tree.lua"
+    comment:
+      repo: "github.com/numToStr/comment.nvim.git"
+      dest: "comment.nvim"
   config:
     dir: "~/.config/nvim"
