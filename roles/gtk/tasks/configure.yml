@@ -18,3 +18,4 @@
       org.gnome.desktop.interface.gtk-theme: "'Nordic'"
       org.gnome.desktop.wm.preferences.theme: "'Nordic'"
       org.gnome.desktop.background.picture-uri-dark: "'{{ 'file://' + home.stdout + '/.local/share/backgrounds/nord.jpg' }}'" 
+      org.gnome.shell.extensions.pop-shell.active-hint: "true"

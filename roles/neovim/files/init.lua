@@ -9,6 +9,9 @@ Plug('soywod/himalaya', {['rtp'] = 'vim'})
 Plug('romgrk/barbar.nvim')
 Plug('lukas-reineke/indent-blankline.nvim')
 Plug('numToStr/comment.nvim')
+Plug('folke/which-key.nvim')
+Plug('karb94/neoscroll.nvim')
+Plug('lewis6991/gitsigns.nvim')
 vim.call('plug#end')
 
 -- basic options
@@ -42,7 +45,7 @@ vim.opt.smartcase = true
 vim.opt.wrap = true
 vim.opt.linebreak = true
 vim.opt.number = true
-vim.opt.showmode = false 
+vim.opt.showmode = false
 vim.opt.autochdir = true
 vim.opt.wildmenu = true
 vim.opt.showmatch = true
@@ -59,13 +62,25 @@ vim.opt.whichwrap:append('h')
 vim.opt.whichwrap:append('l')
 vim.opt.termguicolors = true
 
+
+-- gitsigns
+require('gitsigns').setup()
+
+
+-- neoscroll
+require('neoscroll').setup()
+
+
 -- indent_blankline
-require('indent_blankline').setup {}
+require('indent_blankline').setup()
+
 
 -- nvim-tree
 require('nvim-tree').setup({
   sort_by = "case_sensitive",
   hijack_netrw = true,
+  hijack_unnamed_buffer_when_opening = true,
+  open_on_setup = true,
   sync_root_with_cwd = true,
   reload_on_bufenter = true,
   respect_buf_cwd = true,
@@ -122,7 +137,86 @@ local function toggle_replace()
   end
 end
 
-vim.keymap.set('n', '<leader>f', toggle_replace)
+-- which-key
+require('which-key').setup {
+  key_labels = {
+    ["<space>"] = "SPC",
+    ["<cr>"] = "RET",
+    ["<tab>"] = "TAB",
+  },
+  ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
+}
+
+local wk = require("which-key")
+wk.register({
+  f = { toggle_replace, "File tree" },
+  b = {
+    name = "Buffer management",
+    q = {
+      name = "Delete",
+      q = { ":bdelete!<CR>", "Delete current buffer" },
+      o = { ":%bd|e#|bd#<CR>", "Delete all other buffers" },
+    },
+    w = { ":write!<CR>", "Write current buffer" },
+    j = { ":bprevious<CR>", "Go to previous buffer" },
+    k = { ":bnext<CR>", "Go to next buffer" },
+    ["1"] = { ":BufferGoto 1<CR>", "Go to buffer 1" },
+    ["2"] = { ":BufferGoto 2<CR>", "Go to buffer 2" },
+    ["3"] = { ":BufferGoto 3<CR>", "Go to buffer 3" },
+    ["4"] = { ":BufferGoto 4<CR>", "Go to buffer 4" },
+    ["5"] = { ":BufferGoto 5<CR>", "Go to buffer 5" },
+    ["6"] = { ":BufferGoto 6<CR>", "Go to buffer 6" },
+    ["7"] = { ":BufferGoto 7<CR>", "Go to buffer 7" },
+    ["8"] = { ":BufferGoto 8<CR>", "Go to buffer 8" },
+    ["9"] = { ":BufferGoto 9<CR>", "Go to buffer 9" },
+    ["0"] = { ":BufferGoto 0<CR>", "Go to buffer 0" },
+  },
+  w = {
+    name = "Window management",
+    q = {
+      name = "Close window",
+      q = { ":close!<CR>", "Close current window" },
+      o = { ":only<CR>", "Close all other windows" },
+    },
+    s = {
+      name = "Split",
+      s = { ":split<CR>", "Split with current buffer" },
+      j = { ":sbp<CR>", "Split with previous buffer" },
+      k = { ":sbn<CR>", "Split with next buffer" },
+      t = { ":split +term<CR>", "Split with terminal buffer" },
+    },
+    v = {
+      name = "Vertical split",
+      v = { ":vsplit<CR>", "Vertical split with current buffer" },
+      j = { ":vertical sbp<CR>", "Vertical split with previous buffer" },
+      k = { ":vertical sbn<CR>", "Vertical split with next buffer" },
+      t = { ":vsplit +term<CR>", "Vertical split with terminal buffer" },
+    },
+    h = { "<C-w>h", "Move to window on the left" },
+    j = { "<C-w>j", "Move to window below" },
+    k = { "<C-w>k", "Move to window above" },
+    l = { "<C-w>l", "Move to window on the right" },
+    x = { "<C-w>x", "Exchange current window with next" },
+    H = { "<C-w>H", "Move window to far left" },
+    J = { "<C-w>J", "Move window to very bottom" },
+    K = { "<C-w>K", "Move window to very top" },
+    L = { "<C-w>L", "Move window to far right" },
+    ["<Down>"] = { ":resize -1<CR>", "Reduce horizontal split size" },
+    ["<Up>"] = { ":resize +1<CR>", "Increase horizontal split size" },
+    ["<left>"] = { ":vertical resize -1<CR>", "Reduce vertical split size" },
+    ["<Right>"] = { ":vertical resize +1<CR>", "Increase vertical split size" },
+    ["="] = { "<C-w>=", "Balance split windows" },
+  },
+  t = {
+    name = "Tab management",
+    n = { ":tabnew<CR>", "New tab" },
+    q = { ":tabclose<CR>", "Close tab" },
+    j = { ":tabprevious<CR>", "Previous tab" },
+    k = { ":tabnext<CR>", "Next tab" },
+    o = { ":tabo<CR>", "Close all other tabs" },
+  }
+}, { prefix= "<leader>" })
+
 
 -- nord
 vim.g.nord_contrast = false
@@ -131,6 +225,7 @@ vim.g.nord_disable_background = true
 vim.g.nord_italic = true
 vim.g.nord_uniform_diff_background = true
 require('nord').set()
+
 
 -- barbar
 require('bufferline').setup {
@@ -147,8 +242,10 @@ require('bufferline').setup {
   insert_at_end = true,
 }
 
+
 -- comment
 require('Comment').setup()
+
 
 -- lualine
 require('lualine').setup {
@@ -210,40 +307,22 @@ require('lualine').setup {
   extensions = {}
 }
 
-vim.api.nvim_set_keymap('n', '<leader>j', ':bprevious<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>k', ':bnext<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>qq',':bdelete!<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>e', ':edit<SPACE>', { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>ww', ':write!<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-h>', ':split<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-l>', ':vsplit<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-q>', ':close!<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-h>', ':split<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>W', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>w', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-x>', '<C-w>x', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-down>', ':resize -1<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-up>', ':resize +1<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-left>', ':vertical resize -1<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-right>', ':vertical resize +1<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader><CR>', ':nohlsearch<CR>', { noremap = true, silent = true })
+
 vim.api.nvim_set_keymap('n', '<ESC>', ':nohlsearch<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>pp',':setlocal paste!<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ss',':setlocal spell!<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>cd',':cd %:p:h<CR>:pwd<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('t', '<ESC>', '<C-\\><C-n><CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>t', ':terminal<SPACE>', { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>wh', '<C-w>W<C-w>K<CR>', { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>wl', '<C-w>w<C-w>H<CR>', { noremap = true, silent = false })
+
 
 -- return to last edit positions
 vim.cmd([[au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]])
 
+
 -- handle non-Vim files
 vim.cmd([[au BufRead *.pdf,*.jpg,*.png,*.gif sil exe "!xdg-open " . shellescape(expand("%:p")) | bd | let &ft=&ft | redraw!]])
 
+
 -- detect external file changes
 vim.cmd([[au FocusGained,BufEnter * checktime]])
+
 
 -- no line numbers in Terminal
 vim.cmd([[au TermOpen * setlocal nonumber norelativenumber]])

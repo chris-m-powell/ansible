@@ -31,5 +31,14 @@ neovim:
     comment:
       repo: "github.com/numToStr/comment.nvim.git"
       dest: "comment.nvim"
+    which_key:
+      repo: "github.com/folke/which-key.nvim.git"
+      dest: "which-key.nvim"
+    neoscroll:
+      repo: "github.com/karb94/neoscroll.nvim.git"
+      dest: "neoscroll.nvim"
+    gitsigns:
+      repo: "github.com/lewis6991/gitsigns.nvim.git"
+      dest: "gitsigns.nvim"
   config:
     dir: "~/.config/nvim"
