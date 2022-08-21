@@ -39,11 +39,8 @@
     - alacritty
     - bpytop
     - bitwarden-cli
-    - cava
-    - crt
     - dircolors
     - gtk
-    - gotop
     - himalaya
     - latex
     - mpd
@@ -54,7 +51,6 @@
     - protonvpn-cli
     - qutebrowser
     - ranger
-    - rustscan
     - signal-desktop
     - tty-clock
     - zathura
