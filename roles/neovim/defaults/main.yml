@@ -14,7 +14,7 @@ neovim:
       repo: "github.com/nvim-lualine/lualine.nvim.git"
       dest: "lualine.nvim"
     nord:
-      repo: "github.com/shaunsingh/nord.nvim.git"
+      repo: "github.com/chris-m-powell/nord.nvim.git"
       dest: "nord.nvim"
     nvim_tree:
       repo: "github.com/kyazdani42/nvim-tree.lua.git"

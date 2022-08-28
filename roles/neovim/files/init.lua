@@ -3,7 +3,7 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.local/share/nvim/plugged')
 Plug('dense-analysis/ale')
 Plug('nvim-lualine/lualine.nvim')
-Plug('shaunsingh/nord.nvim')
+Plug('chris-m-powell/nord.nvim')
 Plug('kyazdani42/nvim-tree.lua')
 Plug('soywod/himalaya', {['rtp'] = 'vim'})
 Plug('romgrk/barbar.nvim')
