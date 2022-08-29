@@ -76,6 +76,43 @@ require('indent_blankline').setup()
 
 
 -- nvim-tree
+local nvim_tree = require('nvim-tree')
+local get_node = require('nvim-tree.lib').get_node_at_cursor
+local has_children = function(node) return type(node.nodes) == 'table' and vim.tbl_count(node.nodes) > 0 end
+local key_down = vim.api.nvim_replace_termcodes('<Down>', true, true, true)
+
+nvim_tree_go_out = function()
+  local node = get_node()
+
+  if node.name == '..' then
+    require('nvim-tree.lib').dir_up()
+    return
+  end
+
+  nvim_tree.on_keypress('close_node')
+end
+
+nvim_tree_go_in = function()
+  local node = get_node()
+
+  if node.name == '..' then
+    vim.fn.feedkeys(key_down)
+    return
+  end
+
+  if has_children(node) and node.open == true then
+    vim.fn.feedkeys(key_down)
+    return
+  end
+
+  nvim_tree.on_keypress('edit_in_place')
+
+  if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'NvimTree' then return end
+
+  node = get_node()
+  if has_children(node) then vim.fn.feedkeys(key_down) end
+end
+
 require('nvim-tree').setup({
   sort_by = "case_sensitive",
   hijack_netrw = true,
@@ -89,18 +126,15 @@ require('nvim-tree').setup({
     mappings = {
       custom_only = false,
       list = {
-        { key = "h", action = "dir_up" },
-        { key = "l", action = "dir_down" },
-    --    { key = "l", action = "edit" },
-        { key = "l", action = "edit_in_place" },
+        { key = "h", cb = '<cmd>lua nvim_tree_go_out()<CR>' },
+        { key = "l", cb = '<cmd>lua nvim_tree_go_in()<CR>' },
         { key = "cw", action = "rename" },
         { key = "yy", action = "copy" },
         { key = "dd", action = "cut" },
         { key = "pp", action = "paste" },
         { key = "dD", action = "remove" },
-        { key = "ii", action = "toggle_file_info" },
         { key = "zh", action = "toggle_dotfiles" },
-        { key = "t", action = "toggle_mark" },
+        { key = "ii", action = "toggle_file_info" },
       },
     },
   },
@@ -122,9 +156,6 @@ require('nvim-tree').setup({
         folder_arrow = false,
         git = false,
       },
-      glyphs = {
-        bookmark = "-",
-      },
     },
   },
   filters = {
@@ -140,6 +171,7 @@ local function toggle_replace()
     require"nvim-tree".open_replacing_current_buffer()
   end
 end
+
 
 -- which-key
 require('which-key').setup {
