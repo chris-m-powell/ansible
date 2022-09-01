@@ -4,7 +4,7 @@ vim.call('plug#begin', '~/.local/share/nvim/plugged')
 Plug('dense-analysis/ale')
 Plug('nvim-lualine/lualine.nvim')
 Plug('chris-m-powell/nord.nvim')
-Plug('kyazdani42/nvim-tree.lua')
+Plug('chris-m-powell/nvim-tree.lua')
 Plug('soywod/himalaya', {['rtp'] = 'vim'})
 Plug('romgrk/barbar.nvim')
 Plug('lukas-reineke/indent-blankline.nvim')
@@ -12,7 +12,9 @@ Plug('numToStr/comment.nvim')
 Plug('folke/which-key.nvim')
 Plug('karb94/neoscroll.nvim')
 Plug('lewis6991/gitsigns.nvim')
+Plug('nvim-treesitter/nvim-treesitter')
 vim.call('plug#end')
+
 
 -- basic options
 vim.g.mapleader = " "
@@ -61,6 +63,16 @@ vim.opt.cursorline = true
 vim.opt.whichwrap:append('h')
 vim.opt.whichwrap:append('l')
 vim.opt.termguicolors = true
+
+
+-- nvim-treesitter
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "c", "lua", "bash", "python", "cpp", "yaml", "latex", "json", "markdown", "regex" },
+  auto_install = true,
+  highlight = {
+    enable = true,
+  },
+}
 
 
 -- gitsigns

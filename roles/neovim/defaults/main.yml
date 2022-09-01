@@ -17,7 +17,7 @@ neovim:
       repo: "github.com/chris-m-powell/nord.nvim.git"
       dest: "nord.nvim"
     nvim_tree:
-      repo: "github.com/kyazdani42/nvim-tree.lua.git"
+      repo: "github.com/chris-m-powell/nvim-tree.lua.git"
       dest: "nvim-tree.lua"
     himalaya:
       repo: "github.com/soywod/himalaya.git"
@@ -40,5 +40,8 @@ neovim:
     gitsigns:
       repo: "github.com/lewis6991/gitsigns.nvim.git"
       dest: "gitsigns.nvim"
+    nvim_treesitter:
+      repo: "github.com/nvim-treesitter/nvim-treesitter.git"
+      dest: "nvim-treesitter"
   config:
     dir: "~/.config/nvim"
