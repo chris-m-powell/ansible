@@ -13,6 +13,7 @@ Plug('folke/which-key.nvim')
 Plug('karb94/neoscroll.nvim')
 Plug('lewis6991/gitsigns.nvim')
 Plug('nvim-treesitter/nvim-treesitter')
+Plug('akinsho/toggleterm.nvim', {['tag'] = '*'})
 vim.call('plug#end')
 
 
@@ -63,6 +64,22 @@ vim.opt.cursorline = true
 vim.opt.whichwrap:append('h')
 vim.opt.whichwrap:append('l')
 vim.opt.termguicolors = true
+
+
+-- toggleterm
+require("toggleterm").setup {}
+
+function _G.set_terminal_keymaps()
+  local opts = {buffer = 0}
+  vim.keymap.set('t', '<ESC>', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+end
+
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 
 -- nvim-treesitter
@@ -196,7 +213,6 @@ require('which-key').setup {
 
 local wk = require("which-key")
 wk.register({
-  f = { toggle_replace, "File tree" },
   b = {
     name = "Buffer management",
     q = {
@@ -254,14 +270,8 @@ wk.register({
     ["<Right>"] = { ":vertical resize +1<CR>", "Increase vertical split size" },
     ["="] = { "<C-w>=", "Balance split windows" },
   },
-  t = {
-    name = "Tab management",
-    n = { ":tabnew<CR>", "New tab" },
-    q = { ":tabclose<CR>", "Close tab" },
-    j = { ":tabprevious<CR>", "Previous tab" },
-    k = { ":tabnext<CR>", "Next tab" },
-    o = { ":tabo<CR>", "Close all other tabs" },
-  }
+  f = { toggle_replace, "File tree" },
+  t = { ":ToggleTerm<CR>", "Terminal" },
 }, { prefix= "<leader>" })
 
 
@@ -289,6 +299,24 @@ require('bufferline').setup {
   insert_at_end = true,
 }
 
+local nvim_tree_events = require('nvim-tree.events')
+local bufferline_state = require('bufferline.state')
+
+local function get_tree_size()
+  return require'nvim-tree.view'.View.width
+end
+
+nvim_tree_events.subscribe('TreeOpen', function()
+  bufferline_state.set_offset(get_tree_size())
+end)
+
+nvim_tree_events.subscribe('Resize', function()
+  bufferline_state.set_offset(get_tree_size())
+end)
+
+nvim_tree_events.subscribe('TreeClose', function()
+  bufferline_state.set_offset(0)
+end)
 
 -- comment
 require('Comment').setup()
@@ -315,28 +343,9 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', {
-        'diagnostics', 
-        sources = {'ale'},
-        sections = {'error', 'warn', 'info', 'hint'},
-        diagnostics_color = {
-          error = 'DiagnosticError',
-          warn  = 'DiagnosticWarn',
-          info  = 'DiagnosticInfo',
-          hint  = 'DiagnosticHint',
-        },
-        symbols = { error = 'E', warn  = 'W', info  = 'I', hint  = 'H' },
-        colored = true,
-        update_in_insert = false,
-        always_visible = false,
-      },
-    },
+    lualine_b = {'branch', 'diff'},
     lualine_c = {'filename'},
-    lualine_x = {
-      'encoding',
-      'fileformat',
-      'filetype'
-    },
+    lualine_x = {},
     lualine_y = {'progress'},
     lualine_z = {'location'}
   },
@@ -356,7 +365,12 @@ require('lualine').setup {
 
 
 vim.api.nvim_set_keymap('n', '<ESC>', ':nohlsearch<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<ESC>', '<C-\\><C-n><CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-x>', '<C-w>x', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-q>', '<C-w>q', { noremap = true, silent = true })
 
 
 -- return to last edit positions

@@ -43,5 +43,8 @@ neovim:
     nvim_treesitter:
       repo: "github.com/nvim-treesitter/nvim-treesitter.git"
       dest: "nvim-treesitter"
+    toggle_term:
+      repo: "github.com/akinsho/toggleterm.nvim.git"
+      dest: "toggleterm.nvim"
   config:
     dir: "~/.config/nvim"
