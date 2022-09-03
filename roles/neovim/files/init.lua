@@ -117,7 +117,7 @@ nvim_tree_go_in = function()
     return
   end
 
-  nvim_tree.on_keypress('edit_in_place')
+  nvim_tree.on_keypress('edit')
 
   if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'NvimTree' then return end
 
@@ -132,7 +132,6 @@ require('nvim-tree').setup({
   open_on_setup = true,
   sync_root_with_cwd = true,
   reload_on_bufenter = true,
-  respect_buf_cwd = true,
   view = {
     adaptive_size = false,
     mappings = {
@@ -180,7 +179,7 @@ local function toggle_replace()
   if view.is_visible() then
     view.close()
   else
-    require"nvim-tree".open_replacing_current_buffer()
+    require"nvim-tree".open()
   end
 end
 
