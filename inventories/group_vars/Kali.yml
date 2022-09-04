@@ -1,0 +1,34 @@
+---
+discord:
+  enable: true
+rustscan:
+  enable: true
+
+misc_pkgs:
+  - antiword
+  - bettercap
+  - dc3dd
+  - docx2txt
+  - evil-winrm
+  - gdb
+  - gdb-doc
+  - gobuster
+  - hydra
+  - python3-impacket
+  - jq
+  - libsox-fmt-all
+  - ncat
+  - ncdu
+  - nmap
+  - ndiff
+  - nuclei
+  # - nvidia-cuda-toolkit
+  # - nvidia-driver
+  - rkhunter
+  - seclists
+  - sox
+  - sqlmap
+  - strace
+  - texlive-xetex
+  - texlive-fonts-extra
+  - tree

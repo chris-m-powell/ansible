@@ -1,5 +1,5 @@
 ---
-- name: Ensure host is POP!_OS 
+- name: Ensure hosts are compatible
   hosts: all
   gather_facts: true
   become: true
@@ -12,63 +12,52 @@
     - always
 
 - name: Deploy custom configuration 
-  hosts: Pop!_OS
+  vars:
+    distributions:
+      - Pop!_OS
+      - Kali
+  hosts: "{{ distributions | join(',') }}"
   become: true
   gather_facts: false
   handlers:
-    - import_tasks: "{{ playbook_dir + '/includes/handlers.yml' }}"
+    - import_tasks: "{{ playbook_dir + '/handlers/handlers.yml' }}"
   vars_prompt:
     - name: user
       prompt: Enter local username
       private: false
   pre_tasks:
     - block:
-        - name: Gather package facts 
-          package_facts:
-            manager: apt
-
-        - name: Gather service facts
-          service_facts:
-
-        - name: Update APT cache
-          apt:
-            update_cache: true
+        - include_tasks: "{{ playbook_dir + '/tasks/' + item + '.yml' }}"
+          loop:
+            - service_facts
+            - package_facts
+            - apt_cache
       tags:
         - always
   roles:
-    - alacritty
-    - bpytop
-    - bitwarden-cli
-    - dircolors
-    - gtk
-    - himalaya
-    - latex
-    - mpd
-    - ncmpcpp
-    - neofetch
-    - neovim
-    - protonmail-bridge
-    - protonvpn-cli
-    - qutebrowser
-    - ranger
-    - signal-desktop
-    - tty-clock
-    - zathura
+    - { role: alacritty, when: alacritty.enable | default(false) }
+    - { role: bpytop, when: bpytop.enable | default(true) }
+    - { role: bitwarden-cli, when: bitwarden_cli.enable | default(false) }
+    - { role: dircolors, when: dircolors.enable | default(false) }
+    - { role: discord, when: discord.enable | default(false) }
+    - { role: gtk, when: gtk.enable | default(false) }
+    - { role: himalaya, when: himalaya.enable | default(false) }
+    - { role: mpd, when: mpd.enable | default(false) }
+    - { role: ncmpcpp, when: ncmpcpp.enable | default(false) }
+    - { role: neofetch, when: neofetch.enable | default(true) }
+    - { role: neovim, when: neovim.enable | default(true) }
+    - { role: protonmail-bridge, when: protonmail_bridge.enable | default(false) }
+    - { role: protonvpn-cli, when: protonvpn_cli.enable | default(false) }
+    - { role: qutebrowser, when: qutebrowser.enable | default(true) }
+    - { role: ranger, when: ranger.enable | default(true) }
+    - { role: rustscan, when: rustscan.enable | default(false) }
+    - { role: signal-desktop, when: signal_desktop.enable | default(false) }
+    - { role: zathura, when: zathura.enable | default(true) }
   tasks:
     - name: install misc pkgs
       apt:
         state: latest
-        pkg: 
-          - antiword
-          - cmatrix
-          - docx2txt
-          - libsox-fmt-all
-          - lynis
-          - ncdu
-          - nmap
-          - rkhunter
-          - sox
-          - tree
+        pkg: "{{ misc_pkgs | default([]) }}"
       tags:
         - misc-pkgs
       notify:

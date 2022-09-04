@@ -1,0 +1,35 @@
+---
+alacritty:
+  enable: true
+bitwarden_cli:
+  enable: true
+dircolors:
+  enable: true
+gtk:
+  enable: true
+himalaya:
+  enable: true
+mpd:
+  enable: true
+ncmpcpp:
+  enable: true
+protonmail_bridge:
+  enable: true
+protonvpn_cli:
+  enable: true
+signal_desktop:
+  enable: true
+
+misc_pkgs:
+  - antiword
+  - cmatrix
+  - docx2txt
+  - libsox-fmt-all
+  - lynis
+  - ncdu
+  - nmap
+  - rkhunter
+  - sox
+  - texlive-xetex
+  - texlive-fonts-extra
+  - tree

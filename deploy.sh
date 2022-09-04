@@ -28,9 +28,37 @@ END
   sleep 1
 }
 
+function display_dragon() {
+  printf "\033c"
+  cat << END
+..............
+            ..,;:ccc,.
+          ......''';lxO.
+.....''''..........,:ld;
+           .';;;:::;,,.x,
+      ..'''.            0Xxoc:,.  ...
+  ....                ,ONkc;,;cokOdc',.
+ .                   OMo           ':ddo.
+                    dMc               :OO;
+                    0M.                 .:o.
+                    ;Wd
+                     ;XO,
+                       ,d0Odlc;,..
+                           ..',;:cdOOd::,.
+                                    .:d;.':;.
+                                       'd,  .'
+                                         ;l   ..
+                                          .o
+                                            c
+                                            .'
+                                             .
+END
+  sleep 1
+}
+
 function display_help() {
   echo -e "\nUSAGE:\n"
-  echo -e "\tcurl -s https://raw.githubusercontent.com/chris-m-powell/pop-os/master/deploy.sh | sudo bash -s -- [<options>]"
+  echo -e "\tcurl -s https://raw.githubusercontent.com/chris-m-powell/ansible/master/deploy.sh | sudo bash -s -- [<options>]"
   echo -e "\nOPTIONS:\n"
   echo -e "\t-u               \tName of local user"
   echo -e "\t-k               \tComma-delimited list of tags (defaults to 'all')"
@@ -62,7 +90,7 @@ function detect_os() {
   declare -g OS_ID
   OS_ID=$(awk -F '=' '$1=="ID" { print $2 }' /etc/os-release | tr -d '"')
   readonly OS_ID
-  [[ "${OS_ID}" =~ ^pop$ ]] || return 1
+  [[ "${OS_ID}" =~ ^(pop|kali)$ ]] || return 1
   return 0
 }
 
@@ -160,7 +188,7 @@ function priv_check() {
 
 function deploy() {
   local cmd home_dir repo_url
-  repo_url=https://github.com/chris-m-powell/pop-os.git
+  repo_url=https://github.com/chris-m-powell/ansible.git
   home_dir=$(getent passwd ${LOCAL_USER} | cut -d: -f6) 
   alert -t info -m "executing playbook to deploy custom configurations..."
   if [[ "${TAGS}" ]]; then
