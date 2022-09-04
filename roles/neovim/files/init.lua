@@ -66,22 +66,6 @@ vim.opt.whichwrap:append('l')
 vim.opt.termguicolors = true
 
 
--- toggleterm
-require("toggleterm").setup {}
-
-function _G.set_terminal_keymaps()
-  local opts = {buffer = 0}
-  vim.keymap.set('t', '<ESC>', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-end
-
-vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
-
-
 -- nvim-treesitter
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "c", "lua", "bash", "python", "cpp", "yaml", "latex", "json", "markdown", "regex" },
@@ -203,26 +187,15 @@ end
 
 -- which-key
 require('which-key').setup {
-  key_labels = {
-    ["<space>"] = "SPC",
-    ["<cr>"] = "RET",
-    ["<tab>"] = "TAB",
-  },
   ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
 }
 
 local wk = require("which-key")
 wk.register({
+  f = { toggle_replace, "Toggle file tree" },
+  t = { ":ToggleTerm<CR>", "Toggle terminal" },
   b = {
-    name = "Buffer management",
-    q = {
-      name = "Delete",
-      q = { ":bdelete!<CR>", "Delete current buffer" },
-      o = { ":%bd|e#|bd#<CR>", "Delete all other buffers" },
-    },
-    w = { ":write!<CR>", "Write current buffer" },
-    j = { ":bprevious<CR>", "Go to previous buffer" },
-    k = { ":bnext<CR>", "Go to next buffer" },
+    name = "Buffers",
     ["1"] = { ":BufferGoto 1<CR>", "Go to buffer 1" },
     ["2"] = { ":BufferGoto 2<CR>", "Go to buffer 2" },
     ["3"] = { ":BufferGoto 3<CR>", "Go to buffer 3" },
@@ -234,44 +207,6 @@ wk.register({
     ["9"] = { ":BufferGoto 9<CR>", "Go to buffer 9" },
     ["0"] = { ":BufferGoto 0<CR>", "Go to buffer 0" },
   },
-  w = {
-    name = "Window management",
-    q = {
-      name = "Close window",
-      q = { ":close!<CR>", "Close current window" },
-      o = { ":only<CR>", "Close all other windows" },
-    },
-    s = {
-      name = "Split",
-      s = { ":split<CR>", "Split with current buffer" },
-      j = { ":sbp<CR>", "Split with previous buffer" },
-      k = { ":sbn<CR>", "Split with next buffer" },
-      t = { ":split +term<CR>", "Split with terminal buffer" },
-    },
-    v = {
-      name = "Vertical split",
-      v = { ":vsplit<CR>", "Vertical split with current buffer" },
-      j = { ":vertical sbp<CR>", "Vertical split with previous buffer" },
-      k = { ":vertical sbn<CR>", "Vertical split with next buffer" },
-      t = { ":vsplit +term<CR>", "Vertical split with terminal buffer" },
-    },
-    h = { "<C-w>h", "Move to window on the left" },
-    j = { "<C-w>j", "Move to window below" },
-    k = { "<C-w>k", "Move to window above" },
-    l = { "<C-w>l", "Move to window on the right" },
-    x = { "<C-w>x", "Exchange current window with next" },
-    H = { "<C-w>H", "Move window to far left" },
-    J = { "<C-w>J", "Move window to very bottom" },
-    K = { "<C-w>K", "Move window to very top" },
-    L = { "<C-w>L", "Move window to far right" },
-    ["<Down>"] = { ":resize -1<CR>", "Reduce horizontal split size" },
-    ["<Up>"] = { ":resize +1<CR>", "Increase horizontal split size" },
-    ["<left>"] = { ":vertical resize -1<CR>", "Reduce vertical split size" },
-    ["<Right>"] = { ":vertical resize +1<CR>", "Increase vertical split size" },
-    ["="] = { "<C-w>=", "Balance split windows" },
-  },
-  f = { toggle_replace, "File tree" },
-  t = { ":ToggleTerm<CR>", "Terminal" },
 }, { prefix= "<leader>" })
 
 
@@ -317,6 +252,7 @@ end)
 nvim_tree_events.subscribe('TreeClose', function()
   bufferline_state.set_offset(0)
 end)
+
 
 -- comment
 require('Comment').setup()
@@ -364,13 +300,30 @@ require('lualine').setup {
 }
 
 
+-- toggleterm
+require("toggleterm").setup {
+  start_in_insert = false,
+}
+
+function _G.set_terminal_keymaps()
+  local opts = {buffer = 0}
+  vim.keymap.set('t', '<ESC>', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+end
+
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+
+
+
+-- misc keymaps
 vim.api.nvim_set_keymap('n', '<ESC>', ':nohlsearch<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-x>', '<C-w>x', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-q>', '<C-w>q', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-Down>', ":resize -1<CR>", { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<C-Up>', ":resize +1<CR>", { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<C-Left>', ":vertical resize -1<CR>", { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<C-Right>', ":vertical resize +1<CR>", { noremap = true, silent = false })
 
 
 -- return to last edit positions
