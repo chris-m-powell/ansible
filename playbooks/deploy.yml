@@ -35,7 +35,7 @@
       tags:
         - always
   roles:
-    - { role: alacritty, when: alacritty.enable | default(false) }
+    - { role: alacritty, when: alacritty.enable | default(true) }
     - { role: bpytop, when: bpytop.enable | default(true) }
     - { role: bitwarden-cli, when: bitwarden_cli.enable | default(false) }
     - { role: dircolors, when: dircolors.enable | default(false) }

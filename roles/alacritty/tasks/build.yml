@@ -1,0 +1,137 @@
+---
+- name: install | validate task list parameters
+  run_once: true
+  assert:
+    that:
+      - alacritty.project.repo is defined 
+      - alacritty.project.dest is defined 
+    quiet: true
+
+- name: install | check install status
+  stat:
+    path: /usr/local/bin/alacritty 
+  register: bin
+
+- name: install | build from source
+  block: 
+    - name: install | install build dependencies 
+      apt:
+        state: present
+        pkg:
+          - cmake 
+          - pkg-config
+          - libfreetype6-dev
+          - libfontconfig1-dev
+          - libxcb-xfixes0-dev
+          - libxkbcommon-dev
+          - python3
+          - gzip
+      notify:
+        - apt-get clean
+
+    - name: install | get user home directory
+      become_user: "{{ user }}"
+      shell: echo ${HOME}
+      changed_when: false
+      register: home
+
+    - name: install | download Rust installer
+      become_user: "{{ user }}"
+      get_url:
+        url: https://sh.rustup.rs
+        dest: "{{ home.stdout }}"
+        mode: 0700
+        validate_certs: true
+      register: rust_installer
+
+    - name: install | execute Rust installer
+      become_user: "{{ user }}"
+      shell: "{{ '/bin/sh ' + rust_installer.dest + ' -y' }}"
+      args:
+        chdir: "{{ home.stdout }}"
+
+    - name: install | remove Rust installer
+      file:
+        path: "{{ rust_installer.dest }}" 
+        state: absent
+
+    - name: install | install via Cargo
+      become_user: "{{ user }}"
+      command: "{{ '~/.cargo/bin/' + item }}"
+      loop:
+        - rustup override set stable
+        - rustup update stable
+        - cargo install alacritty
+
+    - name: install | copy binary to /usr/local/bin
+      copy:
+        src: "{{ home.stdout + '/.cargo/bin/alacritty' }}"
+        dest: /usr/local/bin 
+        mode: 0755
+        remote_src: true
+
+    - name: install | remove Rust installation
+      file:
+        path: "{{ home.stdout + '/' + item }}" 
+        state: absent
+      loop:
+        - ".cargo"
+        - ".rustup"
+
+    - name: install | remove Rust environment variables
+      lineinfile:
+        path: "{{ home.stdout + '/' + item }}"
+        state: absent
+        line: . "$HOME/.cargo/env"
+      loop:
+        - ".zshenv"
+        - ".bashrc"
+
+    - name: install | clone project repository
+      become_user: "{{ user }}"
+      git:
+        repo: "{{ 'https://' + alacritty.project.repo }}"
+        dest: "{{ alacritty.project.dest }}" 
+        depth: 1
+        single_branch: true
+      register: clone
+
+    - name: install | install icon
+      copy:
+        src: "{{ alacritty.project.dest + '/extra/logo/alacritty-term.svg' }}"
+        dest: /usr/share/pixmaps/Alacritty.svg
+        remote_src: true
+
+    - name: install | install desktop file 
+      command: "{{'desktop-file-install ' +  alacritty.project.dest + '/extra/linux/Alacritty.desktop' }}"
+      notify:
+        - update-desktop-database 
+
+    - name: install | ensure man page directory exists
+      file:
+        path: /usr/local/share/man/man1
+        state: directory
+      
+    - name: install | create man pages
+      shell: "{{ item }}"
+      args:
+        chdir: "{{ alacritty.project.dest }}"
+      loop:
+        - gzip -c extra/alacritty.man | tee /usr/local/share/man/man1/alacritty.1.gz > /dev/null
+        - gzip -c extra/alacritty-msg.man | tee /usr/local/share/man/man1/alacritty-msg.1.gz > /dev/null
+
+    - name: install | remove build artifacts 
+      file:
+        path: "{{ alacritty.project.dest }}" 
+        state: absent
+  when:
+    - not bin.stat.exists
+
+- name: install | install font updates 
+  apt:
+    pkg:
+      - fonts-jetbrains-mono
+    state: latest
+  notify:
+    - fc-cache
+    - apt-get clean
