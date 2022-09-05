@@ -12,22 +12,29 @@
 
 - name: configure | deploy configuration
   become_user: "{{ user }}"
-  block: 
+  block:
     - name: configure | create necessary directories
       file:
-        path: "{{ item }}" 
+        path: "{{ item }}"
         state: directory
       loop:
         - "{{ neovim.config.dir }}"
         - "{{ neovim.vim_plug.dir }}"
 
-    - name: configure | install Flake8 Python linter via pip
+    - name: configure | install or update Flake8 Python linter via pip
       pip:
         name: flake8
         state: latest
         extra_args: --user
       when:
         - neovim.vim_plug.enable
+
+    - name: configure | install or update yamllint
+      apt:
+        state: latest
+        pkg: yamllint
+      notify:
+        - apt-get clean
 
     - name: configure | install vim-plug
       uri:

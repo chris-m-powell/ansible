@@ -15,7 +15,7 @@
   apt:
     state: latest
     pkg:
-      - python3-pip 
-      - neovim 
+      - python3-pip
+      - neovim
   notify:
     - apt-get clean

@@ -11,7 +11,7 @@
   tags:
     - always
 
-- name: Deploy custom configuration 
+- name: Deploy custom configuration
   vars:
     distributions:
       - Pop!_OS
@@ -36,8 +36,8 @@
         - always
   roles:
     - { role: alacritty, when: alacritty.enable | default(true) }
-    - { role: bpytop, when: bpytop.enable | default(true) }
     - { role: bitwarden-cli, when: bitwarden_cli.enable | default(false) }
+    - { role: bpytop, when: bpytop.enable | default(true) }
     - { role: dircolors, when: dircolors.enable | default(false) }
     - { role: discord, when: discord.enable | default(false) }
     - { role: gtk, when: gtk.enable | default(false) }
