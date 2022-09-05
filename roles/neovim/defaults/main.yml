@@ -46,5 +46,23 @@ neovim:
     toggle_term:
       repo: "github.com/akinsho/toggleterm.nvim.git"
       dest: "toggleterm.nvim"
+    lspconfig:
+      repo: "github.com/neovim/nvim-lspconfig.git"
+      dest: "nvim-lspconfig"
+    cmp_nvim_lsp:
+      repo: "github.com/hrsh7th/cmp-nvim-lsp.git"
+      dest: "hrsh7th/cmp-nvim-lsp"
+    cmp_buffer:
+      repo: "github.com/hrsh7th/cmp-buffer.git"
+      dest: "hrsh7th/cmp-buffer"
+    cmp_path:
+      repo: "github.com/hrsh7th/cmp-path.git"
+      dest: "hrsh7th/cmp-path"
+    cmp_cmdline:
+      repo: "github.com/hrsh7th/cmp-cmdline.git"
+      dest: "hrsh7th/cmp-cmdline"
+    nvim_cmp:
+      repo: "github.com/hrsh7th/nvim-cmp.git"
+      dest: "hrsh7th/nvim-cmp"
   config:
     dir: "~/.config/nvim"

@@ -14,6 +14,12 @@ Plug('karb94/neoscroll.nvim')
 Plug('lewis6991/gitsigns.nvim')
 Plug('nvim-treesitter/nvim-treesitter')
 Plug('akinsho/toggleterm.nvim', {['tag'] = '*'})
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
 vim.call('plug#end')
 
 
@@ -30,7 +36,7 @@ vim.opt.clipboard:append('unnamedplus')
 vim.opt.guicursor= ''
 vim.opt.laststatus = 2
 vim.opt.cmdheight = 1
-vim.opt.selection = 'exclusive'
+vim.opt.selection = 'inclusive'
 vim.opt.backspace = {'eol', 'start', 'indent'}
 vim.opt.expandtab = true
 vim.opt.smarttab = true
@@ -66,6 +72,62 @@ vim.opt.whichwrap:append('l')
 vim.opt.termguicolors = true
 
 
+-- nvim-cmp
+vim.opt.completeopt=menu,menuone,noselect
+local cmp = require'cmp'
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
+      end
+    end, { "i", "s" }),
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
+
 -- nvim-treesitter
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "c", "lua", "bash", "python", "cpp", "yaml", "latex", "json", "markdown", "regex" },
@@ -85,7 +147,9 @@ require('neoscroll').setup()
 
 
 -- indent_blankline
-require('indent_blankline').setup()
+require('indent_blankline').setup {
+  show_current_context = true,
+}
 
 
 -- nvim-tree
