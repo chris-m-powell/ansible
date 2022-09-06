@@ -30,6 +30,4 @@ misc_pkgs:
   - nmap
   - rkhunter
   - sox
-  - texlive-xetex
-  - texlive-fonts-extra
   - tree

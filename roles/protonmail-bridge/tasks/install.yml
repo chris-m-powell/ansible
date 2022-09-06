@@ -41,32 +41,32 @@
         --output /usr/share/debsig/keyrings/E2C75D68E6234B07/debsig.gpg
         "{{ pubkey.dest }}"
 
-    - name: install | download policy file 
+    - name: install | download policy file
       get_url:
-        url: "{{ 'https://' + protonmail_bridge.policy }}" 
+        url: "{{ 'https://' + protonmail_bridge.policy }}"
         dest: /etc/debsig/policies/E2C75D68E6234B07
       when:
         - not ansible_check_mode
 
-    - name: install | download ProtonMail Bridge installer 
+    - name: install | download ProtonMail Bridge installer
       get_url:
-        url: "{{ 'https://' + protonmail_bridge.deb }}" 
+        url: "{{ 'https://' + protonmail_bridge.deb }}"
         dest: /tmp
       register: deb 
 
-    - name: install | verify ProtonMail Bridge installer integrity 
+    - name: install | verify ProtonMail Bridge installer integrity
       shell: debsig-verify "{{ deb.dest }}"
 
-    - name: install | install ProtonMail Bridge 
+    - name: install | install ProtonMail Bridge
       apt:
         state: present
-        deb: "{{ deb.dest }}" 
+        deb: "{{ deb.dest }}"
       when:
         - not ansible_check_mode
       notify:
         - apt-get clean
 
-    - name: install | remove artifacts 
+    - name: install | remove artifacts
       file:
         path: "{{ item }}"
         state: absent
@@ -79,7 +79,7 @@
 - name: install | import GPG key binary to keyring
   copy:
     src: ~/.config/protonmail/bridge/cert.pem
-    dest:  /usr/local/share/ca-certificates/protonbridge.crt
+    dest: /usr/local/share/ca-certificates/protonbridge.crt
     owner: root
     group: root
     mode: 0644

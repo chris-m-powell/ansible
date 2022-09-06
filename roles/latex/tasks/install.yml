@@ -9,6 +9,7 @@
   apt:
     state: latest
     pkg:
+      - pandoc
       - texlive-xetex
       - texlive-fonts-extra
   notify:

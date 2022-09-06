@@ -6,4 +6,4 @@
   rescue:
     - meta: flush_handlers
   tags:
-    - latex 
+    - latex
