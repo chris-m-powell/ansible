@@ -15,6 +15,7 @@
   apt:
     state: latest
     pkg:
+      - yamllint
       - python3-pip
       - neovim
   notify:

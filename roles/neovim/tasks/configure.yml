@@ -29,13 +29,6 @@
       when:
         - neovim.vim_plug.enable
 
-    - name: configure | install or update yamllint
-      apt:
-        state: latest
-        pkg: yamllint
-      notify:
-        - apt-get clean
-
     - name: configure | install vim-plug
       uri:
         url: "{{ 'https://' + neovim.vim_plug.url }}"

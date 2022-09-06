@@ -14,12 +14,12 @@ Plug('karb94/neoscroll.nvim')
 Plug('lewis6991/gitsigns.nvim')
 Plug('nvim-treesitter/nvim-treesitter')
 Plug('akinsho/toggleterm.nvim', {['tag'] = '*'})
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
+Plug('neovim/nvim-lspconfig')
+Plug('hrsh7th/cmp-nvim-lsp')
+Plug('hrsh7th/cmp-buffer')
+Plug('hrsh7th/cmp-path')
+Plug('hrsh7th/cmp-cmdline')
+Plug('hrsh7th/nvim-cmp')
 vim.call('plug#end')
 
 
@@ -70,10 +70,21 @@ vim.opt.cursorline = true
 vim.opt.whichwrap:append('h')
 vim.opt.whichwrap:append('l')
 vim.opt.termguicolors = true
+-- vim.opt.foldmethod = 'manual'
+-- vim.opt.foldenable = false
 
 
 -- nvim-cmp
 vim.opt.completeopt=menu,menuone,noselect
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
 local cmp = require'cmp'
 cmp.setup({
   snippet = {
@@ -109,7 +120,6 @@ cmp.setup({
   })
 })
 
--- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
@@ -117,7 +127,6 @@ cmp.setup.cmdline('/', {
   }
 })
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
