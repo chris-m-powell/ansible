@@ -5,7 +5,7 @@ Plug('dense-analysis/ale')
 Plug('nvim-lualine/lualine.nvim')
 Plug('chris-m-powell/nord.nvim')
 Plug('chris-m-powell/nvim-tree.lua')
--- Plug('soywod/himalaya', {['rtp'] = 'vim'})
+Plug('soywod/himalaya', {['rtp'] = 'vim'})
 Plug('romgrk/barbar.nvim')
 Plug('lukas-reineke/indent-blankline.nvim')
 Plug('numToStr/comment.nvim')
@@ -213,13 +213,14 @@ require('nvim-tree').setup({
       list = {
         { key = "h", cb = '<cmd>lua nvim_tree_go_out()<CR>' },
         { key = "l", cb = '<cmd>lua nvim_tree_go_in()<CR>' },
-        { key = "cw", action = "rename" },
+        { key = "cw", action = "full_rename" },
         { key = "yy", action = "copy" },
         { key = "dd", action = "cut" },
         { key = "pp", action = "paste" },
         { key = "dD", action = "remove" },
         { key = "zh", action = "toggle_dotfiles" },
         { key = "ii", action = "toggle_file_info" },
+        { key = "<Tab>", action = "preview" },
       },
     },
   },
