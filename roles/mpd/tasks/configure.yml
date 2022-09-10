@@ -6,21 +6,21 @@
       - mpd.config.dir is defined
     quiet: true
 
-- name: configure | apply local user configurations 
+- name: configure | apply local user configurations
   become_user: "{{ user }}"
   block:
     - name: configure | create necessary directories
       file:
-        path: "{{ item }}" 
+        path: "{{ item }}"
         state: directory
+        force: true
       loop:
         - "{{ mpd.config.dir }}"
         - ~/.mpd/playlists
-        - ~/Music
 
     - name: configure | create necessary files
       file:
-        path: "{{ item }}" 
+        path: "{{ item }}"
         state: touch
       changed_when: false
       loop:

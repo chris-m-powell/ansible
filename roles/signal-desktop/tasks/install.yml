@@ -19,7 +19,7 @@
   block:
     - name: install | download ASCII-armored OpenPGP repository key
       get_url:
-        url: "{{ 'https://' + signal_desktop.repo.key }}" 
+        url: "{{ 'https://' + signal_desktop.repo.key }}"
         dest: /tmp
       register: repo_key
 
@@ -30,9 +30,9 @@
     - name: install | import GPG key binary to keyring
       copy:
         content: "{{ output.stdout }}"
-        dest: "{{ signal_desktop.repo.keyring }}" 
+        dest: "{{ signal_desktop.repo.keyring }}"
 
-    - name: install | remove artifacts 
+    - name: install | remove artifacts
       file:
         path: "{{ repo_key.dest }}"
         state: absent
@@ -57,4 +57,3 @@
       - signal-desktop
   notify:
     - apt-get clean
-

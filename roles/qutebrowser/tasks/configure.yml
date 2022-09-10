@@ -6,9 +6,9 @@
       - qutebrowser.config.dir is defined
     quiet: true
 
-- name: configure | set default web browser 
+- name: configure | set default web browser
   alternatives:
-    name: x-www-browser 
+    name: x-www-browser
     link: /usr/bin/x-www-browser
     path: /usr/bin/qutebrowser
     priority: 50
@@ -23,8 +23,8 @@
 
     - name: configure | deploy config file
       copy:
-        src: "{{ item }}" 
-        dest: "{{ qutebrowser.config.dir }}" 
+        src: "{{ item }}"
+        dest: "{{ qutebrowser.config.dir }}"
       loop:
         - config.py
         - nord-qutebrowser.py

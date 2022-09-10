@@ -90,8 +90,17 @@ function detect_os() {
   declare -g OS_ID
   OS_ID=$(awk -F '=' '$1=="ID" { print $2 }' /etc/os-release | tr -d '"')
   readonly OS_ID
-  [[ "${OS_ID}" =~ ^(pop|kali)$ ]] || return 1
-  return 0
+  if [[ "${OS_ID}" =~ ^(pop)$ ]]
+  then
+    display_logo
+    return 0
+  elif [[ "${OS_ID}" =~ ^(kali)$ ]]
+  then
+    display_dragon
+    return 0
+  else
+    return 1
+  fi
 }
 
 function os_check() {
@@ -280,7 +289,6 @@ function alert() {
 function main() {
   priv_check
   parse_opts "${@}"
-  display_logo
   os_check
   install_dependencies
   deploy

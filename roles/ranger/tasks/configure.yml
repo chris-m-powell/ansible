@@ -6,17 +6,17 @@
       - ranger.config.dir is defined
     quiet: true
 
-- name: configure | apply local user configurations 
+- name: configure | apply local user configurations
   become_user: "{{ user }}"
   block:
     - name: configure | create necessary directories
       file:
-        path: "{{ ranger.config.dir }}" 
+        path: "{{ ranger.config.dir }}"
         state: directory
 
     - name: configure | deploy config file
       copy:
-        src: "{{ item }}" 
-        dest: "{{ ranger.config.dir }}" 
+        src: "{{ item }}"
+        dest: "{{ ranger.config.dir }}"
       loop:
         - rc.conf

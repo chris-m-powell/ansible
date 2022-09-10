@@ -38,7 +38,7 @@
         validate_certs: true
       when:
         - neovim.vim_plug.enable
-        
+
     - name: configure | install plug-in updates
       git:
         repo: "{{ 'https://' + item.value.repo }}"

@@ -6,19 +6,19 @@
       - protonvpn_cli.pkg is defined
     quiet: true
 
-- name: install | setup repository 
-  block: 
-    - name: install | download Proton VPN stable release repository installer 
+- name: install | setup repository
+  block:
+    - name: install | download Proton VPN stable release repository installer
       get_url:
-        url: "{{ 'https://' + protonvpn_cli.pkg }}" 
-        dest: /tmp 
+        url: "{{ 'https://' + protonvpn_cli.pkg }}"
+        dest: /tmp
         validate_certs: true
-      register: pkg 
+      register: pkg
 
     - name: install | setup Proton VPN stable release repository
       apt:
         state: present
-        deb: "{{ pkg.dest }}" 
+        deb: "{{ pkg.dest }}"
       when:
         - not ansible_check_mode
       notify:
@@ -26,7 +26,7 @@
 
     - name: install | remove artifacts
       file:
-        path: "{{ pkg.dest }}" 
+        path: "{{ pkg.dest }}"
         state: absent
       when:
         - not ansible_check_mode

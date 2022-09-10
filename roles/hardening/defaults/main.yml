@@ -1,6 +1,6 @@
 ---
 hardening:
-  banner: 
+  banner:
     text: |
   ssh:
     Port: 2222

@@ -7,11 +7,11 @@
 
 - name: install | check install status
   stat:
-    path: /usr/local/bin/rustscan 
+    path: /usr/local/bin/rustscan
   register: bin
 
 - name: install | build from source
-  block: 
+  block:
     - name: install | get user home directory
       become_user: "{{ user }}"
       shell: echo ${HOME}
@@ -35,7 +35,7 @@
 
     - name: install | remove Rust installer
       file:
-        path: "{{ rust_installer.dest }}" 
+        path: "{{ rust_installer.dest }}"
         state: absent
 
     - name: install | install via Cargo
@@ -44,18 +44,18 @@
       loop:
         - rustup override set stable
         - rustup update stable
-        - cargo install rustscan 
+        - cargo install rustscan
 
     - name: install | copy binary to /usr/local/bin
       copy:
         src: "{{ home.stdout + '/.cargo/bin/rustscan' }}"
-        dest: /usr/local/bin 
+        dest: /usr/local/bin
         mode: 0755
         remote_src: true
 
     - name: install | remove Rust installation
       file:
-        path: "{{ home.stdout + '/' + item }}" 
+        path: "{{ home.stdout + '/' + item }}"
         state: absent
       loop:
         - ".cargo"

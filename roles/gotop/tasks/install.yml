@@ -3,8 +3,8 @@
   run_once: true
   assert:
     that:
-      - gotop.repo is defined 
-      - gotop.dest is defined 
+      - gotop.repo is defined
+      - gotop.dest is defined
     quiet: true
 
 - name: install | check if installed
@@ -17,26 +17,26 @@
     - name: install | clone project repository
       git:
         repo: "{{ 'https://' + gotop.repo }}"
-        dest: "{{ gotop.dest }}" 
+        dest: "{{ gotop.dest }}"
         depth: 1
         single_branch: true
       register: clone
 
-    - name: install | execute build script 
+    - name: install | execute build script
       command: ./scripts/download.sh
       args:
         chdir: "{{ gotop.dest }}"
 
     - name: install | copy binary to /usr/local/bin
       copy:
-        src: "{{ gotop.dest + '/gotop' }}" 
+        src: "{{ gotop.dest + '/gotop' }}"
         dest: /usr/local/bin
         remote_src: true
         mode: +x
 
     - name: install | remove local project repository
       file:
-        path: "{{ gotop.dest }}" 
+        path: "{{ gotop.dest }}"
         state: absent
   when:
     - not gotop_bin.stat.exists

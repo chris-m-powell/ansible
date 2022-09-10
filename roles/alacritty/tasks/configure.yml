@@ -3,7 +3,7 @@
   run_once: true
   assert:
     that:
-      - alacritty.config.dir is defined 
+      - alacritty.config.dir is defined
     quiet: true
 
 - name: configure | apply local user configurations
@@ -16,8 +16,8 @@
 
     - name: configure | deploy config file
       copy:
-        src: "{{ item }}" 
-        dest: "{{ alacritty.config.dir }}" 
+        src: "{{ item }}"
+        dest: "{{ alacritty.config.dir }}"
       loop:
         - alacritty.yml
         - nord.yml

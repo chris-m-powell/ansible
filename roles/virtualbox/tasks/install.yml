@@ -12,7 +12,7 @@
 
 - name: install | report host virtualization status
   debug:
-    msg: This system is virtual, skipping VirtualBox installation... 
+    msg: This system is virtual, skipping VirtualBox installation...
   when:
     - ansible_virtualization_role == "guest"
 
@@ -27,7 +27,7 @@
       block:
         - name: install | download ASCII-armored OpenPGP repository key
           get_url:
-            url: "{{ 'https://' + virtualbox.repo.key }}" 
+            url: "{{ 'https://' + virtualbox.repo.key }}"
             dest: /tmp
           register: repo_key
 
@@ -38,9 +38,9 @@
         - name: install | import GPG key binary to keyring
           copy:
             content: "{{ output.stdout }}"
-            dest: "{{ virtualbox.repo.keyring }}" 
+            dest: "{{ virtualbox.repo.keyring }}"
 
-        - name: install | remove artifacts 
+        - name: install | remove artifacts
           file:
             path: "{{ repo_key.dest }}"
             state: absent
@@ -62,11 +62,10 @@
       apt:
         state: latest
         pkg:
-          - dkms 
+          - dkms
           - virtualbox
       notify:
         - virtualbox-ext-pack
         - apt-get clean
   when:
     - ansible_virtualization_role != "guest"
-

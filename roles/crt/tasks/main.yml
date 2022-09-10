@@ -2,11 +2,11 @@
 - block:
     - import_tasks: "install.yml"
       tags:
-        - crt-install 
+        - crt-install
         - cool-retro-term-install
     - import_tasks: "configure.yml"
       tags:
-        - crt-configure 
+        - crt-configure
         - cool-retro-term-configure
   rescue:
     - meta: flush_handlers

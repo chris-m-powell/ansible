@@ -4,4 +4,4 @@
   rescue:
     - meta: flush_handlers
   tags:
-    - virtualbox 
+    - virtualbox

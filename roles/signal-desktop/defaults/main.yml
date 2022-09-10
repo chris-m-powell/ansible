@@ -6,5 +6,3 @@ signal_desktop:
     keyring: "/usr/share/keyrings/signal-desktop-keyring.gpg"
     arch: "amd64"
     release: "xenial"
-
-  

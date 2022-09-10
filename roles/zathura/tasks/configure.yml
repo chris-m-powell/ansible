@@ -16,8 +16,8 @@
 
     - name: configure | deploy config file
       copy:
-        src: zathurarc 
-        dest: "{{ zathura.config.dir }}" 
+        src: zathurarc
+        dest: "{{ zathura.config.dir }}"
 
     - name: configure | check default PDF viewer
       shell: xdg-mime query default application/pdf

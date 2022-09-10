@@ -11,11 +11,10 @@
   block:
     - name: configure | create necessary directories
       file:
-        path: "{{ crt.config.dir }}" 
+        path: "{{ crt.config.dir }}"
         state: directory
 
     - name: configure | deploy config file
       copy:
         src: cool-retro-term.json
         dest: "{{ crt.config.dir }}"
-        

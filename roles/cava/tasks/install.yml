@@ -12,10 +12,10 @@
       - cava
   notify:
     - apt-get clean
-      
+
 - name: install | create desktop file
   copy:
     src: cava.desktop
     dest: /usr/share/applications
   notify:
-    - update-desktop-database 
+    - update-desktop-database

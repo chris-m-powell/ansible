@@ -1,17 +1,17 @@
 ---
-- name: fc-cache 
+- name: fc-cache
   command: fc-cache -f
   listen: fc-cache
 
-- name: update desktop database 
-  command: update-desktop-database 
+- name: update desktop database
+  command: update-desktop-database
   listen: update-desktop-database
 
-- name: apt-get clean 
+- name: apt-get clean
   command: apt-get clean
   listen: apt-get clean
 
-- name: reboot 
+- name: reboot
   command: shutdown -r -t 30
   listen: reboot
 

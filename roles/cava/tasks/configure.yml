@@ -11,11 +11,10 @@
   block:
     - name: configure | create necessary directories
       file:
-        path: "{{ cava.config.dir }}" 
+        path: "{{ cava.config.dir }}"
         state: directory
 
     - name: configure | deploy config file
       copy:
         src: config
         dest: "{{ cava.config.dir }}"
-        

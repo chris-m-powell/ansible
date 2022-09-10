@@ -12,11 +12,11 @@
   block:
     - name: install | create necessary directories
       file:
-        path: "{{ item }}" 
+        path: "{{ item }}"
         state: directory
       loop:
         - ~/.themes
-        - ~/.local/share/backgrounds 
+        - ~/.local/share/backgrounds
 
     - name: install | clone project repository
       git:
@@ -29,4 +29,4 @@
     - name: install | deploy wallpaper
       copy:
         src: "{{ gtk.wallpaper }}"
-        dest: ~/.local/share/backgrounds 
+        dest: ~/.local/share/backgrounds

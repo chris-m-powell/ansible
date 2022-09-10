@@ -6,7 +6,7 @@
       - dircolors.theme.nord.repo is defined
       - dircolors.theme.nord.dest is defined
     quiet: true
-    
+
 - name: install | clone project repository
   become_user: "{{ user }}"
   git:
@@ -19,7 +19,7 @@
 
 - name: install | enable
   block:
-    - name: install | copy source file to user home directory 
+    - name: install | copy source file to user home directory
       become_user: "{{ user }}"
       copy:
         src: "{{ dircolors.theme.nord.dest + '/src/dir_colors' }}"
@@ -28,16 +28,16 @@
 
     - name: install | remove install artifacts
       file:
-        path: "{{ dircolors.theme.nord.dest }}" 
+        path: "{{ dircolors.theme.nord.dest }}"
         state: absent
       changed_when: false
 
-    - name: install | activate 
+    - name: install | activate
       become_user: "{{ user }}"
       lineinfile:
-        path: ~/.bashrc 
+        path: ~/.bashrc
         state: present
-        line: test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors) 
+        line: test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
         insertafter: EOF
   when:
     - not ansible_check_mode

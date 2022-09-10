@@ -6,7 +6,7 @@
       - hardening.kernel is defined
     quiet: true
 
-- name: kernel | set sysctl parameters 
+- name: kernel | set sysctl parameters
   sysctl:
     name: "{{ item.key }}"
     value: "{{ item.value }}"

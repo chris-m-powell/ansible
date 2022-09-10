@@ -18,7 +18,7 @@
 - name: install | extract remote archive
   unarchive:
     src: "{{ 'https://' + signal_cli.pkg }}"
-    dest: /opt 
+    dest: /opt
     remote_src: true
     list_files: true
   register: archive

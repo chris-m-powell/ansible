@@ -19,4 +19,4 @@
     src: bpytop.desktop
     dest: /usr/share/applications
   notify:
-    - update-desktop-database 
+    - update-desktop-database
