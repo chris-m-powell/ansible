@@ -39,5 +39,8 @@
         state: present
         line: test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
         insertafter: EOF
+      loop:
+        - ~/.bashrc
+        - ~/.zshrc
   when:
     - not ansible_check_mode
