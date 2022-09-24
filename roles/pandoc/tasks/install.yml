@@ -12,5 +12,8 @@
       - pandoc
       - texlive-xetex
       - texlive-fonts-extra
+      - antiword
+      - docx2txt
+      - poppler-utils
   notify:
     - apt-get clean

@@ -2,8 +2,8 @@
 - block:
     - import_tasks: "install.yml"
       tags:
-        - latex-install
+        - pandoc-install
   rescue:
     - meta: flush_handlers
   tags:
-    - latex
+    - pandoc

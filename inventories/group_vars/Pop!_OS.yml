@@ -21,9 +21,7 @@ signal_desktop:
   enable: true
 
 misc_pkgs:
-  - antiword
   - cmatrix
-  - docx2txt
   - libsox-fmt-all
   - lynis
   - ncdu
