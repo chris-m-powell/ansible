@@ -8,7 +8,6 @@ Plug('chris-m-powell/nvim-tree.lua')
 Plug('soywod/himalaya', {['rtp'] = 'vim'})
 Plug('lukas-reineke/indent-blankline.nvim')
 Plug('numToStr/comment.nvim')
-Plug('folke/which-key.nvim')
 Plug('karb94/neoscroll.nvim')
 Plug('lewis6991/gitsigns.nvim')
 Plug('nvim-treesitter/nvim-treesitter')
@@ -189,8 +188,7 @@ nvim_tree_go_in = function()
     return
   end
 
-  -- nvim_tree.on_keypress('edit')
-  nvim_tree.on_keypress('edit_in_place')
+  nvim_tree.on_keypress('edit')
 
   if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'NvimTree' then return end
 
@@ -205,7 +203,6 @@ require('nvim-tree').setup({
   open_on_setup = true,
   sync_root_with_cwd = true,
   reload_on_bufenter = true,
-  respect_buf_cwd = true,
   view = {
     adaptive_size = false,
     mappings = {
@@ -249,27 +246,16 @@ require('nvim-tree').setup({
   },
 })
 
-local function toggle_replace()
+function toggle_replace()
   local view = require"nvim-tree.view"
   if view.is_visible() then
     view.close()
   else
-    -- require"nvim-tree".open()
-    require"nvim-tree".open_replacing_current_buffer()
+    require"nvim-tree".open()
   end
 end
 
-
--- which-key
-require('which-key').setup {
-  ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
-}
-
-local wk = require("which-key")
-wk.register({
-  f = { toggle_replace, "Toggle file tree" },
-  t = { ":ToggleTerm<CR>", "Toggle terminal" },
-}, { prefix= "<leader>" })
+vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua toggle_replace()<CR>", {noremap = true, silent = true})
 
 
 -- nord
@@ -329,21 +315,22 @@ require('lualine').setup {
 
 -- toggleterm
 require("toggleterm").setup {
-  start_in_insert = false,
+  open_mapping = [[<c-\>]],
+  start_in_insert = true,
+  insert_mappings = true,
+  terminal_mappings = true,
   direction = 'float',
+  float_opts = {
+    border = "curved",
+  },
 }
 
 function _G.set_terminal_keymaps()
   local opts = {buffer = 0}
   vim.keymap.set('t', '<ESC>', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
 end
 
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
-
 
 
 -- misc keymaps
