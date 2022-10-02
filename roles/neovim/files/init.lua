@@ -6,7 +6,6 @@ Plug('nvim-lualine/lualine.nvim')
 Plug('chris-m-powell/nord.nvim')
 Plug('chris-m-powell/nvim-tree.lua')
 Plug('soywod/himalaya', {['rtp'] = 'vim'})
-Plug('romgrk/barbar.nvim')
 Plug('lukas-reineke/indent-blankline.nvim')
 Plug('numToStr/comment.nvim')
 Plug('folke/which-key.nvim')
@@ -21,7 +20,6 @@ Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/cmp-cmdline')
 Plug('hrsh7th/nvim-cmp')
 vim.call('plug#end')
-
 
 -- basic options
 vim.g.mapleader = " "
@@ -191,7 +189,8 @@ nvim_tree_go_in = function()
     return
   end
 
-  nvim_tree.on_keypress('edit')
+  -- nvim_tree.on_keypress('edit')
+  nvim_tree.on_keypress('edit_in_place')
 
   if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'NvimTree' then return end
 
@@ -206,6 +205,7 @@ require('nvim-tree').setup({
   open_on_setup = true,
   sync_root_with_cwd = true,
   reload_on_bufenter = true,
+  respect_buf_cwd = true,
   view = {
     adaptive_size = false,
     mappings = {
@@ -213,7 +213,7 @@ require('nvim-tree').setup({
       list = {
         { key = "h", cb = '<cmd>lua nvim_tree_go_out()<CR>' },
         { key = "l", cb = '<cmd>lua nvim_tree_go_in()<CR>' },
-        { key = "cw", action = "full_rename" },
+        { key = "cw", action = "rename" },
         { key = "yy", action = "copy" },
         { key = "dd", action = "cut" },
         { key = "pp", action = "paste" },
@@ -254,7 +254,8 @@ local function toggle_replace()
   if view.is_visible() then
     view.close()
   else
-    require"nvim-tree".open()
+    -- require"nvim-tree".open()
+    require"nvim-tree".open_replacing_current_buffer()
   end
 end
 
@@ -268,19 +269,6 @@ local wk = require("which-key")
 wk.register({
   f = { toggle_replace, "Toggle file tree" },
   t = { ":ToggleTerm<CR>", "Toggle terminal" },
-  b = {
-    name = "Buffers",
-    ["1"] = { ":BufferGoto 1<CR>", "Go to buffer 1" },
-    ["2"] = { ":BufferGoto 2<CR>", "Go to buffer 2" },
-    ["3"] = { ":BufferGoto 3<CR>", "Go to buffer 3" },
-    ["4"] = { ":BufferGoto 4<CR>", "Go to buffer 4" },
-    ["5"] = { ":BufferGoto 5<CR>", "Go to buffer 5" },
-    ["6"] = { ":BufferGoto 6<CR>", "Go to buffer 6" },
-    ["7"] = { ":BufferGoto 7<CR>", "Go to buffer 7" },
-    ["8"] = { ":BufferGoto 8<CR>", "Go to buffer 8" },
-    ["9"] = { ":BufferGoto 9<CR>", "Go to buffer 9" },
-    ["0"] = { ":BufferGoto 0<CR>", "Go to buffer 0" },
-  },
 }, { prefix= "<leader>" })
 
 
@@ -291,41 +279,6 @@ vim.g.nord_disable_background = true
 vim.g.nord_italic = true
 vim.g.nord_uniform_diff_background = true
 require('nord').set()
-
-
--- barbar
-require('bufferline').setup {
-  animation = true,
-  auto_hide = false,
-  tabpages = true,
-  closable = false,
-  clickable = true,
-  icons = 'numbers',
-  icon_close_tab = 'x',
-  icon_custom_colors = true,
-  icon_separator_active = '',
-  icon_separator_inactive = '',
-  insert_at_end = true,
-}
-
-local nvim_tree_events = require('nvim-tree.events')
-local bufferline_state = require('bufferline.state')
-
-local function get_tree_size()
-  return require'nvim-tree.view'.View.width
-end
-
-nvim_tree_events.subscribe('TreeOpen', function()
-  bufferline_state.set_offset(get_tree_size())
-end)
-
-nvim_tree_events.subscribe('Resize', function()
-  bufferline_state.set_offset(get_tree_size())
-end)
-
-nvim_tree_events.subscribe('TreeClose', function()
-  bufferline_state.set_offset(0)
-end)
 
 
 -- comment
@@ -377,6 +330,7 @@ require('lualine').setup {
 -- toggleterm
 require("toggleterm").setup {
   start_in_insert = false,
+  direction = 'float',
 }
 
 function _G.set_terminal_keymaps()

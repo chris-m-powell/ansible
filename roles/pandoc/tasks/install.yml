@@ -15,5 +15,6 @@
       - antiword
       - docx2txt
       - poppler-utils
+      - man2html
   notify:
     - apt-get clean
