@@ -22,18 +22,12 @@ neovim:
     himalaya:
       repo: "github.com/soywod/himalaya.git"
       dest: "himalaya"
-    barbar:
-      repo: "github.com/romgrk/barbar.nvim.git"
-      dest: "barbar.nvim"
     indent_blankline:
       repo: "github.com/lukas-reineke/indent-blankline.nvim.git"
       dest: "indent-blankline.nvim"
     comment:
       repo: "github.com/numToStr/comment.nvim.git"
       dest: "comment.nvim"
-    which_key:
-      repo: "github.com/folke/which-key.nvim.git"
-      dest: "which-key.nvim"
     neoscroll:
       repo: "github.com/karb94/neoscroll.nvim.git"
       dest: "neoscroll.nvim"
@@ -51,18 +45,21 @@ neovim:
       dest: "nvim-lspconfig"
     cmp_nvim_lsp:
       repo: "github.com/hrsh7th/cmp-nvim-lsp.git"
-      dest: "hrsh7th/cmp-nvim-lsp"
+      dest: "cmp-nvim-lsp"
     cmp_buffer:
       repo: "github.com/hrsh7th/cmp-buffer.git"
-      dest: "hrsh7th/cmp-buffer"
+      dest: "cmp-buffer"
     cmp_path:
       repo: "github.com/hrsh7th/cmp-path.git"
-      dest: "hrsh7th/cmp-path"
+      dest: "cmp-path"
     cmp_cmdline:
       repo: "github.com/hrsh7th/cmp-cmdline.git"
-      dest: "hrsh7th/cmp-cmdline"
+      dest: "cmp-cmdline"
     nvim_cmp:
       repo: "github.com/hrsh7th/nvim-cmp.git"
-      dest: "hrsh7th/nvim-cmp"
+      dest: "nvim-cmp"
+    nvim_unception:
+      repo: "github.com/samjwill/nvim-unception"
+      dest: "nvim-unception"
   config:
     dir: "~/.config/nvim"
