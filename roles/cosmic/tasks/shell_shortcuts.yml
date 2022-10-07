@@ -1,0 +1,53 @@
+---
+- name: install | validate task list parameters
+  run_once: true
+  assert:
+    that:
+      - cosmic.extensions.shell_shortcuts.repo
+      - cosmic.extensions.shell_shortcuts.dest
+    quiet: true
+
+- name: install | check if shell extension is installed
+  become_user: "{{ user }}"
+  stat:
+    path: /usr/local/bin/pop-shell-shortcuts
+  register: shell_shortcuts_extension
+
+- name: install | build extensions from source
+  block:
+    - name: install | install build dependencies
+      apt:
+        state: latest
+        pkg:
+          - cargo
+          - rustc
+          - libgtk-3-dev
+      notify:
+        - apt-get clean
+
+    - name: install | clone extensions
+      become_user: "{{ user }}"
+      git:
+        repo: "{{ 'https://' + cosmic.extensions.shell_shortcuts.repo }}"
+        dest: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
+        force: true
+        depth: 1
+        single_branch: true
+
+    - name: install | build shell shortcuts extension
+      become_user: "{{ user }}"
+      command: make
+      args:
+        chdir: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
+
+    - name: install | build shell shortcuts extension
+      command: make install
+      args:
+        chdir: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
+
+    - name: install | remove build artifacts
+      file:
+        path: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
+        state: absent
+  when:
+    - not shell_shortcuts_extension.stat.exists

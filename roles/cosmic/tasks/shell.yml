@@ -1,0 +1,48 @@
+---
+- name: install | validate task list parameters
+  run_once: true
+  assert:
+    that:
+      - cosmic.extensions.shell.repo
+      - cosmic.extensions.shell.dest
+    quiet: true
+
+- name: install | check if shell extension is installed
+  become_user: "{{ user }}"
+  stat:
+    path: ~/.local/share/gnome-shell/extensions/pop-shell@system76.com
+  register: shell_extension
+
+- name: install | build extensions from source
+  block:
+    - name: install | install build dependencies
+      apt:
+        state: latest
+        pkg:
+          - node-typescript
+          - make
+          - git
+      notify:
+        - apt-get clean
+
+    - name: install | clone extensions
+      become_user: "{{ user }}"
+      git:
+        repo: "{{ 'https://' + cosmic.extensions.shell.repo }}"
+        dest: "{{ '/tmp/' + cosmic.extensions.shell.dest }}"
+        force: true
+        depth: 1
+        single_branch: true
+
+    - name: install | build shell extension
+      become_user: "{{ user }}"
+      command: make local-install
+      args:
+        chdir: "{{ '/tmp/' + cosmic.extensions.shell.dest }}"
+
+    - name: install | remove build artifacts
+      file:
+        path: "{{ '/tmp/' + cosmic.extensions.shell.dest }}"
+        state: absent
+  when:
+    - not shell_extension.stat.exists

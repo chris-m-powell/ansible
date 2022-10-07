@@ -1,0 +1,45 @@
+---
+- name: install | validate task list parameters
+  run_once: true
+  assert:
+    that:
+      - cosmic.extensions.workspaces.repo is defined
+      - cosmic.extensions.workspaces.dest is defined
+    quiet: true
+
+- name: install | check if workspaces extension is installed
+  become_user: "{{ user }}"
+  stat:
+    path: ~/.local/share/gnome-shell/extensions/cosmic-workspaces@system76.com
+  register: workspaces_extension
+
+- name: install | build extensions from source
+  become_user: "{{ user }}"
+  block:
+    - name: install | clone workspaces extension
+      git:
+        repo: "{{ 'https://' + cosmic.extensions.workspaces.repo }}"
+        dest: "{{ '/tmp/' + cosmic.extensions.workspaces.dest }}"
+        force: true
+        depth: 1
+        single_branch: true
+
+    - name: install | make workspaces extension
+      command: make
+      args:
+        chdir: "{{ '/tmp/' + cosmic.extensions.workspaces.dest }}"
+
+    - name: install | install workspaces extension
+      command: make install
+      args:
+        chdir: "{{ '/tmp/' + cosmic.extensions.workspaces.dest }}"
+
+    - name: install | install workspaces extension
+      command: gnome-extensions enable cosmic-workspaces@system76.com
+
+    - name: install | remove build artifacts
+      file:
+        path: "{{ '/tmp/' + cosmic.extensions.workspaces.dest }}"
+        state: absent
+  when:
+    - not workspaces_extension.stat.exists

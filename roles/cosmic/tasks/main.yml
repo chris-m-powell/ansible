@@ -1,0 +1,15 @@
+---
+- block:
+    - import_tasks: "shell.yml"
+      tags:
+        - cosmic-shell
+    - import_tasks: "shell_shortcuts.yml"
+      tags:
+        - cosmic-shortcuts
+    - import_tasks: "workspaces.yml"
+      tags:
+        - cosmic-workspaces
+  rescue:
+    - meta: flush_handlers
+  tags:
+    - cosmic

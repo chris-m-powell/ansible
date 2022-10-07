@@ -1,0 +1,12 @@
+---
+cosmic:
+  extensions:
+    shell:
+      repo: "github.com/pop-os/shell"
+      dest: "shell"
+    shell_shortcuts:
+      repo: "github.com/pop-os/shell-shortcuts"
+      dest: "shell-shortcuts"
+    workspaces:
+      repo: "github.com/pop-os/cosmic-workspaces.git"
+      dest: "cosmic-workspaces"
