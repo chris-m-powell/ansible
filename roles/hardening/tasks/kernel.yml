@@ -3,17 +3,25 @@
   run_once: true
   assert:
     that:
-      - hardening.kernel is defined
+      - hardening.sysctl is defined
     quiet: true
 
-- name: kernel | set sysctl parameters
+- name: kernel | enforce network security parameters
   sysctl:
     name: "{{ item.key }}"
     value: "{{ item.value }}"
     state: present
     sysctl_set: true
-    sysctl_file: /etc/sysctl.d/local.conf
+    sysctl_file: /etc/sysctl.d/10-network-security.conf
     reload: true
-  when:
-    - item.value
-  loop: "{{ hardening.kernel | dict2items }}"
+  loop: "{{ hardening.sysctl.net | dict2items }}"
+
+- name: kernel | enforce protections against userspace
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: true
+    sysctl_file: /etc/sysctl.d/10-kernel-hardening.conf
+    reload: true
+  loop: "{{ hardening.sysctl.kernel | dict2items }}"
