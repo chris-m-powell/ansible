@@ -9,12 +9,14 @@ Regards,
 default = true
 email = "chris.m.powell@protonmail.com"
 
+backend = "imap"
 imap-host = "127.0.0.1"
 imap-port = 1143
 imap-login = "chris.m.powell@protonmail.com"
 imap-passwd-cmd = "pass show protonmail/imap"
 imap-starttls = true
 
+sender = "smtp"
 smtp-host = "127.0.0.1"
 smtp-port = 1025
 smtp-login = "chris.m.powell@protonmail.com"
