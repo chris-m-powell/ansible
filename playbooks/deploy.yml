@@ -52,7 +52,6 @@
     - { role: protonvpn-cli, when: protonvpn_cli.enable | default(false) }
     - { role: qutebrowser, when: qutebrowser.enable | default(true) }
     - { role: ranger, when: ranger.enable | default(true) }
-    - { role: rustscan, when: rustscan.enable | default(false) }
     - { role: signal-desktop, when: signal_desktop.enable | default(false) }
     - { role: zathura, when: zathura.enable | default(true) }
   tasks:

@@ -11,10 +11,10 @@
   block:
     - name: configure | create necessary directories
       file:
-        path: "{{ protonvpn_cli.config.dir }}" 
+        path: "{{ protonvpn_cli.config.dir }}"
         state: directory
 
     - name: configure | deploy config file
       copy:
-        src: user_configurations.json 
+        src: user_configurations.json
         dest: "{{ protonvpn_cli.config.dir }}"

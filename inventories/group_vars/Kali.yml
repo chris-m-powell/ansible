@@ -3,8 +3,6 @@ cosmic:
   enable: true
 discord:
   enable: true
-rustscan:
-  enable: true
 
 misc_pkgs:
   - antiword
