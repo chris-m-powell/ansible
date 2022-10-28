@@ -28,4 +28,5 @@ misc_pkgs:
   - nmap
   - rkhunter
   - sox
+  - sysstat
   - tree
