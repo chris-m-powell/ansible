@@ -20,8 +20,8 @@ neovim:
       repo: "github.com/chris-m-powell/nvim-tree.lua.git"
       dest: "nvim-tree.lua"
     himalaya:
-      repo: "github.com/soywod/himalaya.git"
-      dest: "himalaya"
+      repo: "git.sr.ht/~soywod/himalaya-vim"
+      dest: "himalaya-vim"
     indent_blankline:
       repo: "github.com/lukas-reineke/indent-blankline.nvim.git"
       dest: "indent-blankline.nvim"
