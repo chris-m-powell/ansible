@@ -8,7 +8,8 @@
   listen: update-desktop-database
 
 - name: apt-get clean
-  command: apt-get clean
+  apt:
+    clean: true
   listen: apt-get clean
 
 - name: reboot

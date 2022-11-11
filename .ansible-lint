@@ -1,0 +1,12 @@
+parseable: true
+exclude_paths:
+  - roles/alacritty/files
+quiet: false
+skip_list:
+  - '403'
+  - 'key-order'
+  - 'risky-file-permissions'
+  - 'name'
+  - 'fqcn-builtins'
+use_default_rules: true
+verbosity: 0
