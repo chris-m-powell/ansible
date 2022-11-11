@@ -39,6 +39,7 @@
     - { role: bitwarden-cli, when: bitwarden_cli.enable | default(false) }
     - { role: bpytop, when: bpytop.enable | default(true) }
     - { role: cosmic, when: cosmic.enable | default(false) }
+    - { role: crt, when: crt.enable | default(false) }
     - { role: dircolors, when: dircolors.enable | default(true) }
     - { role: discord, when: discord.enable | default(false) }
     - { role: gtk, when: gtk.enable | default(false) }
