@@ -2,8 +2,11 @@
 - block:
     - import_tasks: "install.yml"
       tags:
-        - rustscan-install
+        - ssh-install
+    - import_tasks: "configure.yml"
+      tags:
+        - ssh-configure
   rescue:
     - meta: flush_handlers
   tags:
-    - rustscan
+    - ssh

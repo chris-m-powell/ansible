@@ -19,3 +19,10 @@
 - name: update-ca-certificates
   command: update-ca-certificates
   listen: update-ca-certificates
+
+- name: restart ssh
+  systemd:
+    name: ssh
+    enabled: true
+    state: restarted
+  listen: restart ssh

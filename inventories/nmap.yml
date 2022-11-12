@@ -1,0 +1,7 @@
+---
+plugin: community.general.nmap
+strict: false
+address: 192.168.0.0/24
+ipv6: false
+ports: false
+...

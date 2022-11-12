@@ -71,7 +71,6 @@ function display_help() {
   echo -e "\tdircolors        \tColor setup for ls"
   echo -e "\tgtk              \tApply GTK preferences"
   echo -e "\thimalaya         \tCLI for email management"
-  echo -e "\tlatex            \tHigh-quality typesetting system"
   echo -e "\tmpd              \tAudio playback daemon with client-server architecture"
   echo -e "\tncmpcpp          \tNcurses client for MPD"
   echo -e "\tneofetch         \tFast, highly customizable system info script"
@@ -81,7 +80,6 @@ function display_help() {
   echo -e "\tqutebrowser      \tKeyboard-driven, vim-like browser based on PyQt5"
   echo -e "\tranger           \tTerminal-based, visual file manager inspired by Vim"
   echo -e "\tsignal-desktop   \tPrivate messaging from your desktop"
-  echo -e "\ttty-clock        \tSimple terminal clock"
   echo -e "\tzathura          \tLightweight document viewer"
   exit 1
 }
