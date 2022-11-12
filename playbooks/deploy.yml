@@ -42,11 +42,12 @@
     - { role: crt, when: crt.enable | default(false) }
     - { role: dircolors, when: dircolors.enable | default(true) }
     - { role: discord, when: discord.enable | default(false) }
+    - { role: git, when: git.enable | default(true) }
     - { role: gtk, when: gtk.enable | default(false) }
     - { role: himalaya, when: himalaya.enable | default(false) }
     - { role: pandoc, when: latex.enable | default(true) }
-    - { role: mpd, when: mpd.enable | default(false) }
-    - { role: ncmpcpp, when: ncmpcpp.enable | default(false) }
+    - { role: mpd, when: mpd.enable | default(true) }
+    - { role: ncmpcpp, when: ncmpcpp.enable | default(true) }
     - { role: neofetch, when: neofetch.enable | default(true) }
     - { role: neovim, when: neovim.enable | default(true) }
     - { role: protonmail-bridge, when: protonmail_bridge.enable | default(false) }

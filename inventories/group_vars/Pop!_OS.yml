@@ -9,10 +9,6 @@ gtk:
   enable: true
 himalaya:
   enable: true
-mpd:
-  enable: true
-ncmpcpp:
-  enable: true
 protonmail_bridge:
   enable: true
 protonvpn_cli:

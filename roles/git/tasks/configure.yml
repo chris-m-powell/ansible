@@ -1,0 +1,12 @@
+---
+- name: install | validate task list parameters
+  run_once: true
+  assert:
+    that:
+    quiet: true
+
+- name: install | copy .gitconfig
+  become_user: "{{ user }}"
+  copy:
+    src: gitconfig
+    dest: ~/.gitconfig
