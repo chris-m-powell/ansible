@@ -1,7 +1,7 @@
 ---
 ssh:
   sshd_config:
-    Port: 2222
+    Port: 22
     Banner: /etc/issue
     Ciphers: aes256-ctr,aes192-ctr,aes128-ctr
     Protocol: 2
