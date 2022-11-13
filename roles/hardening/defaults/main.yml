@@ -1,0 +1,30 @@
+---
+hardening:
+  ssh:
+    sshd_config:
+      Port: 22
+      Banner: /etc/issue
+      Ciphers: aes256-ctr,aes192-ctr,aes128-ctr
+      MACs: hmac-sha2-512,hmac-sha2-256
+      Compression: "no"
+      Protocol: 2
+      PermitEmptyPasswords: "no"
+      PermitRootLogin: "no"
+      UsePAM: "yes"
+      ClientAliveCountMax: 0
+      ClientAliveInterval: 300
+      PermitUserEnvironment: "no"
+      X11Forwarding: "no"
+      X11UseLocalHost: "yes"
+      AllowUsers: "chris"
+      IgnoreRhosts: "yes"
+      GSSAPIAuthentication: "no"
+      HostbasedAuthentication: "no"
+      MaxAuthTries: 3
+      MaxSessions: 2
+      AllowTcpForwarding: "no"
+      TCPKeepAlive: "no"
+      AllowAgentForwarding: "no"
+    banner:
+      text: |
+        Authorized uses only. All activity may be monitored and reported.

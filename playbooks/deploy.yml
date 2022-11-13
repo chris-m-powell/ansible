@@ -39,11 +39,12 @@
     - { role: bitwarden-cli, when: bitwarden_cli.enable | default(false) }
     - { role: bpytop, when: bpytop.enable | default(true) }
     - { role: cosmic, when: cosmic.enable | default(false) }
-    - { role: crt, when: crt.enable | default(false) }
+    - { role: crt, when: crt.enable | default(true) }
     - { role: dircolors, when: dircolors.enable | default(true) }
     - { role: discord, when: discord.enable | default(false) }
     - { role: git, when: git.enable | default(true) }
     - { role: gtk, when: gtk.enable | default(false) }
+    - { role: hardening, when: hardening.enable | default(true) }
     - { role: himalaya, when: himalaya.enable | default(false) }
     - { role: pandoc, when: latex.enable | default(true) }
     - { role: mpd, when: mpd.enable | default(true) }
@@ -54,7 +55,7 @@
     - { role: protonvpn-cli, when: protonvpn_cli.enable | default(false) }
     - { role: qutebrowser, when: qutebrowser.enable | default(true) }
     - { role: ranger, when: ranger.enable | default(true) }
-    - { role: ssh, when: ssh.enable | default(true) }
+    # - { role: ssh, when: ssh.enable | default(true) }
     - { role: signal-desktop, when: signal_desktop.enable | default(false) }
     - { role: zathura, when: zathura.enable | default(true) }
   tasks:

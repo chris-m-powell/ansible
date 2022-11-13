@@ -1,0 +1,57 @@
+---
+- name: ssh | validate task list parameters
+  run_once: true
+  assert:
+    that:
+      - hardening.ssh.sshd_config | length > 0
+    quiet: true
+
+- name: ssh | install package updates
+  apt:
+    state: latest
+    pkg:
+      - ssh
+  register: ssh_install
+  notify:
+    - apt-get clean
+
+- block:
+    - name: ssh | set sshd_config parameters
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '(?i)^#*?\s*{{ item.key | regex_escape() }}\s+'
+        line: "{{ item.key }} {{ item.value }}"
+        owner: root
+        group: root
+        mode: 0644
+        validate: /usr/sbin/sshd -tf %s
+      when:
+        - item.value
+      loop: "{{ hardening.ssh.sshd_config | dict2items }}"
+      notify: restart ssh
+
+    - name: install | set TCP wrappers
+      lineinfile:
+        path: "{{ item.path }}"
+        regexp: '^#*?\s*sshd:\s*{{ item.line | regex_escape() }}\s*'
+        line: "{{ 'sshd: ' + item.line }}"
+        owner: root
+        group: root
+        mode: 0644
+      loop:
+        - { path: '/etc/hosts.allow', line: '192.168.0.0/24'}
+        - { path: '/etc/hosts.allow', line: '127.0.0.1' }
+        - { path: '/etc/hosts.deny', line: 'ALL' }
+
+    - name: ssh | copy banner text
+      copy:
+        content: "{{ hardening.ssh.banner.text }}"
+        dest: "{{ item }}"
+        owner: root
+        group: root
+        mode: 0644
+      loop:
+        - /etc/issue
+        - /etc/issue.net
+  when:
+    - '"ssh" in ansible_facts.packages or ssh_pkg.changed'
