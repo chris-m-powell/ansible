@@ -1,0 +1,8 @@
+---
+- name: misc | remove unnecessary packages
+  apt:
+    state: absent
+    purge: true
+    pkg: "{{ hardening.misc.unnecessary_pkgs }}"
+  notify:
+    - apt-get clean

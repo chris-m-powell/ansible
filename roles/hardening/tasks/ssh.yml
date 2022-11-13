@@ -41,6 +41,7 @@
       loop:
         - { path: '/etc/hosts.allow', line: '192.168.0.0/24'}
         - { path: '/etc/hosts.allow', line: '127.0.0.1' }
+        - { path: '/etc/hosts.allow', line: 'localhost' }
         - { path: '/etc/hosts.deny', line: 'ALL' }
 
     - name: ssh | copy banner text

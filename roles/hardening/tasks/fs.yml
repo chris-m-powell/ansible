@@ -1,0 +1,6 @@
+---
+- name: fs | Define default filesystem permissions such that all users can only read and modify their own files.
+  lineinfile:
+      path: /etc/login.defs
+      regexp: '^UMASK.*'
+      line: "UMASK           077"

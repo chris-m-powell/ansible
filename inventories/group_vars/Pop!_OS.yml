@@ -26,3 +26,14 @@ misc_pkgs:
   - sox
   - sysstat
   - tree
+
+hardening:
+  misc:
+    unnecessary_pkgs:
+      - apache2
+      - apache2-bin
+      - apache2-data
+      - apache2-utils
+      - libapr1
+      - libaprutil1
+      - libaprutil1-db

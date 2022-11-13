@@ -1,5 +1,7 @@
 ---
 hardening:
+  misc:
+    unnecessary_pkgs: []
   ssh:
     sshd_config:
       Port: 22
@@ -17,14 +19,84 @@ hardening:
       X11Forwarding: "no"
       X11UseLocalHost: "yes"
       AllowUsers: "chris"
+      AllowGroups: "chris"
       IgnoreRhosts: "yes"
       GSSAPIAuthentication: "no"
       HostbasedAuthentication: "no"
       MaxAuthTries: 3
       MaxSessions: 2
+      LogLevel: "VERBOSE"
       AllowTcpForwarding: "no"
       TCPKeepAlive: "no"
       AllowAgentForwarding: "no"
     banner:
       text: |
         Authorized uses only. All activity may be monitored and reported.
+  sysctl:
+    net:
+      # disables IP source routing
+      net.ipv4.conf.all.accept_source_route: 0
+      net.ipv4.conf.default.accept_source_route: 0
+      # disables packet forwarding
+      net.ipv4.ip_forward: 0
+      # Enable IP spoofing protection, source route verification
+      net.ipv4.conf.all.rp_filter: 1
+      net.ipv4.conf.default.rp_filter: 1
+      # Disable routing
+      net.ipv4.conf.all.send_redirects: 0
+      net.ipv4.conf.default.send_redirects: 0
+      # Disable ICMP Redirect Acceptance
+      net.ipv4.conf.all.accept_redirects: 0
+      net.ipv4.conf.default.accept_redirects: 0
+      # Log suspicious Martian packets
+      net.ipv4.conf.all.log_martians: 1
+      net.ipv4.conf.default.log_martians: 1
+      # Disable multicast routing
+      net.ipv4.conf.all.mc_forwarding: 0
+      net.ipv4.conf.default.mc_forwarding: 0
+      # Enable TCP SYN cookie protection to prevent SYN flood attacks
+      net.ipv4.tcp_syncookies: 1
+      # Prvent time-wait assassination attacks
+      net.ipv4.tcp_rfc1337: 1
+      # Disable TCP timestamps to avoid leaking system time
+      net.ipv4.tcp_timestamps: 0
+      # net.ipv4.conf.all.forwarding: 0
+      # net.ipv4.conf.all.bootp_relay: 0
+      # net.ipv4.conf.all.proxy_arp: 0
+      # net.ipv4.icmp_echo_ignore_broadcasts: 1
+      # net.ipv4.icmp_ignore_bogus_error_responses: 1
+      net.ipv6.conf.all.accept_redirects: 0
+      net.ipv6.conf.default.accept_redirects: 0
+      net.ipv6.conf.all.accept_source_route: 0
+      net.ipv6.conf.default.accept_source_route: 0
+      # net.ipv6.conf.all.disable_ipv6: 1
+      # net.ipv6.conf.default.disable_ipv6: 1
+      # Harden BPF Just-in-Time (JIT) compiler against heap-spraying attacks
+      net.core.bpf_jit_harden: 2
+    kernel:
+      # Restricts access the BPF Just-in-Time (JIT) compiler to root
+      kernel.unprivileged_bpf_disabled: 1
+      # hide kernel symbols in /proc/kallsyms
+      kernel.kptr_restrict: 2
+      # restrict ptrace() syscall access to root
+      kernel.yama.ptrace_scope: 2
+      # kernel.panic: 10
+      # kernel.core_uses_pid: 1
+      kernel.ctrl-alt-del: 0
+      # Restrict kernel ring buffer access to root
+      kernel.dmesg_restrict: 1
+      # kernel.modules_disabled: 1
+      # Restrict kernel profiling via perf to users with CAP_SYS_ADMIN
+      kernel.perf_event_paranoid: 3
+      # Randomize mmap base, stack, VDSO page, and heap
+      kernel.randomize_va_space: 2
+      # Disable System Request debugging functionality
+      kernel.sysrq: 0
+    fs:
+      # dev.tty.ldisc_autoload: 0
+      # fs.protected_fifos: 2
+      # fs.protected_hardlinks: 1
+      # fs.protected_regular: 2
+      # fs.protected_symlinks: 1
+      # Disable core dump for any process that changes privilege levels or is execute only
+      fs.suid_dumpable: 0

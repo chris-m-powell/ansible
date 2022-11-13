@@ -1,8 +1,17 @@
 ---
 - block:
+    - import_tasks: "kernel.yml"
+      tags:
+        - hardening-kernel
     - import_tasks: "ssh.yml"
       tags:
         - hardening-ssh
+    - import_tasks: "fs.yml"
+      tags:
+        - hardening-fs
+    - import_tasks: "misc.yml"
+      tags:
+        - hardening-misc
   rescue:
     - meta: flush_handlers
   tags:
