@@ -11,10 +11,37 @@
   block:
     - name: configure | create necessary directories
       file:
-        path: "{{ neofetch.config.dir }}" 
+        path: "{{ neofetch.config.dir }}"
         state: directory
 
     - name: configure | deploy config file
       copy:
         src: config.conf
         dest: "{{ neofetch.config.dir }}"
+
+- name: configure | find all scripts
+  find:
+    paths:
+      - /etc/update-motd.d
+      - /etc/pop-os/update-motd.d
+    file_type: file
+    depth: 1
+    use_regex: true
+    excludes:
+      - '^00-neofetch-motd$'
+  register: motd_scripts
+
+- name: configure | disable default motd scritps
+  file:
+    path: "{{ item.path }}"
+    mode: 'ugo-x'
+  loop: "{{ motd_scripts.files }}"
+  when: motd_scripts.matched > 0
+
+- name: configure | configure motd
+  copy:
+    src: 00-neofetch-motd
+    dest: /etc/update-motd.d
+    owner: root
+    group: root
+    mode: 0700

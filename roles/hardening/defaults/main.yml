@@ -93,8 +93,8 @@ hardening:
       # Disable System Request debugging functionality
       kernel.sysrq: 0
     fs:
-      # dev.tty.ldisc_autoload: 0
-      # fs.protected_fifos: 2
+      dev.tty.ldisc_autoload: 0
+      fs.protected_fifos: 2
       # fs.protected_hardlinks: 1
       # fs.protected_regular: 2
       # fs.protected_symlinks: 1
