@@ -1,13 +1,7 @@
 ---
-alacritty:
-  enable: true
 bitwarden_cli:
   enable: true
-dircolors:
-  enable: true
 gtk:
-  enable: true
-himalaya:
   enable: true
 protonmail_bridge:
   enable: true

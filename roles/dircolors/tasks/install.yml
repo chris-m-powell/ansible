@@ -1,12 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - dircolors.theme.nord.repo is defined
-      - dircolors.theme.nord.dest is defined
-    quiet: true
-
 - name: install | clone project repository
   become_user: "{{ user }}"
   git:
@@ -44,3 +36,4 @@
         - ~/.zshrc
   when:
     - not ansible_check_mode
+...

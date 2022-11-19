@@ -1,11 +1,4 @@
 ---
-- name: configure | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - himalaya.config.dir is defined
-    quiet: true
-
 - name: configure | deploy configurations
   become_user: "{{ user }}"
   block:
@@ -18,3 +11,4 @@
       copy:
         src: config.toml
         dest: "{{ himalaya.config.dir }}"
+...

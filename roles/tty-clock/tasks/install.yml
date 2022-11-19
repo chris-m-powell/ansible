@@ -1,12 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - tty_clock.repo is defined
-      - tty_clock.dest is defined
-    quiet: true
-
 - name: install | check if installed
   stat:
     path: /usr/local/bin/tty-clock
@@ -52,3 +44,4 @@
     dest: /usr/share/applications
   notify:
     - update-desktop-database
+...

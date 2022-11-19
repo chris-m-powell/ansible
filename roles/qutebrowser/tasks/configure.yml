@@ -1,11 +1,4 @@
 ---
-- name: configure | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - qutebrowser.config.dir is defined
-    quiet: true
-
 - name: configure | set default web browser
   alternatives:
     name: x-www-browser
@@ -28,3 +21,4 @@
       loop:
         - config.py
         - nord-qutebrowser.py
+...

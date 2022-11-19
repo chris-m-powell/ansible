@@ -1,12 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - gtk.theme is defined
-      - gtk.wallpaper is defined
-    quiet: true
-
 - name:
   become_user: "{{ user }}"
   block:
@@ -30,3 +22,4 @@
       copy:
         src: "{{ gtk.wallpaper }}"
         dest: ~/.local/share/backgrounds
+...

@@ -6,5 +6,4 @@ virtualbox:
     keyring: "/usr/share/keyrings/virtualbox-archive-keyring.gpg"
     arch: "amd64"
     debian_release: "bullseye"
-
-  
+...

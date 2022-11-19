@@ -1,8 +1,6 @@
 ---
 cosmic:
   enable: true
-crt:
-  enable: true
 discord:
   enable: true
 

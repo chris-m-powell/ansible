@@ -7,3 +7,4 @@ git:
     - { name: "pull.rebase", value: "false" }
     - { name: "commit.gpgsign", value: "true" }
     - { name: "init.defaultBranch", value: "master" }
+...

@@ -1,11 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - discord.pkg is defined
-    quiet: true
-
 - name: install | check install status
   stat:
     path: /usr/local/bin/Discord
@@ -48,3 +41,4 @@
         - update-desktop-database
   when:
     - not bin.stat.exists
+...

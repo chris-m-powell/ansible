@@ -1,12 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - cosmic.extensions.shell.repo
-      - cosmic.extensions.shell.dest
-    quiet: true
-
 - name: install | check if shell extension is installed
   become_user: "{{ user }}"
   stat:
@@ -44,3 +36,4 @@
         state: absent
   when:
     - not shell_extension.stat.exists
+...

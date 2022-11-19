@@ -1,11 +1,4 @@
 ---
-- name: ssh | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - hardening.ssh.sshd_config | length > 0
-    quiet: true
-
 - name: ssh | install package updates
   apt:
     state: latest
@@ -54,3 +47,4 @@
         - /etc/issue.net
   when:
     - '"ssh" in ansible_facts.packages or ssh_pkg.changed'
+...

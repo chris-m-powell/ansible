@@ -1,11 +1,4 @@
 ---
-- name: configure | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - bpytop.config.dir is defined
-    quiet: true
-
 - name: configure | apply local user configurations
   become_user: "{{ user }}"
   block:
@@ -18,3 +11,4 @@
       copy:
         src: bpytop.conf
         dest: "{{ bpytop.config.dir }}"
+...

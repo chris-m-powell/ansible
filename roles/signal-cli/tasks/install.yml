@@ -1,11 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - signal_cli.pkg is defined
-    quiet: true
-
 - name: install | install dependencies
   apt:
     state: latest
@@ -26,3 +19,4 @@
     src: "{{ '/opt/' + archive.files[0] + '/bin/signal-cli' }}"
     dest: /usr/local/bin/signal-cli
     state: link
+...

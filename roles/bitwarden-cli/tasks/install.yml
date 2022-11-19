@@ -1,11 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      bitwarden_cli.pkg is defined
-    quiet: true
-
 - name: install | extract remote archive
   unarchive:
     src: "{{ 'https://' + bitwarden_cli.pkg }}"
@@ -20,3 +13,4 @@
     state: latest
     pkg:
       - jq
+...

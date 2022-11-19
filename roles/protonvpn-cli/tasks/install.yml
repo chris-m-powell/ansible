@@ -1,11 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - protonvpn_cli.pkg is defined
-    quiet: true
-
 - name: install | setup repository
   block:
     - name: install | download Proton VPN stable release repository installer
@@ -37,3 +30,4 @@
     state: latest
     pkg:
       - protonvpn-cli
+...

@@ -1,15 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - signal_desktop.repo.key
-      - signal_desktop.repo.keyring
-      - signal_desktop.repo.url
-      - signal_desktop.repo.arch
-      - signal_desktop.repo.release
-    quiet: true
-
 - name: install | check if repository keyring exists
   stat:
     path: "{{ signal_desktop.repo.keyring }}"
@@ -55,3 +44,4 @@
     state: latest
     pkg:
       - signal-desktop
+...

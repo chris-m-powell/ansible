@@ -1,12 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - cosmic.extensions.workspaces.repo is defined
-      - cosmic.extensions.workspaces.dest is defined
-    quiet: true
-
 - name: install | check if workspaces extension is installed
   become_user: "{{ user }}"
   stat:
@@ -43,3 +35,4 @@
         state: absent
   when:
     - not workspaces_extension.stat.exists
+...

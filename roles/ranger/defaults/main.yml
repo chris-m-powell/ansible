@@ -2,3 +2,4 @@
 ranger:
   config:
     dir: "~/.config/ranger"
+...

@@ -27,11 +27,24 @@
       private: false
   pre_tasks:
     - block:
-        - include_tasks: "{{ playbook_dir + '/tasks/' + item + '.yml' }}"
-          loop:
-            - service_facts
-            - package_facts
-            - apt_cache
+        - name: Verify existence of resident user account {{ user }}
+          getent:
+            database: passwd
+            key: "{{ user }}"
+
+        - name: Gather service facts
+          service_facts:
+
+        - name: Gather package facts
+          package_facts:
+            manager: auto
+
+        - name: Gather listening ports facts
+          listen_ports_facts:
+
+        - name: Update APT cache
+          apt:
+            update_cache: true
       tags:
         - always
   roles:
@@ -45,7 +58,7 @@
     - { role: git, when: git.enable | default(true) }
     - { role: gtk, when: gtk.enable | default(false) }
     - { role: hardening, when: hardening.enable | default(true) }
-    - { role: himalaya, when: himalaya.enable | default(false) }
+    - { role: himalaya, when: himalaya.enable | default(true) }
     - { role: pandoc, when: latex.enable | default(true) }
     - { role: mpd, when: mpd.enable | default(true) }
     - { role: ncmpcpp, when: ncmpcpp.enable | default(true) }
@@ -56,6 +69,7 @@
     - { role: qutebrowser, when: qutebrowser.enable | default(true) }
     - { role: ranger, when: ranger.enable | default(true) }
     - { role: signal-desktop, when: signal_desktop.enable | default(false) }
+    - { role: tty-clock, when: tty_clock.enable | default(true) }
     - { role: zathura, when: zathura.enable | default(true) }
   tasks:
     - name: install misc pkgs
@@ -64,5 +78,4 @@
         pkg: "{{ misc_pkgs | default([]) }}"
       tags:
         - misc-pkgs
-      notify:
-        - apt-get clean
+...

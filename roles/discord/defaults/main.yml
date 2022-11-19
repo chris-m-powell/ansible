@@ -1,3 +1,4 @@
 ---
 discord:
   pkg: "discordapp.com/api/download?platform=linux&format=tar.gz"
+...

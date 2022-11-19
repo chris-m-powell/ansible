@@ -1,11 +1,4 @@
 ---
-- name: kernel | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - hardening.sysctl is defined
-    quiet: true
-
 - name: kernel | enforce network security parameters
   sysctl:
     name: "{{ item.key }}"
@@ -45,3 +38,4 @@
     sysctl_file: /etc/sysctl.d/99-fs-hardening-ansible.conf
     reload: true
   loop: "{{ hardening.sysctl.fs | dict2items }}"
+...

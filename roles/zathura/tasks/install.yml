@@ -1,10 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-    quiet: true
-
 - name: install | install package updates
   apt:
     state: latest
@@ -14,3 +8,4 @@
       - zathura-ps
       - zathura-cb
       - zathura-djvu
+...

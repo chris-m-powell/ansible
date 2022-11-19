@@ -1,15 +1,4 @@
 ---
-- name: configure | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - neovim.config.dir is defined
-      - neovim.vim_plug.dir is defined
-      - neovim.vim_plug.url is defined
-      - neovim.vim_plug.dest is defined
-      - neovim.plugins is defined
-    quiet: true
-
 - name: configure | deploy configuration
   become_user: "{{ user }}"
   block:
@@ -55,3 +44,4 @@
       copy:
         src: init.lua
         dest: "{{ neovim.config.dir }}"
+...

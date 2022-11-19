@@ -1,12 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - alacritty.project.repo is defined
-      - alacritty.project.dest is defined
-    quiet: true
-
 - name: install | check install status
   stat:
     path: /usr/local/bin/alacritty
@@ -132,3 +124,4 @@
     state: latest
   notify:
     - fc-cache
+...

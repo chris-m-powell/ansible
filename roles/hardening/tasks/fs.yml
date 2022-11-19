@@ -4,3 +4,4 @@
       path: /etc/login.defs
       regexp: '^UMASK.*'
       line: "UMASK           077"
+...

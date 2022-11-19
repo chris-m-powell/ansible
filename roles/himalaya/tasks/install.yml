@@ -1,11 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - himalaya.dependency.libssl
-    quiet: true
-
 - name: install | install OpenSSL dependencies
   block:
     - name: install | download libssl and libcrypt libraries
@@ -44,3 +37,4 @@
     list_files: true
     include:
       - himalaya
+...

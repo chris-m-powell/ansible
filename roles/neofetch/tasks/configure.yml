@@ -1,11 +1,4 @@
 ---
-- name: configure | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - neofetch.config.dir is defined
-    quiet: true
-
 - name: configure | deploy configurations
   become_user: "{{ user }}"
   block:
@@ -45,3 +38,4 @@
     owner: root
     group: root
     mode: 0700
+...

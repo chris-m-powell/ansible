@@ -19,3 +19,4 @@
       loop: "{{ hardening.systemd }}"
   when:
     - "'systemd' in ansible_facts.packages"
+...

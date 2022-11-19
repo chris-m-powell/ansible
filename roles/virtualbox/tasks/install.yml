@@ -1,15 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - virtualbox.repo.key
-      - virtualbox.repo.keyring
-      - virtualbox.repo.url
-      - virtualbox.repo.arch
-      - virtualbox.repo.debian_release
-    quiet: true
-
 - name: install | report host virtualization status
   debug:
     msg: This system is virtual, skipping VirtualBox installation...
@@ -68,3 +57,4 @@
         - virtualbox-ext-pack
   when:
     - ansible_virtualization_role != "guest"
+...

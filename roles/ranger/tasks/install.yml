@@ -1,10 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-    quiet: true
-
 - name: install | install package updates
   apt:
     state: latest
@@ -16,3 +10,4 @@
       - w3m
       - poppler-utils
       - mediainfo
+...

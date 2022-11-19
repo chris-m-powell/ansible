@@ -17,3 +17,4 @@
     - meta: flush_handlers
   tags:
     - alacritty
+...

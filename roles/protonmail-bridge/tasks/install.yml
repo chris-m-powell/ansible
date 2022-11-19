@@ -1,13 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-      - protonmail_bridge.pubkey is defined
-      - protonmail_bridge.policy is defined
-      - protonmail_bridge.deb is defined
-    quiet: true
-
 - name: install | install dependencies
   apt:
     state: latest
@@ -81,3 +72,4 @@
     mode: 0644
   notify:
     - update-ca-certificates
+...

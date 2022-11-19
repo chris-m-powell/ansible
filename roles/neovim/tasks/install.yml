@@ -1,10 +1,4 @@
 ---
-- name: install | validate task list parameters
-  run_once: true
-  assert:
-    that:
-    quiet: true
-
 - name: install | add nightly build APT repository
   apt_repository:
     repo: 'ppa:neovim-ppa/unstable'
@@ -18,3 +12,4 @@
       - yamllint
       - python3-pip
       - neovim
+...
