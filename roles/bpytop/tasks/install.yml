@@ -11,8 +11,6 @@
     pkg:
       - bpytop
   register: pkg_install
-  notify:
-    - apt-get clean
 
 - name: install | create desktop file
   copy:

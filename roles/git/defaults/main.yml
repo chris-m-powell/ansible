@@ -1,0 +1,9 @@
+---
+git:
+  gitconfig:
+    - { name: "user.name", value: "Chris Powell" }
+    - { name: "user.email", value: "chris.m.powell@protonmail.com" }
+    - { name: "core.editor", value: "nvim" }
+    - { name: "pull.rebase", value: "false" }
+    - { name: "commit.gpgsign", value: "true" }
+    - { name: "init.defaultBranch", value: "master" }

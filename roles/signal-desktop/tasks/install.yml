@@ -55,5 +55,3 @@
     state: latest
     pkg:
       - signal-desktop
-  notify:
-    - apt-get clean

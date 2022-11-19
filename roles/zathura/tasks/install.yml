@@ -14,5 +14,3 @@
       - zathura-ps
       - zathura-cb
       - zathura-djvu
-  notify:
-    - apt-get clean

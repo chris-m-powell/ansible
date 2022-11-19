@@ -10,5 +10,3 @@
     state: latest
     pkg:
       - neofetch
-  notify:
-    - apt-get clean

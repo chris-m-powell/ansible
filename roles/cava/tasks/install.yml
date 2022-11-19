@@ -10,8 +10,6 @@
     state: latest
     pkg:
       - cava
-  notify:
-    - apt-get clean
 
 - name: install | create desktop file
   copy:

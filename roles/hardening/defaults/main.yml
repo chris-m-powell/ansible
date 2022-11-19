@@ -1,37 +1,5 @@
 ---
 hardening:
-  misc:
-    unnecessary_pkgs: []
-  ssh:
-    sshd_config:
-      Port: 22
-      Banner: /etc/issue
-      Ciphers: aes256-ctr,aes192-ctr,aes128-ctr
-      MACs: hmac-sha2-512,hmac-sha2-256
-      Compression: "no"
-      Protocol: 2
-      PermitEmptyPasswords: "no"
-      PermitRootLogin: "no"
-      UsePAM: "yes"
-      ClientAliveCountMax: 0
-      ClientAliveInterval: 300
-      PermitUserEnvironment: "no"
-      X11Forwarding: "no"
-      X11UseLocalHost: "yes"
-      AllowUsers: "chris"
-      AllowGroups: "chris"
-      IgnoreRhosts: "yes"
-      GSSAPIAuthentication: "no"
-      HostbasedAuthentication: "no"
-      MaxAuthTries: 3
-      MaxSessions: 2
-      LogLevel: "VERBOSE"
-      AllowTcpForwarding: "no"
-      TCPKeepAlive: "no"
-      AllowAgentForwarding: "no"
-    banner:
-      text: |
-        Authorized uses only. All activity may be monitored and reported.
   sysctl:
     net:
       # disables IP source routing
@@ -100,3 +68,44 @@ hardening:
       # fs.protected_symlinks: 1
       # Disable core dump for any process that changes privilege levels or is execute only
       fs.suid_dumpable: 0
+  systemd:
+    - ModemManager
+    - avahi-daemon
+    - chrony
+    - colord
+    - cron
+    - postfix
+    - rsyslog
+  ssh:
+    sshd_config:
+      Port: 22
+      Banner: /etc/issue
+      Ciphers: aes256-ctr,aes192-ctr,aes128-ctr
+      MACs: hmac-sha2-512,hmac-sha2-256
+      Compression: "no"
+      Protocol: 2
+      PermitEmptyPasswords: "no"
+      PermitRootLogin: "no"
+      UsePAM: "yes"
+      ClientAliveCountMax: 0
+      ClientAliveInterval: 300
+      PermitUserEnvironment: "no"
+      X11Forwarding: "no"
+      X11UseLocalHost: "yes"
+      AllowUsers: "chris"
+      AllowGroups: "chris"
+      IgnoreRhosts: "yes"
+      GSSAPIAuthentication: "no"
+      HostbasedAuthentication: "no"
+      MaxAuthTries: 3
+      MaxSessions: 2
+      LogLevel: "VERBOSE"
+      AllowTcpForwarding: "no"
+      TCPKeepAlive: "no"
+      AllowAgentForwarding: "no"
+    banner:
+      text: |
+        WARNING: Unauthorized access to this system is forbidden and will be
+        prosecuted to the fullest extent of the law. By accessing this system, you consent to your actions being monitored. All suspicious activity will be immediately reported.
+  misc:
+    unnecessary_pkgs: []

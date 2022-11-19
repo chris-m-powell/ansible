@@ -18,5 +18,3 @@
       - yamllint
       - python3-pip
       - neovim
-  notify:
-    - apt-get clean

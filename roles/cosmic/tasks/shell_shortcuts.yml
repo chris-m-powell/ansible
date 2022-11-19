@@ -22,8 +22,6 @@
           - cargo
           - rustc
           - libgtk-3-dev
-      notify:
-        - apt-get clean
 
     - name: install | clone extensions
       become_user: "{{ user }}"

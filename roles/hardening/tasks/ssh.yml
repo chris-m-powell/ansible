@@ -12,8 +12,6 @@
     pkg:
       - ssh
   register: ssh_install
-  notify:
-    - apt-get clean
 
 - block:
     - name: ssh | set sshd_config parameters

@@ -21,8 +21,6 @@
         deb: "{{ pkg.dest }}"
       when:
         - not ansible_check_mode
-      notify:
-        - apt-get clean
 
     - name: install | remove artifacts
       file:
@@ -39,5 +37,3 @@
     state: latest
     pkg:
       - protonvpn-cli
-  notify:
-    - apt-get clean

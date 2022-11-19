@@ -12,8 +12,6 @@
     pkg:
       - openjdk-18-jre
       - qrencode
-  notify:
-    - apt-get clean
 
 - name: install | extract remote archive
   unarchive:

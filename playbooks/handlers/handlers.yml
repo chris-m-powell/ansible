@@ -7,11 +7,6 @@
   command: update-desktop-database
   listen: update-desktop-database
 
-- name: apt-get clean
-  apt:
-    clean: true
-  listen: apt-get clean
-
 - name: reboot
   command: shutdown -r -t 30
   listen: reboot
@@ -26,3 +21,7 @@
     enabled: true
     state: restarted
   listen: restart ssh
+
+- name: reload systemd
+  systemd:
+    daemon_reload: true

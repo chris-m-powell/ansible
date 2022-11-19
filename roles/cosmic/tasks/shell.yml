@@ -22,8 +22,6 @@
           - node-typescript
           - make
           - git
-      notify:
-        - apt-get clean
 
     - name: install | clone extensions
       become_user: "{{ user }}"

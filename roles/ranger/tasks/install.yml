@@ -16,5 +16,3 @@
       - w3m
       - poppler-utils
       - mediainfo
-  notify:
-    - apt-get clean

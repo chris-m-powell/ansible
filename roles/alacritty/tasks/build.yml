@@ -26,8 +26,6 @@
           - libxkbcommon-dev
           - python3
           - gzip
-      notify:
-        - apt-get clean
 
     - name: install | get user home directory
       become_user: "{{ user }}"
@@ -134,4 +132,3 @@
     state: latest
   notify:
     - fc-cache
-    - apt-get clean

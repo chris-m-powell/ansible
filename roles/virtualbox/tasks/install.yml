@@ -66,6 +66,5 @@
           - virtualbox
       notify:
         - virtualbox-ext-pack
-        - apt-get clean
   when:
     - ansible_virtualization_role != "guest"

@@ -19,8 +19,6 @@
         state: latest
         pkg:
           - libncursesw5-dev
-      notify:
-        - apt-get clean
 
     - name: install | clone project repository
       git:

@@ -1,12 +1,16 @@
 ---
-- name: install | validate task list parameters
+- name: configure | validate task list parameters
   run_once: true
   assert:
     that:
     quiet: true
 
-- name: install | copy .gitconfig
+- name: configure | gitconfig
   become_user: "{{ user }}"
-  copy:
-    src: gitconfig
-    dest: ~/.gitconfig
+  git_config:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    scope: file
+    file: ~/.gitconfig
+  loop: "{{ git.gitconfig }}"
+...

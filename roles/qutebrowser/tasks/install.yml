@@ -10,8 +10,6 @@
     state: latest
     pkg:
       - qutebrowser
-  notify:
-    - apt-get clean
 
 - name: install | update fonts
   apt:
@@ -20,4 +18,3 @@
       - fonts-jetbrains-mono
   notify:
     - fc-cache
-    - apt-get clean

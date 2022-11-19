@@ -20,5 +20,3 @@
     state: latest
     pkg:
       - jq
-  notify:
-    - apt-get clean

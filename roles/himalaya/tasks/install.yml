@@ -33,8 +33,6 @@
     state: latest
     pkg:
       - pass
-  notify:
-    - apt-get clean
 
 - name: install | extract binary from remote archive
   become_user: "{{ user }}"

@@ -10,5 +10,3 @@
     state: latest
     pkg:
       - ncmpcpp
-  notify:
-    - apt-get clean

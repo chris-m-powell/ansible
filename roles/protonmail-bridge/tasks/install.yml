@@ -15,8 +15,6 @@
       - debsig-verify
       - debian-keyring
       - ca-certificates
-  notify:
-    - apt-get clean
 
 - name: install | install ProtonMail Bridge
   block:
@@ -63,8 +61,6 @@
         deb: "{{ deb.dest }}"
       when:
         - not ansible_check_mode
-      notify:
-        - apt-get clean
 
     - name: install | remove artifacts
       file:

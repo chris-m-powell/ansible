@@ -10,5 +10,3 @@
     state: latest
     pkg:
       - mpd
-  notify:
-    - apt-get clean

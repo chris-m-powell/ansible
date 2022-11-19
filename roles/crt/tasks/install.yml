@@ -10,8 +10,6 @@
     state: latest
     pkg:
       - cool-retro-term
-  notify:
-    - apt-get clean
 
 - name: install | install font updates
   apt:
@@ -20,4 +18,3 @@
     state: latest
   notify:
     - fc-cache
-    - apt-get clean

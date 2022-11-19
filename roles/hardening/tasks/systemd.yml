@@ -1,0 +1,21 @@
+---
+- block:
+    - name: systemd | ensure systemd service.d folder exists
+      file:
+        dest: "{{ '/etc/systemd/system/' + item + '.service.d' }}"
+        state: directory
+        mode: 0755
+      loop: "{{ hardening.systemd }}"
+
+    - name: systemd | set overrides to sandbox select services
+      copy:
+        src: "{{ item + '.override.conf' }}"
+        dest: "{{ '/etc/systemd/system/' + item + '.service.d/override.conf' }}"
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - reload systemd
+      loop: "{{ hardening.systemd }}"
+  when:
+    - "'systemd' in ansible_facts.packages"
