@@ -9,6 +9,9 @@
     - import_tasks: "systemd.yml"
       tags:
         - hardening-systemd
+    - import_tasks: "ufw.yml"
+      tags:
+        - hardening-ufw
     - import_tasks: "ssh.yml"
       tags:
         - hardening-ssh

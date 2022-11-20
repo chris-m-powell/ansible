@@ -1,4 +1,14 @@
 ---
+- name: misc | install rootkit detection
+  apt:
+    state: latest
+    pkg: rkhunter
+
+- name: misc | install auditing tools
+  apt:
+    state: latest
+    pkg: lynis
+
 - name: misc | remove unnecessary packages
   apt:
     state: absent

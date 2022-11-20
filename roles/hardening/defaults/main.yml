@@ -1,7 +1,6 @@
 ---
 hardening:
   sysctl:
-    net:
       # disables IP source routing
       net.ipv4.conf.all.accept_source_route: 0
       net.ipv4.conf.default.accept_source_route: 0
@@ -41,7 +40,6 @@ hardening:
       # net.ipv6.conf.default.disable_ipv6: 1
       # Harden BPF Just-in-Time (JIT) compiler against heap-spraying attacks
       net.core.bpf_jit_harden: 2
-    kernel:
       # Restricts access the BPF Just-in-Time (JIT) compiler to root
       kernel.unprivileged_bpf_disabled: 1
       # hide kernel symbols in /proc/kallsyms
@@ -60,7 +58,6 @@ hardening:
       kernel.randomize_va_space: 2
       # Disable System Request debugging functionality
       kernel.sysrq: 0
-    fs:
       dev.tty.ldisc_autoload: 0
       fs.protected_fifos: 2
       # fs.protected_hardlinks: 1
@@ -78,7 +75,7 @@ hardening:
     - rsyslog
   ssh:
     sshd_config:
-      Port: 22
+      Port: 2222
       Banner: /etc/issue
       Ciphers: aes256-ctr,aes192-ctr,aes128-ctr
       MACs: hmac-sha2-512,hmac-sha2-256
@@ -103,10 +100,13 @@ hardening:
       AllowTcpForwarding: "no"
       TCPKeepAlive: "no"
       AllowAgentForwarding: "no"
+      AddressFamily: "inet"
     banner:
       text: |
         WARNING: Unauthorized access to this system is forbidden and will be
-        prosecuted to the fullest extent of the law. By accessing this system, you consent to your actions being monitored. All suspicious activity will be immediately reported.
+        prosecuted to the fullest extent of the law. By accessing this system,
+        you consent to your actions being monitored. All suspicious activity
+        will be immediately reported.
   misc:
     unnecessary_pkgs: []
 ...

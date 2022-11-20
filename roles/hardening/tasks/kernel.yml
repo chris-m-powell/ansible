@@ -1,41 +1,11 @@
 ---
-- name: kernel | enforce network security parameters
+- name: kernel | enforce kernel paramaters
   sysctl:
     name: "{{ item.key }}"
     value: "{{ item.value }}"
     state: present
     sysctl_set: true
-    sysctl_file: /etc/sysctl.d/10-network-security-ansible.conf
+    sysctl_file: /etc/sysctl.d/99-hardening-ansible.conf
     reload: true
-  loop: "{{ hardening.sysctl.net | dict2items }}"
-
-- name: kernel | enforce protections against userspace
-  sysctl:
-    name: "{{ item.key }}"
-    value: "{{ item.value }}"
-    state: present
-    sysctl_set: true
-    sysctl_file: /etc/sysctl.d/99-kernel-hardening-ansible.conf
-    reload: true
-  loop: "{{ hardening.sysctl.kernel | dict2items }}"
-
-- name: kernel | enforce protections against userspace
-  sysctl:
-    name: "{{ item.key }}"
-    value: "{{ item.value }}"
-    state: present
-    sysctl_set: true
-    sysctl_file: /etc/sysctl.d/99-kernel-hardening-ansible.conf
-    reload: true
-  loop: "{{ hardening.sysctl.kernel | dict2items }}"
-
-- name: kernel | enforce protections against userspace
-  sysctl:
-    name: "{{ item.key }}"
-    value: "{{ item.value }}"
-    state: present
-    sysctl_set: true
-    sysctl_file: /etc/sysctl.d/99-fs-hardening-ansible.conf
-    reload: true
-  loop: "{{ hardening.sysctl.fs | dict2items }}"
+  loop: "{{ hardening.sysctl | dict2items }}"
 ...

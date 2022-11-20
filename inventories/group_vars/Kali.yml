@@ -25,7 +25,6 @@ misc_pkgs:
   - nuclei
   # - nvidia-cuda-toolkit
   # - nvidia-driver
-  - rkhunter
   - seclists
   - sox
   - sqlmap

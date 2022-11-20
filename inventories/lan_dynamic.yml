@@ -1,3 +1,4 @@
+# Firewall must be configured to not block ping probes
 ---
 plugin: community.general.nmap
 strict: false

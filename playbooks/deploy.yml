@@ -42,6 +42,11 @@
         - name: Gather listening ports facts
           listen_ports_facts:
 
+        # - debug:
+        #     msg: "{{ ansible_facts.tcp_listen }}"
+        # - debug:
+        #     msg: "{{ ansible_facts.udp_listen }}"
+
         - name: Update APT cache
           apt:
             update_cache: true

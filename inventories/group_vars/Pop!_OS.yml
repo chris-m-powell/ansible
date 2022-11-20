@@ -13,10 +13,8 @@ signal_desktop:
 misc_pkgs:
   - cmatrix
   - libsox-fmt-all
-  - lynis
   - ncdu
   - nmap
-  - rkhunter
   - sox
   - sysstat
   - tree
