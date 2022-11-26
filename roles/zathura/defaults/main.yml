@@ -1,4 +1,3 @@
 ---
 zathura:
-  config:
-    dir: "~/.config/zathura"
+  config_dir: ".config/zathura"

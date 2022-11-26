@@ -6,6 +6,9 @@
     - import_tasks: "configure.yml"
       tags:
         - zathura-configure
+    - import_tasks: "validate.yml"
+      tags:
+        - zathura-configure
   rescue:
     - meta: flush_handlers
   tags:

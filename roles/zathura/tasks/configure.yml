@@ -1,24 +1,27 @@
 ---
-- name: configure | deploy configurations
+- name: configure | create necessary directories
+  file:
+    path: "{{ ansible_facts.user_dir + '/' + zathura.config_dir }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: configure | deploy config file
+  copy:
+    src: zathurarc
+    dest: "{{ ansible_facts.user_dir + '/' + zathura.config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: configure | check default PDF viewer
   become_user: "{{ user }}"
-  block:
-    - name: configure | create necessary directories
-      file:
-        path: "{{ zathura.config.dir }}"
-        state: directory
+  shell: xdg-mime query default application/pdf
+  changed_when: false
+  register: default_pdf_viewer
 
-    - name: configure | deploy config file
-      copy:
-        src: zathurarc
-        dest: "{{ zathura.config.dir }}"
-
-    - name: configure | check default PDF viewer
-      shell: xdg-mime query default application/pdf
-      changed_when: false
-      register: default_pdf_viewer
-
-    - name: configure | set default PDF viewer
-      shell: xdg-mime default org.pwmt.zathura.desktop application/pdf
-      when:
-        - default_pdf_viewer.stdout != "org.pwmt.zathura.desktop"
+- name: configure | set default PDF viewer
+  become_user: "{{ user }}"
+  shell: xdg-mime default org.pwmt.zathura.desktop application/pdf
+  when:
+    - default_pdf_viewer.stdout != "org.pwmt.zathura.desktop"
 ...

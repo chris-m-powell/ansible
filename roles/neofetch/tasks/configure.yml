@@ -1,16 +1,17 @@
 ---
-- name: configure | deploy configurations
-  become_user: "{{ user }}"
-  block:
-    - name: configure | create necessary directories
-      file:
-        path: "{{ neofetch.config.dir }}"
-        state: directory
+- name: configure | create necessary directories
+  file:
+    dest: "{{ ansible_facts.user_dir + '/' + neofetch.config_dir }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
-    - name: configure | deploy config file
-      copy:
-        src: config.conf
-        dest: "{{ neofetch.config.dir }}"
+- name: configure | deploy config file
+  copy:
+    src: config.conf
+    dest: "{{ ansible_facts.user_dir + '/' + neofetch.config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
 - name: configure | find all scripts
   find:

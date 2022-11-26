@@ -1,16 +1,15 @@
 ---
-- name: configure | apply local user configurations
-  become_user: "{{ user }}"
-  block:
-    - name: configure | create necessary directories
-      file:
-        path: "{{ ranger.config.dir }}"
-        state: directory
+- name: configure | create necessary directories
+  file:
+    path: "{{ ansible_facts.user_dir + '/' + ranger.config_dir }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
-    - name: configure | deploy config file
-      copy:
-        src: "{{ item }}"
-        dest: "{{ ranger.config.dir }}"
-      loop:
-        - rc.conf
+- name: configure | deploy config file
+  copy:
+    src: rc.conf
+    dest: "{{ ansible_facts.user_dir + '/' + ranger.config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
 ...

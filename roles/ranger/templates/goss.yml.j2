@@ -1,0 +1,34 @@
+package:
+  ranger:
+    installed: true
+    title: ranger | yamllint installed
+  caca-utils:
+    installed: true
+    title: ranger | caca-utils installed
+  highlight:
+    installed: true
+    title: ranger | highlight installed
+  atool:
+    installed: true
+    title: ranger | atool installed
+  w3m:
+    installed: true
+    title: ranger | w3m installed
+  poppler-utils:
+    installed: true
+    title: ranger | poppler-utils installed
+  mediainfo:
+    installed: true
+    title: ranger | mediainfo installed
+file:
+  {{ ansible_facts.user_dir + '/' + ranger.config_dir }}:
+    exists: true
+    filetype: directory
+    owner: {{ user }}
+    group: {{ user }}
+    title: ranger | configuration directory exists
+  {{ [ansible_facts.user_dir,ranger.config_dir,'rc.conf'] | join ('/') }}:
+    exists: true
+    owner: {{ user }}
+    group: {{ user }}
+    title: ranger | configuration file exists

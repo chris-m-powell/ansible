@@ -6,6 +6,9 @@
     - import_tasks: "configure.yml"
       tags:
         - ranger-configure
+    - import_tasks: "validate.yml"
+      tags:
+        - ranger-validate
   rescue:
     - meta: flush_handlers
   tags:

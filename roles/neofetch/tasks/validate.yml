@@ -2,9 +2,9 @@
 - name: validate | deploy goss unit test
   template:
     src: goss.yml.j2
-    dest: "{{ goss_dir + '/tests/bpytop.yml' }}"
+    dest: "{{ goss_dir + '/tests/neofetch.yml' }}"
 
 - name: validate | run goss unit test
   goss:
-    path: "{{ goss_dir + '/tests/bpytop.yml' }}"
+    path: "{{ goss_dir + '/tests/neofetch.yml' }}"
 ...
