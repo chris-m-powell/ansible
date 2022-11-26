@@ -1,7 +1,6 @@
 ---
 alacritty:
-  config:
-    dir: "~/.config/alacritty"
+  config_dir: ".config/alacritty"
   project:
     repo: "github.com/alacritty/alacritty.git"
     dest: "/tmp/alacritty"

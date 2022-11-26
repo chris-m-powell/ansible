@@ -13,6 +13,9 @@
     - import_tasks: "configure.yml"
       tags:
         - alacritty-configure
+    - import_tasks: "validate.yml"
+      tags:
+        - alacritty-validate
   rescue:
     - meta: flush_handlers
   tags:

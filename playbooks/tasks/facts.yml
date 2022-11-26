@@ -1,0 +1,21 @@
+---
+- name: Verify existence of resident user account {{ user }}
+  getent:
+    database: passwd
+    key: "{{ user }}"
+
+- name: Gather service facts
+  service_facts:
+
+- name: Gather package facts
+  package_facts:
+    manager: auto
+
+- name: Gather listening ports facts
+  listen_ports_facts:
+
+- name: Get user home directory
+  become_user: "{{ user }}"
+  setup:
+    gather_subset: user_dir
+...

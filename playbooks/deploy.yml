@@ -16,6 +16,7 @@
     distributions:
       - Pop!_OS
       - Kali
+    goss_dir: "/opt/goss"
   hosts: "{{ distributions | join(',') }}"
   become: true
   gather_facts: false
@@ -27,29 +28,11 @@
       private: false
   pre_tasks:
     - block:
-        - name: Verify existence of resident user account {{ user }}
-          getent:
-            database: passwd
-            key: "{{ user }}"
-
-        - name: Gather service facts
-          service_facts:
-
-        - name: Gather package facts
-          package_facts:
-            manager: auto
-
-        - name: Gather listening ports facts
-          listen_ports_facts:
-
-        # - debug:
-        #     msg: "{{ ansible_facts.tcp_listen }}"
-        # - debug:
-        #     msg: "{{ ansible_facts.udp_listen }}"
-
-        - name: Update APT cache
-          apt:
-            update_cache: true
+        - include_tasks: "{{ [playbook_dir,'tasks',item] | join('/') }}"
+          loop:
+            - facts.yml
+            - apt_cache.yml
+            - goss.yml
       tags:
         - always
   roles:
@@ -83,4 +66,11 @@
         pkg: "{{ misc_pkgs | default([]) }}"
       tags:
         - misc-pkgs
+  # post_tasks:
+  #   - name: validate
+  #     goss:
+  #       path: "{{ goss_dir + '/goss.yml' }}"
+  #       format: documentation
+  #       output_file: "{{ goss_dir + '/validate.log' }}"
+  #     ignore_errors: true
 ...

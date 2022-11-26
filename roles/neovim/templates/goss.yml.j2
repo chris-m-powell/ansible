@@ -1,0 +1,22 @@
+package:
+  yamllint:
+    installed: true
+    title: neovim | yamllint installed
+  python3-pip:
+    installed: true
+    title: neovim | python3-pip installed
+  neovim:
+    installed: true
+    title: neovim | package installed
+file:
+  {{ ansible_facts.user_dir + '/' + neovim.config_dir }}:
+    exists: true
+    filetype: directory
+    owner: {{ user }}
+    group: {{ user }}
+    title: neovim | configuration directory exists
+  {{ [ansible_facts.user_dir,neovim.config_dir,'init.lua'] | join ('/') }}:
+    exists: true
+    owner: {{ user }}
+    group: {{ user }}
+    title: neovim | configuration file exists

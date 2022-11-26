@@ -6,6 +6,9 @@
     - import_tasks: "configure.yml"
       tags:
         - neovim-configure
+    - import_tasks: "validate.yml"
+      tags:
+        - neovim-validate
   rescue:
     - meta: flush_handlers
   tags:

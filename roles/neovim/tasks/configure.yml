@@ -1,47 +1,55 @@
 ---
-- name: configure | deploy configuration
+# - name: configure | deploy configuration
+#   become_user: "{{ user }}"
+#   block:
+- name: configure | create necessary directories
+  file:
+    path: "{{ ansible_facts.user_dir + '/' + item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  loop:
+    - "{{ neovim.config_dir }}"
+    - "{{ neovim.vim_plug.dir }}"
+
+- name: configure | install or update Flake8 Python linter via pip
   become_user: "{{ user }}"
-  block:
-    - name: configure | create necessary directories
-      file:
-        path: "{{ item }}"
-        state: directory
-      loop:
-        - "{{ neovim.config.dir }}"
-        - "{{ neovim.vim_plug.dir }}"
+  pip:
+    name: flake8
+    state: latest
+    extra_args: --user
+  when:
+    - neovim.vim_plug.enable
 
-    - name: configure | install or update Flake8 Python linter via pip
-      pip:
-        name: flake8
-        state: latest
-        extra_args: --user
-      when:
-        - neovim.vim_plug.enable
+- name: configure | install vim-plug
+  uri:
+    url: "{{ 'https://' + neovim.vim_plug.url }}"
+    dest: "{{ ansible_facts.user_dir + '/' + neovim.vim_plug.dest }}"
+    creates: "{{ ansible_facts.user_dir + '/' + neovim.vim_plug.dest }}"
+    return_content: true
+    validate_certs: true
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  when:
+    - neovim.vim_plug.enable
 
-    - name: configure | install vim-plug
-      uri:
-        url: "{{ 'https://' + neovim.vim_plug.url }}"
-        dest: "{{ neovim.vim_plug.dest }}"
-        creates: "{{ neovim.vim_plug.dest }}"
-        return_content: true
-        validate_certs: true
-      when:
-        - neovim.vim_plug.enable
+- name: configure | install plug-in updates
+  become_user: "{{ user }}"
+  git:
+    repo: "{{ 'https://' + item.value.repo }}"
+    dest: "{{ ansible_facts.user_dir + '/.local/share/nvim/plugged/' + item.value.dest }}"
+    force: true
+    depth: 1
+    single_branch: true
+  when:
+    - neovim.vim_plug.enable
+    - neovim.vim_plug.preinstall_plugins
+  loop: "{{ neovim.plugins | dict2items }}"
 
-    - name: configure | install plug-in updates
-      git:
-        repo: "{{ 'https://' + item.value.repo }}"
-        dest: "{{ '~/.local/share/nvim/plugged/' + item.value.dest }}"
-        force: true
-        depth: 1
-        single_branch: true
-      when:
-        - neovim.vim_plug.enable
-        - neovim.vim_plug.preinstall_plugins
-      loop: "{{ neovim.plugins | dict2items }}"
-
-    - name: configure | deploy init
-      copy:
-        src: init.lua
-        dest: "{{ neovim.config.dir }}"
+- name: configure | deploy init
+  copy:
+    src: init.lua
+    dest: "{{ ansible_facts.user_dir + '/' + neovim.config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
 ...

@@ -1,0 +1,10 @@
+---
+- name: validate | deploy goss file
+  template:
+    src: goss.yml.j2
+    dest: "{{ goss_dir + '/tests/neovim.yml' }}"
+
+- name: validate | run goss
+  goss:
+    path: "{{ goss_dir + '/tests/neovim.yml' }}"
+...

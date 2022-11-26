@@ -1,4 +1,3 @@
 ---
 bpytop:
-  config:
-    dir: "~/.config/bpytop"
+  config_dir: ".config/bpytop"

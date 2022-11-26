@@ -1,17 +1,18 @@
 ---
-- name: configure | apply local user configurations
-  become_user: "{{ user }}"
-  block:
-    - name: configure | create local config directory
-      file:
-        path: "{{ alacritty.config.dir }}"
-        state: directory
+- name: configure | create local config directory
+  file:
+    dest: "{{ ansible_facts.user_dir + '/' + alacritty.config_dir }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
-    - name: configure | deploy config file
-      copy:
-        src: "{{ item }}"
-        dest: "{{ alacritty.config.dir }}"
-      loop:
-        - alacritty.yml
-        - nord.yml
+- name: configure | deploy config file
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ansible_facts.user_dir + '/' + alacritty.config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  loop:
+    - alacritty.yml
+    - nord.yml
 ...
