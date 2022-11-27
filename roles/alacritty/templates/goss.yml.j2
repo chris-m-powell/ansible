@@ -1,7 +1,9 @@
 package:
+{% if ansible_distribution == "Pop!_OS" %}
   alacritty:
     installed: true
     title: alacritty | package installed
+{% endif %}
   fonts-jetbrains-mono:
     installed: true
     title: alacritty | fonts-jetbrains-mono font installed
