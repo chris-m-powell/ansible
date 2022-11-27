@@ -1,21 +1,21 @@
- bind_to_address    "{{ mpd.config.attr.bind_to_address }}"
- music_directory    "{{ mpd.config.attr.music_directory }}"
- playlist_directory "{{ mpd.config.attr.playlist_directory }}"   
- db_file            "{{ mpd.config.attr.db_file }}"
- log_file           "{{ mpd.config.attr.log_file }}"
- pid_file           "{{ mpd.config.attr.pid_file }}"
- state_file         "{{ mpd.config.attr.state_file }}"
- mixer_type         "{{ mpd.config.attr.mixer_type }}"
-
-audio_output {  
-  type        "{{ mpd.config.attr.audio_output.pulse.type }}"  
-  name        "{{ mpd.config.attr.audio_output.pulse.name }}"
-  mixer_type  "{{ mpd.config.attr.audio_output.pulse.mixer_type }}" 
- }  
+ bind_to_address    "{{ mpd.bind_to_address }}"
+ music_directory    "{{ ansible_facts.user_dir + '/' + mpd.music_dir }}"
+ playlist_directory "{{ ansible_facts.user_dir + '/' + mpd.playlist_dir }}"
+ db_file            "{{ ansible_facts.user_dir + '/' + mpd.db_file }}"
+ log_file           "{{ ansible_facts.user_dir + '/' + mpd.log_file }}"
+ pid_file           "{{ ansible_facts.user_dir + '/' + mpd.pid_file }}"
+ state_file         "{{ ansible_facts.user_dir + '/' + mpd.state_file }}"
+ mixer_type         "{{ mpd.mixer_type }}"
 
 audio_output {
-  type    "{{ mpd.config.attr.audio_output.fifo.type }}"
-  name    "{{ mpd.config.attr.audio_output.fifo.name }}"
-  path    "{{ mpd.config.attr.audio_output.fifo.path }}"
-  format  "{{ mpd.config.attr.audio_output.fifo.format }}"
+  type        "{{ mpd.audio_output.pulse.type }}"
+  name        "{{ mpd.audio_output.pulse.name }}"
+  mixer_type  "{{ mpd.audio_output.pulse.mixer_type }}"
+ }
+
+audio_output {
+  type    "{{ mpd.audio_output.fifo.type }}"
+  name    "{{ mpd.audio_output.fifo.name }}"
+  path    "{{ mpd.audio_output.fifo.path }}"
+  format  "{{ mpd.audio_output.fifo.format }}"
 }

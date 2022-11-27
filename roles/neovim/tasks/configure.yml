@@ -1,7 +1,4 @@
 ---
-# - name: configure | deploy configuration
-#   become_user: "{{ user }}"
-#   block:
 - name: configure | create necessary directories
   file:
     path: "{{ ansible_facts.user_dir + '/' + item }}"
@@ -11,15 +8,6 @@
   loop:
     - "{{ neovim.config_dir }}"
     - "{{ neovim.vim_plug.dir }}"
-
-- name: configure | install or update Flake8 Python linter via pip
-  become_user: "{{ user }}"
-  pip:
-    name: flake8
-    state: latest
-    extra_args: --user
-  when:
-    - neovim.vim_plug.enable
 
 - name: configure | install vim-plug
   uri:

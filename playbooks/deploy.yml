@@ -66,11 +66,10 @@
         pkg: "{{ misc_pkgs | default([]) }}"
       tags:
         - misc-pkgs
-  # post_tasks:
-  #   - name: validate
-  #     goss:
-  #       path: "{{ goss_dir + '/goss.yml' }}"
-  #       format: documentation
-  #       output_file: "{{ goss_dir + '/validate.log' }}"
-  #     ignore_errors: true
+  post_tasks:
+    - name: validate
+      goss:
+        path: "{{ goss_dir + '/goss.yml' }}"
+        format: documentation
+        output_file: "{{ goss_dir + '/validate.log' }}"
 ...

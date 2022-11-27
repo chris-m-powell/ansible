@@ -17,11 +17,11 @@
         - /usr/share/debsig/keyrings/
         - /etc/debsig/policies/
 
-    - name: install | download public key 
+    - name: install | download public key
       get_url:
-        url: "{{ 'https://' + protonmail_bridge.pubkey }}" 
+        url: "{{ 'https://' + protonmail_bridge.pubkey }}"
         dest: /tmp
-      register: pubkey 
+      register: pubkey
 
     - name: install | import public key to keyring
       shell: >
@@ -41,10 +41,10 @@
       get_url:
         url: "{{ 'https://' + protonmail_bridge.deb }}"
         dest: /tmp
-      register: deb 
+      register: deb
 
     - name: install | verify ProtonMail Bridge installer integrity
-      shell: debsig-verify "{{ deb.dest }}"
+      command: debsig-verify "{{ deb.dest }}"
 
     - name: install | install ProtonMail Bridge
       apt:

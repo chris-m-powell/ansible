@@ -15,13 +15,13 @@
 
 - name: configure | check default PDF viewer
   become_user: "{{ user }}"
-  shell: xdg-mime query default application/pdf
+  command: xdg-mime query default application/pdf
   changed_when: false
   register: default_pdf_viewer
 
 - name: configure | set default PDF viewer
   become_user: "{{ user }}"
-  shell: xdg-mime default org.pwmt.zathura.desktop application/pdf
+  command: xdg-mime default org.pwmt.zathura.desktop application/pdf
   when:
     - default_pdf_viewer.stdout != "org.pwmt.zathura.desktop"
 ...

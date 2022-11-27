@@ -6,19 +6,20 @@
     path: /usr/bin/qutebrowser
     priority: 50
 
-- name: configure | apply local user configurations
-  become_user: "{{ user }}"
-  block:
-    - name: configure | create necessary directories
-      file:
-        path: "{{ qutebrowser.config.dir }}"
-        state: directory
+- name: configure | create necessary directories
+  file:
+    path: "{{ ansible_facts.user_dir + '/' + qutebrowser.config_dir }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
-    - name: configure | deploy config file
-      copy:
-        src: "{{ item }}"
-        dest: "{{ qutebrowser.config.dir }}"
-      loop:
-        - config.py
-        - nord-qutebrowser.py
+- name: configure | deploy config file
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ansible_facts.user_dir + '/' + qutebrowser.config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  loop:
+    - config.py
+    - nord-qutebrowser.py
 ...

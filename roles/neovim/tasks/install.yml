@@ -12,4 +12,14 @@
       - yamllint
       - python3-pip
       - neovim
+
+- name: configure | install or update pip add-ons
+  become_user: "{{ user }}"
+  pip:
+    name: "{{ item }}"
+    state: latest
+    extra_args: --user
+  loop:
+    - flake8
+    - ansible-lint
 ...

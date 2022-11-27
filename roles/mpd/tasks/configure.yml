@@ -1,35 +1,39 @@
 ---
-- name: configure | apply local user configurations
+- name: configure | create necessary directories
+  file:
+    path: "{{ ansible_facts.user_dir + '/' + item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    force: true
+  loop:
+    - "{{ mpd.config_dir }}"
+    - "{{ mpd.playlist_dir }}"
+
+- name: configure | create necessary files
+  file:
+    path: "{{ ansible_facts.user_dir + '/' + item }}"
+    state: touch
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  changed_when: false
+  loop:
+    - "{{ mpd.db_file }}"
+    - "{{ mpd.log_file }}"
+    - "{{ mpd.pid_file }}"
+    - "{{ mpd.state_file }}"
+
+- name: configure | render config from template
+  template:
+    src: "mpd.conf.j2"
+    dest: "{{ [ansible_facts.user_dir,mpd.config_dir,'mpd.conf'] | join('/') }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: configure | start & enable service with user scope
   become_user: "{{ user }}"
-  block:
-    - name: configure | create necessary directories
-      file:
-        path: "{{ item }}"
-        state: directory
-        force: true
-      loop:
-        - "{{ mpd.config.dir }}"
-        - ~/.mpd/playlists
-
-    - name: configure | create necessary files
-      file:
-        path: "{{ item }}"
-        state: touch
-      changed_when: false
-      loop:
-        - "{{ mpd.config.attr.db_file }}"
-        - "{{ mpd.config.attr.log_file }}"
-        - "{{ mpd.config.attr.pid_file }}"
-        - "{{ mpd.config.attr.state_file }}"
-
-    - name: configure | render config from template
-      template:
-        src: "mpd.conf.j2"
-        dest: "{{ mpd.config.dir + '/mpd.conf' }}"
-
-    - name: configure | start & enable service with user scope
-      systemd:
-        name: mpd
-        state: started
-        enabled: true
-        scope: user
+  systemd:
+    name: mpd
+    state: started
+    enabled: true
+    scope: user
