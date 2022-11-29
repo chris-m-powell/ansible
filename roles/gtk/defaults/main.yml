@@ -3,6 +3,6 @@ gtk:
   wallpaper: "nord.jpg"
   theme:
     - repo: "github.com/EliverLara/Nordic.git"
-      dest: "~/.themes/Nordic"
+      dest: ".themes/Nordic"
     - repo: "github.com/EliverLara/Nordic-Polar.git"
-      dest: "~/.themes/Nordic-Polar"
+      dest: ".themes/Nordic-Polar"

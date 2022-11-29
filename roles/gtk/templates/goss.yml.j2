@@ -1,0 +1,7 @@
+file:
+  {{ ansible_facts.user_dir + '/' + '.themes' }}:
+    exists: true
+    owner: {{ user }}
+    group: {{ user }}
+    filetype: directory
+    title: gtk | theme directory exists

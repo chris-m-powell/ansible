@@ -1,25 +1,14 @@
 ---
-- name:
-  become_user: "{{ user }}"
-  block:
-    - name: install | create necessary directories
-      file:
-        path: "{{ item }}"
-        state: directory
-      loop:
-        - ~/.themes
-        - ~/.local/share/backgrounds
+- name: install | create necessary directories
+  file:
+    path: "{{ ansible_facts.user_dir + '/.themes' }}"
+    state: directory
 
-    - name: install | clone project repository
-      git:
-        repo: "{{ 'https://' + item.repo }}"
-        dest: "{{ item.dest }}"
-        depth: 1
-        single_branch: true
-      loop: "{{ gtk.theme }}"
-
-    - name: install | deploy wallpaper
-      copy:
-        src: "{{ gtk.wallpaper }}"
-        dest: ~/.local/share/backgrounds
+- name: install | clone project repository
+  git:
+    repo: "{{ 'https://' + item.repo }}"
+    dest: "{{ ansible_facts.user_dir + '/' + item.dest }}"
+    depth: 1
+    single_branch: true
+  loop: "{{ gtk.theme }}"
 ...

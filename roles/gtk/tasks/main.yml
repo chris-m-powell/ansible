@@ -6,6 +6,9 @@
     - import_tasks: "configure.yml"
       tags:
         - gtk-configure
+    - import_tasks: "validate.yml"
+      tags:
+        - gtk-validate
   rescue:
     - meta: flush_handlers
   tags:
