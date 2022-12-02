@@ -1,4 +1,3 @@
 ---
 ncmpcpp:
-  config:
-    dir: "~/.config/ncmpcpp"
+  config_dir: ".config/ncmpcpp"

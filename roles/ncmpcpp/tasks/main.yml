@@ -6,6 +6,9 @@
     - import_tasks: "configure.yml"
       tags:
         - ncmpcpp-configure
+    - import_tasks: "validate.yml"
+      tags:
+        - ncmpcpp-validate
   rescue:
     - meta: flush_handlers
   tags:

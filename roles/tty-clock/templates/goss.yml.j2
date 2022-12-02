@@ -1,0 +1,22 @@
+package:
+  libncursesw5-dev:
+    installed: true
+    title: tty-clock | dependency package installed
+file:
+  /usr/local/bin/tty-clock:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: file
+    title: tty-clock | runtime binary exists
+  /tmp/tty-clock:
+    exists: false
+    title: tty-clock | build artifacts removed
+  /usr/share/applications/tty_clock.desktop:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    title: tty-clock | desktop file exists

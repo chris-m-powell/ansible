@@ -17,6 +17,7 @@ file:
     title: neovim | configuration directory exists
   {{ [ansible_facts.user_dir,neovim.config_dir,'init.lua'] | join ('/') }}:
     exists: true
+    filetype: file
     owner: {{ user }}
     group: {{ user }}
     title: neovim | configuration file exists

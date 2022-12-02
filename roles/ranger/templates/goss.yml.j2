@@ -29,6 +29,7 @@ file:
     title: ranger | configuration directory exists
   {{ [ansible_facts.user_dir,ranger.config_dir,'rc.conf'] | join ('/') }}:
     exists: true
+    filetype: file
     owner: {{ user }}
     group: {{ user }}
     title: ranger | configuration file exists

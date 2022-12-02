@@ -1,17 +1,16 @@
 ---
-- name: configure | apply local user configurations
-  become_user: "{{ user }}"
-  block:
-    - name: configure | Create necessary directories
-      file:
-        path: "{{ ncmpcpp.config.dir }}"
-        state: directory
+- name: configure | Create necessary directories
+  file:
+    path: "{{ ansible_facts.user_dir + '/' + ncmpcpp.config_dir }}"
+    state: directory
 
-    - name: configure | deploy config file
-      copy:
-        src: "{{ item }}"
-        dest: "{{ ncmpcpp.config.dir }}"
-      loop:
-        - config
-        - bindings
+- name: configure | deploy config file
+  copy:
+    src: bindings
+    dest: "{{ ansible_facts.user_dir + '/' + ncmpcpp.config_dir }}"
+
+- name: configure | deploy config file
+  template:
+    src: config.j2
+    dest: "{{ [ansible_facts.user_dir,ncmpcpp.config_dir,'config'] | join('/') }}"
 ...

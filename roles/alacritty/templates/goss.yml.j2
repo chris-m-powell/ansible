@@ -10,17 +10,19 @@ package:
 file:
   {{ ansible_facts.user_dir + '/' + alacritty.config_dir }}:
     exists: true
-    filetype: directory
     owner: {{ user }}
     group: {{ user }}
+    filetype: directory
     title: alacritty | configuration directory exists
   {{ [ansible_facts.user_dir,alacritty.config_dir,'alacritty.yml'] | join ('/') }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
+    filetype: file
     title: alacritty | configuration file exists
   {{ [ansible_facts.user_dir,alacritty.config_dir,'nord.yml'] | join ('/') }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
+    filetype: file
     title: alacritty | nord theme file exists

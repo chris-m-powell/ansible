@@ -13,9 +13,12 @@ file:
     exists: true
     owner: {{ user }}
     group: {{ user }}
+    filetype: file
     title: bpytop | configuration file exists
   /usr/share/applications/bpytop.desktop:
     exists: true
+    mode: "0644"
     owner: root
     group: root
+    filetype: file
     title: bpytop | desktop file exists
