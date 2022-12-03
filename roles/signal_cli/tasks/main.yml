@@ -1,0 +1,12 @@
+---
+- when:
+    - signal_cli.enable
+  tags:
+    - signal_cli
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
+      tags:
+        - signal_cli-install
+  rescue:
+    - ansible.builtin.meta: flush_handlers
+...

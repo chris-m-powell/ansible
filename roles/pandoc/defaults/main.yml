@@ -1,1 +1,3 @@
 ---
+pandoc:
+  enable: true

@@ -1,10 +1,12 @@
 ---
-- block:
-    - import_tasks: "install.yml"
+- when:
+    - pandoc.enable
+  tags:
+    - pandoc
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
       tags:
         - pandoc-install
   rescue:
-    - meta: flush_handlers
-  tags:
-    - pandoc
+    - ansible.builtin.meta: flush_handlers
 ...

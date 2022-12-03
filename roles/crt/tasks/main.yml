@@ -1,16 +1,18 @@
 ---
-- block:
-    - import_tasks: "install.yml"
-      tags:
-        - crt-install
-        - cool-retro-term-install
-    - import_tasks: "configure.yml"
-      tags:
-        - crt-configure
-        - cool-retro-term-configure
-  rescue:
-    - meta: flush_handlers
+- when:
+    - crt.enable
   tags:
     - crt
-    - cool-retro-term
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
+      tags:
+        - crt-install
+    - ansible.builtin.import_tasks: "configure.yml"
+      tags:
+        - crt-configure
+    - ansible.builtin.import_tasks: "validate.yml"
+      tags:
+        - crt-validate
+  rescue:
+    - ansible.builtin.meta: flush_handlers
 ...

@@ -1,27 +1,29 @@
 ---
 - name: configure | create necessary directories
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_facts.user_dir + '/' + zathura.config_dir }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0750
 
 - name: configure | deploy config file
-  copy:
+  ansible.builtin.copy:
     src: zathurarc
     dest: "{{ ansible_facts.user_dir + '/' + zathura.config_dir }}"
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0640
 
 - name: configure | check default PDF viewer
   become_user: "{{ user }}"
-  command: xdg-mime query default application/pdf
+  ansible.builtin.command: xdg-mime query default application/pdf
   changed_when: false
   register: default_pdf_viewer
 
 - name: configure | set default PDF viewer
   become_user: "{{ user }}"
-  command: xdg-mime default org.pwmt.zathura.desktop application/pdf
+  ansible.builtin.command: xdg-mime default org.pwmt.zathura.desktop application/pdf
   when:
     - default_pdf_viewer.stdout != "org.pwmt.zathura.desktop"
 ...

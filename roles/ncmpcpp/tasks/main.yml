@@ -1,16 +1,18 @@
 ---
-- block:
-    - import_tasks: "install.yml"
+- when:
+    - ncmpcpp.enable
+  tags:
+    - ncmpcpp
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
       tags:
         - ncmpcpp-install
-    - import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks: "configure.yml"
       tags:
         - ncmpcpp-configure
-    - import_tasks: "validate.yml"
+    - ansible.builtin.import_tasks: "validate.yml"
       tags:
         - ncmpcpp-validate
   rescue:
-    - meta: flush_handlers
-  tags:
-    - ncmpcpp
+    - ansible.builtin.meta: flush_handlers
 ...

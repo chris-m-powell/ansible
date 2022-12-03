@@ -1,8 +1,10 @@
 ---
-- block:
-    - import_tasks: "install.yml"
-  rescue:
-    - meta: flush_handlers
+- when:
+    - virtualbox.enable
   tags:
     - virtualbox
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
+  rescue:
+    - ansible.builtin.meta: flush_handlers
 ...

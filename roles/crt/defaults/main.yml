@@ -1,5 +1,5 @@
 ---
 crt:
-  config:
-    dir: "~/.config/cool-retro-term"
+  enable: true
+  config_dir: ".config/cool-retro-term"
 ...

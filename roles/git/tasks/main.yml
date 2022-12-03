@@ -1,13 +1,15 @@
 ---
-- block:
-    - import_tasks: "install.yml"
+- when:
+    - git.enable
+  tags:
+    - git
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
       tags:
         - git-install
-    - import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks: "configure.yml"
       tags:
         - git-configure
   rescue:
-    - meta: flush_handlers
-  tags:
-    - git
+    - ansible.builtin.meta: flush_handlers
 ...

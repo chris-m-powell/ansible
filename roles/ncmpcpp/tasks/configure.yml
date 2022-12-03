@@ -1,16 +1,25 @@
 ---
 - name: configure | Create necessary directories
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_facts.user_dir + '/' + ncmpcpp.config_dir }}"
     state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0750
 
 - name: configure | deploy config file
-  copy:
+  ansible.builtin.copy:
     src: bindings
     dest: "{{ ansible_facts.user_dir + '/' + ncmpcpp.config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0640
 
 - name: configure | deploy config file
-  template:
+  ansible.builtin.template:
     src: config.j2
     dest: "{{ [ansible_facts.user_dir,ncmpcpp.config_dir,'config'] | join('/') }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0640
 ...

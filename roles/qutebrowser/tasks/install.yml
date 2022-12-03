@@ -1,12 +1,12 @@
 ---
 - name: install | install package updates
-  apt:
+  ansible.builtin.apt:
     state: latest
     pkg:
       - qutebrowser
 
 - name: install | update fonts
-  apt:
+  ansible.builtin.apt:
     state: latest
     pkg:
       - fonts-jetbrains-mono

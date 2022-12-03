@@ -1,23 +1,25 @@
 ---
-- block:
-    - include_tasks: "install.yml"
+- when:
+    - alacritty.enable
+  tags:
+    - alacritty
+  block:
+    - ansible.builtin.include_tasks: "install.yml"
       when:
         ansible_distribution == "Pop!_OS"
       tags:
         - alacritty-install
-    - include_tasks: "build.yml"
+    - ansible.builtin.include_tasks: "build.yml"
       when:
         ansible_distribution == "Kali"
       tags:
         - alacritty-install
-    - import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks: "configure.yml"
       tags:
         - alacritty-configure
-    - import_tasks: "validate.yml"
+    - ansible.builtin.import_tasks: "validate.yml"
       tags:
         - alacritty-validate
   rescue:
-    - meta: flush_handlers
-  tags:
-    - alacritty
+    - ansible.builtin.meta: flush_handlers
 ...

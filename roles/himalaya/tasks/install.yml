@@ -1,38 +1,42 @@
 ---
 - name: install | install OpenSSL dependencies
+  when:
+    - '"libssl1.1" not in ansible_facts.packages'
   block:
     - name: install | download libssl and libcrypt libraries
-      get_url:
-        url: "{{ 'http://' + himalaya.dependency.libssl }}"
+      ansible.builtin.get_url:
+        url: "{{ 'http://' + himalaya.libssl }}"
         dest: /tmp
+        owner: root
+        group: root
+        mode: 0750
       register: libssl
 
     - name: install | instal libssl and libcrypt libraries
-      apt:
+      ansible.builtin.apt:
         state: present
         deb: "{{ libssl.dest }}"
       when:
         - not ansible_check_mode
 
     - name: install | remove artifacts
-      file:
+      ansible.builtin.file:
         path: "{{ libssl.dest }}"
         state: absent
-  when:
-    - '"libssl1.1" not in ansible_facts.packages'
 
 - name: install |  install pass
-  apt:
+  ansible.builtin.apt:
     state: latest
     pkg:
       - pass
 
 - name: install | extract binary from remote archive
-  become_user: "{{ user }}"
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ 'https://' + himalaya.installer }}"
-    dest: ~/.local/bin
-    mode: 0755
+    dest: "{{ ansible_facts.user_dir + '/.local/bin' }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0750
     remote_src: true
     list_files: true
     include:

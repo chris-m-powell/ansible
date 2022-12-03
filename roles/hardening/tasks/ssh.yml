@@ -1,14 +1,16 @@
 ---
 - name: ssh | install package updates
-  apt:
+  ansible.builtin.apt:
     state: latest
     pkg:
       - ssh
   register: ssh_install
 
-- block:
+- when:
+    - '"ssh" in ansible_facts.packages or ssh_pkg.changed'
+  block:
     - name: ssh | set sshd_config parameters
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /etc/ssh/sshd_config
         regexp: '(?i)^#*?\s*{{ item.key | regex_escape() }}\s+'
         line: "{{ item.key }} {{ item.value }}"
@@ -22,7 +24,7 @@
       notify: restart ssh
 
     - name: install | set TCP wrappers
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: "{{ item.path }}"
         regexp: '^#*?\s*sshd:\s*{{ item.line | regex_escape() }}\s*'
         line: "{{ 'sshd: ' + item.line }}"
@@ -36,7 +38,7 @@
         - { path: '/etc/hosts.deny', line: 'ALL' }
 
     - name: ssh | copy banner text
-      copy:
+      ansible.builtin.copy:
         content: "{{ hardening.ssh.banner.text }}"
         dest: "{{ item }}"
         owner: root
@@ -45,6 +47,4 @@
       loop:
         - /etc/issue
         - /etc/issue.net
-  when:
-    - '"ssh" in ansible_facts.packages or ssh_pkg.changed'
 ...

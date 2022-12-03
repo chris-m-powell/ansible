@@ -66,7 +66,7 @@ function display_help() {
   echo -e "\nSUPPORTED TAGS:\n"
   echo -e "\tall              \tApply all custom configurations"
   echo -e "\talacritty        \tFast, cross-platform, OpenGL terminal emulator"
-  echo -e "\tbitwarden-cli    \tFull-featured CLI to access and manage Bitwarden vault"
+  echo -e "\tbitwarden_cli    \tFull-featured CLI to access and manage Bitwarden vault"
   echo -e "\tbpytop           \tSystem activity monitoring tool"
   echo -e "\tdircolors        \tColor setup for ls"
   echo -e "\tgtk              \tApply GTK preferences"

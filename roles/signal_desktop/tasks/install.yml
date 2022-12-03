@@ -1,0 +1,54 @@
+---
+- name: install | check if repository keyring exists
+  ansible.builtin.stat:
+    path: "{{ signal_desktop.repo.keyring }}"
+  register: repo_keyring
+
+- name: install | import repository key
+  when:
+    - not repo_keyring.stat.exists
+  block:
+    - name: install | download ASCII-armored OpenPGP repository key
+      ansible.builtin.get_url:
+        url: "{{ 'https://' + signal_desktop.repo.key }}"
+        dest: /tmp
+        owner: root
+        group: root
+        mode: 0644
+      register: repo_key
+
+    - name: install | unpack ASCII-armored OpenPGP repository key
+      ansible.builtin.shell: cat "{{ repo_key.dest }}" | gpg --dearmor
+      changed_when: false
+      register: output
+
+    - name: install | import GPG key binary to keyring
+      ansible.builtin.copy:
+        content: "{{ output.stdout }}"
+        dest: "{{ signal_desktop.repo.keyring }}"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: install | remove artifacts
+      ansible.builtin.file:
+        path: "{{ repo_key.dest }}"
+        state: absent
+
+- name: install | add repository to APT source list
+  ansible.builtin.apt_repository:
+    repo: >
+      deb
+      [arch={{ signal_desktop.repo.arch }} signed-by={{ signal_desktop.repo.keyring }}]
+      {{ signal_desktop.repo.url }}
+      {{ signal_desktop.repo.release }}
+      main
+    state: present
+    filename: "{{ 'signal' + signal_desktop.repo.release }}"
+
+- name: install | install package updates
+  ansible.builtin.apt:
+    state: latest
+    pkg:
+      - signal-desktop
+...

@@ -1,0 +1,12 @@
+---
+- when:
+    - protonmail_bridge.enable
+  tags:
+    - protonmail_bridge
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
+      tags:
+        - protonmail_bridge-install
+  rescue:
+    - ansible.builtin.meta: flush_handlers
+...

@@ -1,13 +1,15 @@
 ---
-- block:
-    - import_tasks: "install.yml"
+- when:
+    - discord.enable
+  tags:
+    - discord
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
       tags:
         - discord-install
-    - import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks: "configure.yml"
       tags:
         - discord-configure
   rescue:
-    - meta: flush_handlers
-  tags:
-    - discord
+    - ansible.builtin.meta: flush_handlers
 ...

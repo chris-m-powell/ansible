@@ -1,0 +1,12 @@
+---
+- when:
+    - signal_desktop.enable
+  tags:
+    - signal_desktop
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
+      tags:
+        - signal_desktop-install
+  rescue:
+    - ansible.builtin.meta: flush_handlers
+...

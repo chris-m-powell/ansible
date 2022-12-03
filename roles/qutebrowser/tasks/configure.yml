@@ -1,24 +1,26 @@
 ---
 - name: configure | set default web browser
-  alternatives:
+  community.general.system.alternatives:
     name: x-www-browser
     link: /usr/bin/x-www-browser
     path: /usr/bin/qutebrowser
     priority: 50
 
 - name: configure | create necessary directories
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_facts.user_dir + '/' + qutebrowser.config_dir }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0750
 
 - name: configure | deploy config file
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ ansible_facts.user_dir + '/' + qutebrowser.config_dir }}"
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0640
   loop:
     - config.py
     - nord-qutebrowser.py

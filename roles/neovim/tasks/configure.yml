@@ -1,16 +1,17 @@
 ---
 - name: configure | create necessary directories
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_facts.user_dir + '/' + item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0750
   loop:
     - "{{ neovim.config_dir }}"
     - "{{ neovim.vim_plug.dir }}"
 
 - name: configure | install vim-plug
-  uri:
+  ansible.builtin.uri:
     url: "{{ 'https://' + neovim.vim_plug.url }}"
     dest: "{{ ansible_facts.user_dir + '/' + neovim.vim_plug.dest }}"
     creates: "{{ ansible_facts.user_dir + '/' + neovim.vim_plug.dest }}"
@@ -23,7 +24,7 @@
 
 - name: configure | install plug-in updates
   become_user: "{{ user }}"
-  git:
+  ansible.builtin.git:
     repo: "{{ 'https://' + item.value.repo }}"
     dest: "{{ ansible_facts.user_dir + '/.local/share/nvim/plugged/' + item.value.dest }}"
     force: true
@@ -35,9 +36,10 @@
   loop: "{{ neovim.plugins | dict2items }}"
 
 - name: configure | deploy init
-  copy:
+  ansible.builtin.copy:
     src: init.lua
     dest: "{{ ansible_facts.user_dir + '/' + neovim.config_dir }}"
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0640
 ...

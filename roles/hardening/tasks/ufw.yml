@@ -1,17 +1,17 @@
 ---
 - name: ufw | ensure ufw is installed
-  apt:
+  ansible.builtin.apt:
     state: latest
     pkg: ufw
 
 - name: ufw | default deny all incoming traffic
-  ufw:
+  community.general.system.ufw:
     state: enabled
     policy: deny
     direction: incoming
 
 - name: ufw | limit inbound TCP traffic from LAN on port 2222 for SSH
-  ufw:
+  community.general.system.ufw:
     rule: limit
     port: '2222'
     from_ip: 192.168.0.0/24

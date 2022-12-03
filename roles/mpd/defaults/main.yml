@@ -1,5 +1,6 @@
 ---
 mpd:
+  enable: true
   config_dir: ".config/mpd"
   playlist_dir: ".mpd/playlists"
   bind_to_address: "0.0.0.0"

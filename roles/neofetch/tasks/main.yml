@@ -1,16 +1,18 @@
 ---
-- block:
-    - import_tasks: "install.yml"
+- when:
+    - neofetch.enable
+  tags:
+    - neofetch
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
       tags:
         neofetch-install
-    - import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks: "configure.yml"
       tags:
         neofetch-configure
-    - import_tasks: "validate.yml"
+    - ansible.builtin.import_tasks: "validate.yml"
       tags:
         neofetch-validate
   rescue:
-    - meta: flush_handlers
-  tags:
-    - neofetch
+    - ansible.builtin.meta: flush_handlers
 ...

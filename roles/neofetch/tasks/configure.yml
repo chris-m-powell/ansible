@@ -1,20 +1,22 @@
 ---
 - name: configure | create necessary directories
-  file:
+  ansible.builtin.file:
     dest: "{{ ansible_facts.user_dir + '/' + neofetch.config_dir }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0750
 
 - name: configure | deploy config file
-  copy:
+  ansible.builtin.copy:
     src: config.conf
     dest: "{{ ansible_facts.user_dir + '/' + neofetch.config_dir }}"
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0640
 
 - name: configure | find all scripts
-  find:
+  ansible.builtin.find:
     paths:
       - /etc/update-motd.d
       - /etc/pop-os/update-motd.d
@@ -26,14 +28,14 @@
   register: motd_scripts
 
 - name: configure | disable default motd scritps
-  file:
+  ansible.builtin.file:
     path: "{{ item.path }}"
     mode: 'ugo-x'
   loop: "{{ motd_scripts.files }}"
   when: motd_scripts.matched > 0
 
 - name: configure | configure motd
-  copy:
+  ansible.builtin.copy:
     src: 00-neofetch-motd
     dest: /etc/update-motd.d
     owner: root

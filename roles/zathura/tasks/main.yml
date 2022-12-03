@@ -1,16 +1,18 @@
 ---
-- block:
-    - import_tasks: "install.yml"
+- when:
+    - zathura.enable
+  tags:
+    - zathura
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
       tags:
         - zathura-install
-    - import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks: "configure.yml"
       tags:
         - zathura-configure
-    - import_tasks: "validate.yml"
+    - ansible.builtin.import_tasks: "validate.yml"
       tags:
         - zathura-configure
   rescue:
-    - meta: flush_handlers
-  tags:
-    - zathura
+    - ansible.builtin.meta: flush_handlers
 ...

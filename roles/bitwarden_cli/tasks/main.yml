@@ -1,0 +1,12 @@
+---
+- when:
+    - bitwarden_cli.enable
+  tags:
+    - bitwarden_cli
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
+      tags:
+        - bitwarden_cli-install
+  rescue:
+    - ansible.builtin.meta: flush_handlers
+...

@@ -1,0 +1,15 @@
+package:
+  node-typescript:
+    installed: true
+    title: cosmic | epedency 'node-typescript' package installed
+  make:
+    installed: true
+    title: cosmic | ependency 'make' nstalled
+  git:
+    installed: true
+    title: cosmic | depedency 'git' nstalled
+file:
+  {{ '/tmp/' + cosmic.extensions.shell.dest }}:
+    exists: false
+    filetype: file
+    title: cosmic | build artifacts cleaned

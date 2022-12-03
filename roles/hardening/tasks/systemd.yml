@@ -1,14 +1,16 @@
 ---
-- block:
+- when:
+    - "'systemd' in ansible_facts.packages"
+  block:
     - name: systemd | ensure systemd service.d folder exists
-      file:
+      ansible.builtin.file:
         dest: "{{ '/etc/systemd/system/' + item + '.service.d' }}"
         state: directory
         mode: 0755
       loop: "{{ hardening.systemd }}"
 
     - name: systemd | set overrides to sandbox select services
-      copy:
+      ansible.builtin.copy:
         src: "{{ item + '.override.conf' }}"
         dest: "{{ '/etc/systemd/system/' + item + '.service.d/override.conf' }}"
         owner: root
@@ -17,6 +19,4 @@
       notify:
         - reload systemd
       loop: "{{ hardening.systemd }}"
-  when:
-    - "'systemd' in ansible_facts.packages"
 ...

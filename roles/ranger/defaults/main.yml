@@ -1,4 +1,5 @@
 ---
 ranger:
+  enable: true
   config_dir: ".config/ranger"
 ...

@@ -8,16 +8,19 @@ file:
     filetype: directory
     owner: {{ user }}
     group: {{ user }}
+    mode: "0750"
     title: ncmpcpp | configuration directory exists
   {{ [ansible_facts.user_dir,ncmpcpp.config_dir,'bindings'] | join('/') }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
+    mode: "0640"
     filetype: file
     title: ncmpcpp | configuration file exists 
   {{ [ansible_facts.user_dir,ncmpcpp.config_dir,'config'] | join('/') }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
+    mode: "0640"
     filetype: file
     title: ncmpcpp | configuration file exists 

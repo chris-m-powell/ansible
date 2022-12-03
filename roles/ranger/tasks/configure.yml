@@ -1,15 +1,17 @@
 ---
 - name: configure | create necessary directories
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_facts.user_dir + '/' + ranger.config_dir }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0750
 
 - name: configure | deploy config file
-  copy:
+  ansible.builtin.copy:
     src: rc.conf
     dest: "{{ ansible_facts.user_dir + '/' + ranger.config_dir }}"
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0640
 ...

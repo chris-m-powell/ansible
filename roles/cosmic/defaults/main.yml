@@ -1,5 +1,6 @@
 ---
 cosmic:
+  enable: true
   extensions:
     shell:
       repo: "github.com/pop-os/shell"

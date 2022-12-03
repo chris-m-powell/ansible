@@ -1,0 +1,15 @@
+---
+- when:
+    - tty_clock.enable
+  tags:
+    - tty_clock
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
+      tags:
+        - tty_clock-install
+    - ansible.builtin.import_tasks: "validate.yml"
+      tags:
+        - tty_clock-validate
+  rescue:
+    - ansible.builtin.meta: flush_handlers
+...

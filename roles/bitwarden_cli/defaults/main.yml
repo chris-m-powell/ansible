@@ -1,0 +1,5 @@
+---
+bitwarden_cli:
+  enable: true
+  pkg: "vault.bitwarden.com/download/?app=cli&platform=linux"
+...

@@ -1,21 +1,23 @@
 ---
 - name: configure | create necessary directories
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_facts.user_dir + '/' + item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0750
     force: true
   loop:
     - "{{ mpd.config_dir }}"
     - "{{ mpd.playlist_dir }}"
 
 - name: configure | create necessary files
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_facts.user_dir + '/' + item }}"
     state: touch
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0640
   changed_when: false
   loop:
     - "{{ mpd.db_file }}"
@@ -24,15 +26,16 @@
     - "{{ mpd.state_file }}"
 
 - name: configure | render config from template
-  template:
+  ansible.builtin.template:
     src: "mpd.conf.j2"
     dest: "{{ [ansible_facts.user_dir,mpd.config_dir,'mpd.conf'] | join('/') }}"
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0640
 
 - name: configure | start & enable service with user scope
   become_user: "{{ user }}"
-  systemd:
+  ansible.builtin.systemd:
     name: mpd
     state: started
     enabled: true

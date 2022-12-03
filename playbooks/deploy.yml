@@ -5,7 +5,7 @@
   become: true
   tasks:
     - name: Group by distribution
-      group_by:
+      ansible.builtin.group_by:
         key: "{{ ansible_distribution }}"
       changed_when: false
   tags:
@@ -21,47 +21,47 @@
   become: true
   gather_facts: false
   handlers:
-    - import_tasks: "{{ playbook_dir + '/handlers/handlers.yml' }}"
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/handlers/handlers.yml' }}"
   vars_prompt:
     - name: user
       prompt: Enter local username
       private: false
   pre_tasks:
-    - block:
-        - include_tasks: "{{ [playbook_dir,'tasks',item] | join('/') }}"
+    - tags:
+        - always
+      block:
+        - ansible.builtin.include_tasks: "{{ [playbook_dir,'tasks',item] | join('/') }}"
           loop:
             - facts.yml
             - apt_cache.yml
             - goss.yml
-      tags:
-        - always
   roles:
-    - { role: alacritty, when: alacritty.enable | default(true) }
-    - { role: bitwarden-cli, when: bitwarden_cli.enable | default(false) }
-    - { role: bpytop, when: bpytop.enable | default(true) }
-    - { role: cosmic, when: cosmic.enable | default(false) }
-    - { role: crt, when: crt.enable | default(true) }
-    - { role: dircolors, when: dircolors.enable | default(true) }
-    - { role: discord, when: discord.enable | default(false) }
-    - { role: git, when: git.enable | default(true) }
-    - { role: gtk, when: gtk.enable | default(false) }
-    - { role: hardening, when: hardening.enable | default(true) }
-    - { role: himalaya, when: himalaya.enable | default(true) }
-    - { role: pandoc, when: latex.enable | default(true) }
-    - { role: mpd, when: mpd.enable | default(true) }
-    - { role: ncmpcpp, when: ncmpcpp.enable | default(true) }
-    - { role: neofetch, when: neofetch.enable | default(true) }
-    - { role: neovim, when: neovim.enable | default(true) }
-    - { role: protonmail-bridge, when: protonmail_bridge.enable | default(false) }
-    - { role: protonvpn-cli, when: protonvpn_cli.enable | default(false) }
-    - { role: qutebrowser, when: qutebrowser.enable | default(true) }
-    - { role: ranger, when: ranger.enable | default(true) }
-    - { role: signal-desktop, when: signal_desktop.enable | default(false) }
-    - { role: tty-clock, when: tty_clock.enable | default(true) }
-    - { role: zathura, when: zathura.enable | default(true) }
+    - alacritty
+    - bitwarden_cli
+    - bpytop
+    - cosmic
+    - crt
+    - dircolors
+    - discord
+    - git
+    - gtk
+    - hardening
+    - himalaya
+    - mpd
+    - ncmpcpp
+    - neofetch
+    - neovim
+    - pandoc
+    - protonmail_bridge
+    - protonvpn_cli
+    - qutebrowser
+    - ranger
+    - signal_desktop
+    - tty_clock
+    - zathura
   tasks:
     - name: install misc pkgs
-      apt:
+      ansible.builtin.apt:
         state: latest
         pkg: "{{ misc_pkgs | default([]) }}"
       tags:

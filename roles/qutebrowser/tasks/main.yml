@@ -1,16 +1,18 @@
 ---
-- block:
-    - import_tasks: "install.yml"
+- when:
+    - qutebrowser.enable
+  tags:
+    - qutebrowser
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
       tags:
         - qutebrowser-install
-    - import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks: "configure.yml"
       tags:
         - qutebrowser-configure
-    - import_tasks: "validate.yml"
+    - ansible.builtin.import_tasks: "validate.yml"
       tags:
         - qutebrowser-validate
   rescue:
-    - meta: flush_handlers
-  tags:
-    - qutebrowser
+    - ansible.builtin.meta: flush_handlers
 ...

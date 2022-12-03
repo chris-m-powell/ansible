@@ -1,12 +1,14 @@
 ---
-- block:
-    - import_tasks: "install.yml"
+- when:
+    - himalaya.enable
+  tags:
+    - himalaya
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
       tags:
         - himalaya-install
-    - import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks: "configure.yml"
       tags:
         - himalaya-configure
   rescue:
-    - meta: flush_handlers
-  tags:
-    - himalaya
+    - ansible.builtin.meta: flush_handlers

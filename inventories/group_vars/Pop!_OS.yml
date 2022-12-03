@@ -1,14 +1,12 @@
 ---
 bitwarden_cli:
-  enable: true
-gtk:
-  enable: true
-protonmail_bridge:
-  enable: true
-protonvpn_cli:
-  enable: true
-signal_desktop:
-  enable: true
+  enable: false
+cosmic:
+  enable: false
+discord:
+  enable: false
+virtualbox:
+  enable: false
 
 misc_pkgs:
   - cmatrix

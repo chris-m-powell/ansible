@@ -1,5 +1,6 @@
 ---
 neovim:
+  enable: true
   config_dir: ".config/nvim"
   vim_plug:
     dir: ".local/share/nvim/site/autoload"

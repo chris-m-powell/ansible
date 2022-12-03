@@ -1,0 +1,20 @@
+package:
+  cool-retro-term:
+    installed: true
+    title: crt | package installed
+  fonts-jetbrains-mono:
+    installed: true
+    title: crt | fonts-jetbrains-mono font installed
+file:
+  {{ ansible_facts.user_dir + '/' + crt.config_dir }}:
+    exists: true
+    owner: {{ user }}
+    group: {{ user }}
+    filetype: directory
+    title: crt | configuration directory exists
+  {{ [ansible_facts.user_dir,crt.config_dir,'cool-retro-term.json'] | join ('/') }}:
+    exists: true
+    owner: {{ user }}
+    group: {{ user }}
+    filetype: file
+    title: crt | configuration file exists

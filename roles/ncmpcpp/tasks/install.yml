@@ -1,6 +1,6 @@
 ---
 - name: install | install package updates
-  apt:
+  ansible.builtin.apt:
     state: latest
     pkg:
       - ncmpcpp

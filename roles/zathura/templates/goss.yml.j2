@@ -17,12 +17,15 @@ package:
 file:
   {{ ansible_facts.user_dir + '/' + zathura.config_dir }}:
     exists: true
-    filetype: directory
     owner: {{ user }}
     group: {{ user }}
+    mode: "0750"
+    filetype: directory
     title: zathura | configuration directory exists
   {{ [ansible_facts.user_dir,zathura.config_dir,'zathurarc'] | join ('/') }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
+    mode: "0640"
+    filetype: file
     title: zathura | configuration file exists

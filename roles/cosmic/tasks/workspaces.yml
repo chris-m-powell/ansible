@@ -1,15 +1,17 @@
 ---
 - name: install | check if workspaces extension is installed
   become_user: "{{ user }}"
-  stat:
+  ansible.builtin.stat:
     path: ~/.local/share/gnome-shell/extensions/cosmic-workspaces@system76.com
   register: workspaces_extension
 
 - name: install | build extensions from source
   become_user: "{{ user }}"
+  when:
+    - not workspaces_extension.stat.exists
   block:
     - name: install | clone workspaces extension
-      git:
+      ansible.builtin.git:
         repo: "{{ 'https://' + cosmic.extensions.workspaces.repo }}"
         dest: "{{ '/tmp/' + cosmic.extensions.workspaces.dest }}"
         force: true
@@ -17,22 +19,23 @@
         single_branch: true
 
     - name: install | make workspaces extension
-      command: make
+      ansible.builtin.command: make
       args:
         chdir: "{{ '/tmp/' + cosmic.extensions.workspaces.dest }}"
+      changed_when: true
 
     - name: install | install workspaces extension
-      command: make install
+      ansible.builtin.command: make install
       args:
         chdir: "{{ '/tmp/' + cosmic.extensions.workspaces.dest }}"
+      changed_when: true
 
     - name: install | install workspaces extension
-      command: gnome-extensions enable cosmic-workspaces@system76.com
+      ansible.builtin.command: gnome-extensions enable cosmic-workspaces@system76.com
+      changed_when: true
 
     - name: install | remove build artifacts
-      file:
+      ansible.builtin.file:
         path: "{{ '/tmp/' + cosmic.extensions.workspaces.dest }}"
         state: absent
-  when:
-    - not workspaces_extension.stat.exists
 ...

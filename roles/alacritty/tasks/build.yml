@@ -1,13 +1,15 @@
 ---
 - name: install | check install status
-  stat:
+  ansible.builtin.stat:
     path: /usr/local/bin/alacritty
   register: bin
 
 - name: install | build from source
+  when:
+    - not bin.stat.exists
   block:
     - name: install | install build dependencies
-      apt:
+      ansible.builtin.apt:
         state: present
         pkg:
           - cmake
@@ -19,58 +21,57 @@
           - python3
           - gzip
 
-    - name: install | get user home directory
-      become_user: "{{ user }}"
-      shell: echo ${HOME}
-      changed_when: false
-      register: home
-
     - name: install | download Rust installer
-      become_user: "{{ user }}"
-      get_url:
+      ansible.builtin.get_url:
         url: https://sh.rustup.rs
-        dest: "{{ home.stdout }}"
-        mode: 0700
+        dest: "{{ ansible_facts.user_dir }}"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: 0750
         validate_certs: true
       register: rust_installer
 
     - name: install | execute Rust installer
       become_user: "{{ user }}"
-      shell: "{{ '/bin/sh ' + rust_installer.dest + ' -y' }}"
+      ansible.builtin.command: "{{ rust_installer.dest + ' -y' }}"
+      changed_when: true
       args:
-        chdir: "{{ home.stdout }}"
+        chdir: "{{ ansible_facts.user_dir }}"
 
     - name: install | remove Rust installer
-      file:
+      ansible.builtin.file:
         path: "{{ rust_installer.dest }}"
         state: absent
 
     - name: install | install via Cargo
       become_user: "{{ user }}"
-      command: "{{ '~/.cargo/bin/' + item }}"
+      ansible.builtin.command: "{{ ansible_facts.user_dir + '/.cargo/bin/' + item }}"
+      changed_when: true
       loop:
         - rustup override set stable
         - rustup update stable
         - cargo install alacritty
 
     - name: install | copy binary to /usr/local/bin
-      copy:
-        src: "{{ home.stdout + '/.cargo/bin/alacritty' }}"
+      ansible.builtin.copy:
+        src: "{{ ansible_facts.user_dir + '/.cargo/bin/alacritty' }}"
         dest: /usr/local/bin
+        owner: root
+        group: root
         mode: 0755
         remote_src: true
 
     - name: install | remove Rust installation
-      file:
-        path: "{{ home.stdout + '/' + item }}"
+      ansible.builtin.file:
+        path: "{{ ansible_facts.user_dir + '/' + item }}"
         state: absent
       loop:
         - ".cargo"
         - ".rustup"
 
     - name: install | remove Rust environment variables
-      lineinfile:
-        path: "{{ home.stdout + '/' + item }}"
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_facts.user_dir + '/' + item }}"
         state: absent
         line: . "$HOME/.cargo/env"
       loop:
@@ -79,7 +80,7 @@
 
     - name: install | clone project repository
       become_user: "{{ user }}"
-      git:
+      ansible.builtin.git:
         repo: "{{ 'https://' + alacritty.project.repo }}"
         dest: "{{ alacritty.project.dest }}"
         depth: 1
@@ -87,38 +88,44 @@
       register: clone
 
     - name: install | install icon
-      copy:
+      ansible.builtin.copy:
         src: "{{ alacritty.project.dest + '/extra/logo/alacritty-term.svg' }}"
         dest: /usr/share/pixmaps/Alacritty.svg
+        owner: root
+        group: root
+        mode: 0644
         remote_src: true
 
     - name: install | install desktop file
-      command: "{{'desktop-file-install ' +  alacritty.project.dest + '/extra/linux/Alacritty.desktop' }}"
+      ansible.builtin.command: "{{ 'desktop-file-install ' + alacritty.project.dest + '/extra/linux/Alacritty.desktop' }}"
+      changed_when: true
       notify:
         - update-desktop-database
 
     - name: install | ensure man page directory exists
-      file:
+      ansible.builtin.file:
         path: /usr/local/share/man/man1
+        owner: root
+        group: root
+        mode: 0755
         state: directory
 
     - name: install | create man pages
-      shell: "{{ item }}"
+      ansible.builtin.shell: "{{ item }}"
       args:
         chdir: "{{ alacritty.project.dest }}"
+      changed_when: true
       loop:
         - gzip -c extra/alacritty.man | tee /usr/local/share/man/man1/alacritty.1.gz > /dev/null
         - gzip -c extra/alacritty-msg.man | tee /usr/local/share/man/man1/alacritty-msg.1.gz > /dev/null
 
     - name: install | remove build artifacts
-      file:
+      ansible.builtin.file:
         path: "{{ alacritty.project.dest }}"
         state: absent
-  when:
-    - not bin.stat.exists
 
 - name: install | install font updates
-  apt:
+  ansible.builtin.apt:
     pkg:
       - fonts-jetbrains-mono
     state: latest

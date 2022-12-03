@@ -1,5 +1,6 @@
 ---
 alacritty:
+  enable: true
   config_dir: ".config/alacritty"
   project:
     repo: "github.com/alacritty/alacritty.git"

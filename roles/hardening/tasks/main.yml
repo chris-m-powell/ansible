@@ -1,25 +1,27 @@
 ---
-- block:
-    - import_tasks: "kernel.yml"
+- when:
+    - hardening.enable
+  tags:
+    - hardening
+  block:
+    - ansible.builtin.import_tasks: "kernel.yml"
       tags:
         - hardening-kernel
-    - import_tasks: "fs.yml"
+    - ansible.builtin.import_tasks: "fs.yml"
       tags:
         - hardening-fs
-    - import_tasks: "systemd.yml"
+    - ansible.builtin.import_tasks: "systemd.yml"
       tags:
         - hardening-systemd
-    - import_tasks: "ufw.yml"
+    - ansible.builtin.import_tasks: "ufw.yml"
       tags:
         - hardening-ufw
-    - import_tasks: "ssh.yml"
+    - ansible.builtin.import_tasks: "ssh.yml"
       tags:
         - hardening-ssh
-    - import_tasks: "misc.yml"
+    - ansible.builtin.import_tasks: "misc.yml"
       tags:
         - hardening-misc
   rescue:
-    - meta: flush_handlers
-  tags:
-    - hardening
+    - ansible.builtin.meta: flush_handlers
 ...

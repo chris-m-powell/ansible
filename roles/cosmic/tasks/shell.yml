@@ -1,14 +1,15 @@
 ---
 - name: install | check if shell extension is installed
-  become_user: "{{ user }}"
-  stat:
-    path: ~/.local/share/gnome-shell/extensions/pop-shell@system76.com
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.user_dir + '/.local/share/gnome-shell/extensions/pop-shell@system76.com' }}"
   register: shell_extension
 
 - name: install | build extensions from source
+  when:
+    - not shell_extension.stat.exists
   block:
     - name: install | install build dependencies
-      apt:
+      ansible.builtin.apt:
         state: latest
         pkg:
           - node-typescript
@@ -17,7 +18,7 @@
 
     - name: install | clone extensions
       become_user: "{{ user }}"
-      git:
+      ansible.builtin.git:
         repo: "{{ 'https://' + cosmic.extensions.shell.repo }}"
         dest: "{{ '/tmp/' + cosmic.extensions.shell.dest }}"
         force: true
@@ -26,14 +27,13 @@
 
     - name: install | build shell extension
       become_user: "{{ user }}"
-      command: make local-install
+      ansible.builtin.command: make local-install
       args:
         chdir: "{{ '/tmp/' + cosmic.extensions.shell.dest }}"
+      changed_when: true
 
     - name: install | remove build artifacts
-      file:
+      ansible.builtin.file:
         path: "{{ '/tmp/' + cosmic.extensions.shell.dest }}"
         state: absent
-  when:
-    - not shell_extension.stat.exists
 ...

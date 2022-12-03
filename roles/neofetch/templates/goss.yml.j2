@@ -8,10 +8,12 @@ file:
     filetype: directory
     owner: {{ user }}
     group: {{ user }}
+    mode: "0750"
     title: neofetch | configuration directory exists
   {{ [ansible_facts.user_dir,neofetch.config_dir,'config.conf'] | join ('/') }}:
     exists: true
     filetype: file
     owner: {{ user }}
     group: {{ user }}
+    mode: "0640"
     title: neofetch | configuration file exists

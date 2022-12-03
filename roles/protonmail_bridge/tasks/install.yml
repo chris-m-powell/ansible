@@ -1,0 +1,90 @@
+---
+- name: install | install dependencies
+  ansible.builtin.apt:
+    state: latest
+    pkg:
+      - debsig-verify
+      - debian-keyring
+      - ca-certificates
+
+- name: install | install ProtonMail Bridge
+  when:
+    - '"protonmail-bridge" not in ansible_facts.packages'
+  block:
+    - name: configure | create necessary directories
+      ansible.builtin.file:
+        path: "{{ item + 'E2C75D68E6234B07' }}"
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+      loop:
+        - /usr/share/debsig/keyrings/
+        - /etc/debsig/policies/
+
+    - name: install | download public key
+      ansible.builtin.get_url:
+        url: "{{ 'https://' + protonmail_bridge.pubkey }}"
+        dest: /tmp
+        owner: root
+        group: root
+        mode: 0755
+      register: pubkey
+
+    - name: install | import public key to keyring
+      ansible.builtin.shell: >
+        gpg
+        --dearmor
+        --output /usr/share/debsig/keyrings/E2C75D68E6234B07/debsig.gpg
+        "{{ pubkey.dest }}"
+      changed_when: true
+
+    - name: install | download policy file
+      ansible.builtin.get_url:
+        url: "{{ 'https://' + protonmail_bridge.policy }}"
+        dest: /etc/debsig/policies/E2C75D68E6234B07
+        owner: root
+        group: root
+        mode: 0755
+      when:
+        - not ansible_check_mode
+
+    - name: install | download ProtonMail Bridge installer
+      ansible.builtin.get_url:
+        url: "{{ 'https://' + protonmail_bridge.deb }}"
+        dest: /tmp
+        owner: root
+        group: root
+        mode: 0755
+      register: deb
+
+    - name: install | verify ProtonMail Bridge installer integrity
+      ansible.builtin.command: debsig-verify "{{ deb.dest }}"
+      changed_when: false
+
+    - name: install | install ProtonMail Bridge
+      ansible.builtin.apt:
+        state: present
+        deb: "{{ deb.dest }}"
+      when:
+        - not ansible_check_mode
+
+    - name: install | remove artifacts
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ pubkey.dest }}"
+        - "{{ deb.dest }}"
+
+- name: install | import GPG key binary to keyring
+  ansible.builtin.copy:
+    src: "{{ ansible_facts.user_dir + '/.config/protonmail/bridge/cert.pem' }}"
+    dest: /usr/local/share/ca-certificates/protonbridge.crt
+    owner: root
+    group: root
+    mode: 0644
+    remote_src: true
+  notify:
+    - update-ca-certificates
+...

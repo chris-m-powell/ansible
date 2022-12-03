@@ -1,6 +1,6 @@
 ---
 gtk:
-  wallpaper: "nord.jpg"
+  enable: true
   theme:
     - repo: "github.com/EliverLara/Nordic.git"
       dest: ".themes/Nordic"

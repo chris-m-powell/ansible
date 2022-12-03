@@ -1,7 +1,7 @@
 ---
 - name: install | clone project repository
   become_user: "{{ user }}"
-  git:
+  ansible.builtin.git:
     repo: "{{ 'https://' + dircolors.theme.nord.repo }}"
     dest: "{{ dircolors.theme.nord.dest }}"
     force: true
@@ -10,30 +10,29 @@
   changed_when: false
 
 - name: install | enable
+  when:
+    - not ansible_check_mode
   block:
     - name: install | copy source file to user home directory
-      become_user: "{{ user }}"
-      copy:
+      ansible.builtin.copy:
         src: "{{ dircolors.theme.nord.dest + '/src/dir_colors' }}"
-        dest: ~/.dir_colors
+        dest: "{{ ansible_facts.user_dir + '/.dir_colors' }}"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: 0640
         remote_src: true
 
     - name: install | remove install artifacts
-      file:
+      ansible.builtin.file:
         path: "{{ dircolors.theme.nord.dest }}"
         state: absent
       changed_when: false
 
     - name: install | activate
       become_user: "{{ user }}"
-      lineinfile:
-        path: ~/.bashrc
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_facts.user_dir + '/.bashrc' }}"
         state: present
         line: test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
         insertafter: EOF
-      loop:
-        - ~/.bashrc
-        - ~/.zshrc
-  when:
-    - not ansible_check_mode
 ...

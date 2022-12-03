@@ -1,7 +1,7 @@
 ---
 - name: configure | gitconfig
   become_user: "{{ user }}"
-  git_config:
+  community.general.source_control.git_config:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     scope: file

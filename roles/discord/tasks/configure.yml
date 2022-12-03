@@ -1,8 +1,10 @@
 ---
 - name: configure | enable autostart
-  become_user: "{{ user }}"
-  copy:
+  ansible.builtin.copy:
     src: /usr/share/applications/discord.desktop
-    dest: ~/.config/autostart/
+    dest: "{{ ansible_facts.user_dir + '/.config/autostart/' }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0640
     remote_src: true
 ...

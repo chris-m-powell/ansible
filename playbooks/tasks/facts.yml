@@ -1,21 +1,21 @@
 ---
 - name: Verify existence of resident user account {{ user }}
-  getent:
+  ansible.builtin.getent:
     database: passwd
     key: "{{ user }}"
 
 - name: Gather service facts
-  service_facts:
+  ansible.builtin.service_facts:
 
 - name: Gather package facts
-  package_facts:
+  ansible.builtin.package_facts:
     manager: auto
 
 - name: Gather listening ports facts
-  listen_ports_facts:
+  community.general.system.listen_ports_facts:
 
 - name: Get user home directory
   become_user: "{{ user }}"
-  setup:
+  ansible.builtin.setup:
     gather_subset: user_dir
 ...

@@ -1,15 +1,17 @@
 ---
 - name: configure | create necessary directories
-  file:
+  ansible.builtin.file:
     dest: "{{ ansible_facts.user_dir + '/' + bpytop.config_dir }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0750
 
 - name: configure | deploy config file
-  copy:
+  ansible.builtin.copy:
     src: bpytop.conf
     dest: "{{ ansible_facts.user_dir + '/' + bpytop.config_dir }}"
     owner: "{{ user }}"
     group: "{{ user }}"
+    mode: 0640
 ...

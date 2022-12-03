@@ -1,12 +1,12 @@
 ---
 - name: install | install package updates
-  apt:
+  ansible.builtin.apt:
     state: latest
     pkg:
       - alacritty
 
 - name: install | install font updates
-  apt:
+  ansible.builtin.apt:
     pkg:
       - fonts-jetbrains-mono
     state: latest

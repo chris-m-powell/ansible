@@ -1,14 +1,17 @@
 ---
-- name: configure | deploy configurations
-  become_user: "{{ user }}"
-  block:
-    - name: configure | create necessary directories
-      file:
-        path: "{{ himalaya.config.dir }}"
-        state: directory
+- name: configure | create necessary directories
+  ansible.builtin.file:
+    path: "{{ ansible_facts.user_dir + '/' + himalaya.config.dir }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0750
 
-    - name: configure | deploy config file
-      copy:
-        src: config.toml
-        dest: "{{ himalaya.config.dir }}"
+- name: configure | deploy config file
+  ansible.builtin.copy:
+    src: config.toml
+    dest: "{{ ansible_facts.user_dir + '/' + himalaya.config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0640
 ...

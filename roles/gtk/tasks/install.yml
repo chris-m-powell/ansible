@@ -1,11 +1,14 @@
 ---
 - name: install | create necessary directories
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_facts.user_dir + '/.themes' }}"
     state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0750
 
 - name: install | clone project repository
-  git:
+  ansible.builtin.git:
     repo: "{{ 'https://' + item.repo }}"
     dest: "{{ ansible_facts.user_dir + '/' + item.dest }}"
     depth: 1

@@ -1,12 +1,12 @@
 ---
 - name: install | add nightly build APT repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: 'ppa:neovim-ppa/unstable'
     state: present
   when: ansible_distribution in ["Ubuntu", "Pop!_OS"]
 
 - name: install | install package updates
-  apt:
+  ansible.builtin.apt:
     state: latest
     pkg:
       - yamllint
@@ -15,7 +15,7 @@
 
 - name: configure | install or update pip add-ons
   become_user: "{{ user }}"
-  pip:
+  ansible.builtin.pip:
     name: "{{ item }}"
     state: latest
     extra_args: --user

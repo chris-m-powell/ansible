@@ -1,5 +1,6 @@
 ---
 virtualbox:
+  enable: true
   repo:
     url: "http://download.virtualbox.org/virtualbox/debian"
     key: "www.virtualbox.org/download/oracle_vbox_2016.asc"

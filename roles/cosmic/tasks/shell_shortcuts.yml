@@ -1,14 +1,16 @@
 ---
 - name: install | check if shell extension is installed
   become_user: "{{ user }}"
-  stat:
+  ansible.builtin.stat:
     path: /usr/local/bin/pop-shell-shortcuts
   register: shell_shortcuts_extension
 
 - name: install | build extensions from source
+  when:
+    - not shell_shortcuts_extension.stat.exists
   block:
     - name: install | install build dependencies
-      apt:
+      ansible.builtin.apt:
         state: latest
         pkg:
           - cargo
@@ -17,7 +19,7 @@
 
     - name: install | clone extensions
       become_user: "{{ user }}"
-      git:
+      ansible.builtin.git:
         repo: "{{ 'https://' + cosmic.extensions.shell_shortcuts.repo }}"
         dest: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
         force: true
@@ -26,19 +28,19 @@
 
     - name: install | build shell shortcuts extension
       become_user: "{{ user }}"
-      command: make
+      ansible.builtin.command: make
       args:
         chdir: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
+      changed_when: true
 
     - name: install | build shell shortcuts extension
-      command: make install
+      ansible.builtin.command: make install
       args:
         chdir: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
+      changed_when: true
 
     - name: install | remove build artifacts
-      file:
+      ansible.builtin.file:
         path: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
         state: absent
-  when:
-    - not shell_shortcuts_extension.stat.exists
 ...

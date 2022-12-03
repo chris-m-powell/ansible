@@ -1,14 +1,17 @@
 ---
-- name: configure | apply local user configurations
-  become_user: "{{ user }}"
-  block:
-    - name: configure | create necessary directories
-      file:
-        path: "{{ crt.config.dir }}"
-        state: directory
+- name: configure | create necessary directories
+  ansible.builtin.file:
+    path: "{{ ansible_facts.user_dir + '/' + crt.config_dir }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0750
 
-    - name: configure | deploy config file
-      copy:
-        src: cool-retro-term.json
-        dest: "{{ crt.config.dir }}"
+- name: configure | deploy config file
+  ansible.builtin.copy:
+    src: cool-retro-term.json
+    dest: "{{ ansible_facts.user_dir + '/' + crt.config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0640
 ...

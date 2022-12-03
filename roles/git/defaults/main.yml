@@ -1,5 +1,6 @@
 ---
 git:
+  enable: true
   gitconfig:
     - { name: "user.name", value: "Chris Powell" }
     - { name: "user.email", value: "chris.m.powell@protonmail.com" }

@@ -1,44 +1,48 @@
 ---
 - name: install | check install status
-  stat:
+  ansible.builtin.stat:
     path: /usr/local/bin/Discord
   register: bin
 
 - name: install | download and install
+  when:
+    - not bin.stat.exists
   block:
     - name: install | download tarball
-      get_url:
+      ansible.builtin.get_url:
         url: "{{ 'https://' + discord.pkg }}"
         dest: /tmp
+        owner: root
+        group: root
+        mode: 0640
       register: tarball
 
     - name: install | extract contents from tarball
-      unarchive:
+      ansible.builtin.unarchive:
         src: "{{ tarball.dest }}"
         dest: /opt
 
     - name: install | remove tarball
-      file:
+      ansible.builtin.file:
         path: "{{ tarball.dest }}"
         state: absent
 
     - name: install | create binary symlink
-      file:
+      ansible.builtin.file:
         src: /opt/Discord/Discord
         dest: /usr/local/bin/Discord
         state: link
 
     - name: install | install desktop file
-      command: "{{ 'desktop-file-install ' +  '/opt/Discord/discord.desktop' }}"
+      ansible.builtin.command: "{{ 'desktop-file-install ' + '/opt/Discord/discord.desktop' }}"
+      changed_when: true
 
     - name: install | set executable path in desktop entry
-      ini_file:
+      community.general.files.ini_file:
         path: /usr/share/applications/discord.desktop
         section: Desktop Entry
         option: Exec
         value: /usr/local/bin/Discord
       notify:
         - update-desktop-database
-  when:
-    - not bin.stat.exists
 ...

@@ -2,11 +2,15 @@ parseable: true
 exclude_paths:
   - roles/alacritty/files
 quiet: false
+warn_list:
+  - 'package-latest'
+  - 'latest[git]'
+  - 'jinja[spacing]'
+  - 'no-handler'
+  - 'command-instead-of-shell'
 skip_list:
-  - '403'
-  - 'key-order'
-  - 'risky-file-permissions'
-  - 'name'
-  - 'fqcn-builtins'
+  - 'name[casing]'
+  - 'name[missing]'
+  - 'yaml[comments]'
 use_default_rules: true
 verbosity: 0

@@ -1,16 +1,18 @@
 ---
-- block:
-    - import_tasks: "install.yml"
+- when:
+    - neovim.enable
+  tags:
+    - neovim
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
       tags:
         - neovim-install
-    - import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks: "configure.yml"
       tags:
         - neovim-configure
-    - import_tasks: "validate.yml"
+    - ansible.builtin.import_tasks: "validate.yml"
       tags:
         - neovim-validate
   rescue:
-    - meta: flush_handlers
-  tags:
-    - neovim
+    - ansible.builtin.meta: flush_handlers
 ...

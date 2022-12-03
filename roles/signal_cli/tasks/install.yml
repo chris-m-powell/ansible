@@ -1,0 +1,22 @@
+---
+- name: install | install dependencies
+  ansible.builtin.apt:
+    state: latest
+    pkg:
+      - openjdk-18-jre
+      - qrencode
+
+- name: install | extract remote archive
+  ansible.builtin.unarchive:
+    src: "{{ 'https://' + signal_cli.pkg }}"
+    dest: /opt
+    remote_src: true
+    list_files: true
+  register: archive
+
+- name: install | create symlink
+  ansible.builtin.file:
+    src: "{{ '/opt/' + archive.files[0] + '/bin/signal-cli' }}"
+    dest: /usr/local/bin/signal-cli
+    state: link
+...

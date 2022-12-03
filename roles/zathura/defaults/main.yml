@@ -1,3 +1,4 @@
 ---
 zathura:
+  enable: true
   config_dir: ".config/zathura"

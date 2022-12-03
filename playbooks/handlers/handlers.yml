@@ -1,28 +1,28 @@
 ---
 - name: fc-cache
-  command: fc-cache -f
+  ansible.builtin.command: fc-cache -f
   listen: fc-cache
 
 - name: update desktop database
-  command: update-desktop-database
+  ansible.builtin.command: update-desktop-database
   listen: update-desktop-database
 
 - name: reboot
-  command: shutdown -r -t 30
+  ansible.builtin.command: shutdown -r -t 30
   listen: reboot
 
 - name: update-ca-certificates
-  command: update-ca-certificates
+  ansible.builtin.command: update-ca-certificates
   listen: update-ca-certificates
 
 - name: restart ssh
-  systemd:
+  ansible.builtin.systemd:
     name: ssh
     enabled: true
     state: restarted
   listen: restart ssh
 
 - name: reload systemd
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
 ...
