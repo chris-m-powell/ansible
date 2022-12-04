@@ -1,7 +1,7 @@
 ---
 - name: configure | create necessary directories
   ansible.builtin.file:
-    path: "{{ ansible_facts.user_dir + '/' + himalaya.config.dir }}"
+    path: "{{ ansible_facts.user_dir + '/' + himalaya.config_dir }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"

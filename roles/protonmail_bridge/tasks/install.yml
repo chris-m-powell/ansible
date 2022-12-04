@@ -7,13 +7,12 @@
       - debian-keyring
       - ca-certificates
 
-- name: install | install ProtonMail Bridge
-  when:
+- when:
     - '"protonmail-bridge" not in ansible_facts.packages'
   block:
     - name: configure | create necessary directories
       ansible.builtin.file:
-        path: "{{ item + 'E2C75D68E6234B07' }}"
+        path: "{{ item + protonmail_bridge.debsig_id }}"
         state: directory
         owner: root
         group: root
@@ -22,32 +21,32 @@
         - /usr/share/debsig/keyrings/
         - /etc/debsig/policies/
 
-    - name: install | download public key
+    - name: install | download policy file
       ansible.builtin.get_url:
-        url: "{{ 'https://' + protonmail_bridge.pubkey }}"
-        dest: /tmp
+        url: "{{ 'https://' + protonmail_bridge.policy }}"
+        dest: "{{ '/etc/debsig/policies/' + protonmail_bridge.debsig_id }}"
         owner: root
         group: root
         mode: 0755
-      register: pubkey
+      when:
+        - not ansible_check_mode
+
+    - name: install | download public key
+      ansible.builtin.get_url:
+        url: "{{ 'https://' + protonmail_bridge.gpg_key }}"
+        dest: /tmp/bridge_pubkey.gpg
+        owner: root
+        group: root
+        mode: 0755
+      register: gpg_key
 
     - name: install | import public key to keyring
       ansible.builtin.shell: >
         gpg
         --dearmor
         --output /usr/share/debsig/keyrings/E2C75D68E6234B07/debsig.gpg
-        "{{ pubkey.dest }}"
+        "{{ gpg_key.dest }}"
       changed_when: true
-
-    - name: install | download policy file
-      ansible.builtin.get_url:
-        url: "{{ 'https://' + protonmail_bridge.policy }}"
-        dest: /etc/debsig/policies/E2C75D68E6234B07
-        owner: root
-        group: root
-        mode: 0755
-      when:
-        - not ansible_check_mode
 
     - name: install | download ProtonMail Bridge installer
       ansible.builtin.get_url:
@@ -74,7 +73,7 @@
         path: "{{ item }}"
         state: absent
       loop:
-        - "{{ pubkey.dest }}"
+        - "{{ gpg_key.dest }}"
         - "{{ deb.dest }}"
 
 - name: install | import GPG key binary to keyring
