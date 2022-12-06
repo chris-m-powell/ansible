@@ -28,16 +28,13 @@
 
     - name: install | build shell shortcuts extension
       become_user: "{{ user }}"
-      ansible.builtin.command: make
-      args:
+      community.general.make:
         chdir: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
-      changed_when: true
 
     - name: install | build shell shortcuts extension
-      ansible.builtin.command: make install
-      args:
+      community.general.make:
         chdir: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
-      changed_when: true
+        target: install
 
     - name: install | remove build artifacts
       ansible.builtin.file:

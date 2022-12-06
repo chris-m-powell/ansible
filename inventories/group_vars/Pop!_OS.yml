@@ -1,6 +1,4 @@
 ---
-bitwarden_cli:
-  enable: false
 cosmic:
   enable: false
 discord:

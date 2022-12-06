@@ -27,10 +27,9 @@
 
     - name: install | build shell extension
       become_user: "{{ user }}"
-      ansible.builtin.command: make local-install
-      args:
+      community.general.make:
         chdir: "{{ '/tmp/' + cosmic.extensions.shell.dest }}"
-      changed_when: true
+        target: local-install
 
     - name: install | remove build artifacts
       ansible.builtin.file:

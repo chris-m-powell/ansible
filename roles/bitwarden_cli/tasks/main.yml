@@ -7,6 +7,9 @@
     - ansible.builtin.import_tasks: "install.yml"
       tags:
         - bitwarden_cli-install
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+      tags:
+        - bitwarden_cli-audit
   rescue:
     - ansible.builtin.meta: flush_handlers
 ...

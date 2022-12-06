@@ -21,20 +21,15 @@
   become: true
   gather_facts: false
   handlers:
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/handlers/handlers.yml' }}"
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/handlers.yml' }}"
   vars_prompt:
     - name: user
       prompt: Enter local username
       private: false
   pre_tasks:
-    - tags:
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/pre_tasks.yml' }}"
+      tags:
         - always
-      block:
-        - ansible.builtin.include_tasks: "{{ [playbook_dir,'tasks',item] | join('/') }}"
-          loop:
-            - facts.yml
-            - apt_cache.yml
-            - goss.yml
   roles:
     - alacritty
     - bitwarden_cli
@@ -59,17 +54,8 @@
     - signal_desktop
     - tty_clock
     - zathura
-  tasks:
-    - name: install misc pkgs
-      ansible.builtin.apt:
-        state: latest
-        pkg: "{{ misc_pkgs | default([]) }}"
-      tags:
-        - misc-pkgs
   post_tasks:
-    - name: validate
-      goss:
-        path: "{{ goss_dir + '/goss.yml' }}"
-        format: documentation
-        output_file: "{{ goss_dir + '/validate.log' }}"
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/post_tasks.yml' }}"
+      tags:
+        - always
 ...

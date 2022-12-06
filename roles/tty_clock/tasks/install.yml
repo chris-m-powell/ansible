@@ -22,10 +22,8 @@
       register: clone
 
     - name: install | build from source
-      ansible.builtin.command: /usr/bin/make
-      args:
+      community.general.make:
         chdir: "{{ tty_clock.dest }}"
-      changed_when: true
 
     - name: install | copy binary to /usr/local/bin
       ansible.builtin.copy:

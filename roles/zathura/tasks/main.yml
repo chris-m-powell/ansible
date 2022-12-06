@@ -10,7 +10,7 @@
     - ansible.builtin.import_tasks: "configure.yml"
       tags:
         - zathura-configure
-    - ansible.builtin.import_tasks: "validate.yml"
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
         - zathura-configure
   rescue:

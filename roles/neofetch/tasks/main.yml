@@ -10,9 +10,9 @@
     - ansible.builtin.import_tasks: "configure.yml"
       tags:
         neofetch-configure
-    - ansible.builtin.import_tasks: "validate.yml"
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
-        neofetch-validate
+        neofetch-audit
   rescue:
     - ansible.builtin.meta: flush_handlers
 ...
