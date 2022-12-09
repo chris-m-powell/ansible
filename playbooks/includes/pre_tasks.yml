@@ -44,7 +44,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0754
+    mode: 0755
 
 - name: pre_tasks | deploy gossfile
   ansible.builtin.copy:

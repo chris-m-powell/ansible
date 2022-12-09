@@ -1,0 +1,29 @@
+package:
+  libssl1.1:
+    installed: true
+    title: himalaya | libssl1.1 package installed
+  pass:
+    installed: true
+    title: himalaya | pass package installed
+file:
+  /usr/local/bin/himalaya:
+    exists: true
+    owner: root
+    group: root
+    mode: "0755"
+    filetype: file
+    title: himalaya | himalaya binary exists
+  {{ ansible_facts.user_dir + '/' + himalaya.config_dir }}:
+    exists: true
+    owner: {{ user }}
+    group: {{ user }}
+    mode: "0750"
+    filetype: directory
+    title: himalaya | configuration directory exists
+  {{ [ansible_facts.user_dir,himalaya.config_dir,'config.toml'] | join ('/') }}:
+    exists: true
+    owner: {{ user }}
+    group: {{ user }}
+    mode: "0640"
+    filetype: file
+    title: himalaya | configuration file exists

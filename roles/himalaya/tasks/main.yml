@@ -10,5 +10,8 @@
     - ansible.builtin.import_tasks: "configure.yml"
       tags:
         - himalaya-configure
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+      tags:
+        - himalaya-audit
   rescue:
     - ansible.builtin.meta: flush_handlers

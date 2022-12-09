@@ -4,6 +4,8 @@
   tags:
     - zathura
   block:
+    # - set_fact:
+    #     zathura.config_dir: "{{ ansible_facts.user_dir + '/' zathura.config_dir }}"
     - ansible.builtin.import_tasks: "install.yml"
       tags:
         - zathura-install

@@ -5,6 +5,11 @@
     - dircolors
   block:
     - ansible.builtin.import_tasks: "install.yml"
+      tags:
+        - dircolors-install
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+      tags:
+        - dircolors-audit
   rescue:
     - ansible.builtin.meta: flush_handlers
 ...

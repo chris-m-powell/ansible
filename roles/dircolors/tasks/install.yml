@@ -9,8 +9,7 @@
     single_branch: true
   changed_when: false
 
-- name: install | enable
-  when:
+- when:
     - not ansible_check_mode
   block:
     - name: install | copy source file to user home directory

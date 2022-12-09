@@ -8,7 +8,7 @@ mpd:
   db_file: ".mpd/mpd.db"
   log_file: ".mpd/mpd.log"
   pid_file: ".mpd/mpd.pid"
-  state_file: ".mpd/mpdstate"
+  state_file: ".mpd/mpd.state"
   mixer_type: "software"
   audio_output:
     pulse:

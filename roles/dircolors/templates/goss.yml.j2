@@ -1,0 +1,15 @@
+file:
+  {{ ansible_facts.user_dir + '/.dir_colors' }}:
+    exists: true
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: "0640"
+    filetype: file
+    title: dircolors | file exists
+  {{ dircolors.theme.nord.dest }}:
+    exists: false
+    title: dircolors | build artifacts cleaned
+  {{ ansible_facts.user_dir + '/.bashrc' }}:
+    exists: true
+    contains: 
+      - 'test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)'
