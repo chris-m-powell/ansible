@@ -1,7 +1,7 @@
 ---
 - name: configure | create necessary directories
   ansible.builtin.file:
-    path: "{{ ansible_facts.user_dir + '/' + protonvpn_cli.config.dir }}"
+    path: "{{ ansible_facts.user_dir + '/' + protonvpn_cli.config_dir }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
@@ -10,7 +10,7 @@
 - name: configure | deploy config file
   ansible.builtin.copy:
     src: user_configurations.json
-    dest: "{{ protonvpn_cli.config.dir }}"
+    dest: "{{ ansible_facts.user_dir + '/' + protonvpn_cli.config_dir }}"
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0640

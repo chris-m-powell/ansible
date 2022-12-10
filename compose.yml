@@ -1,0 +1,6 @@
+services:
+  ansible:
+    image: localhost/ansible
+    container_name: controller
+    network_mode: host
+    tty: true

@@ -46,7 +46,7 @@
     - ncmpcpp
     - neofetch
     - neovim
-    - pandoc
+    - podman
     - protonmail_bridge
     - protonvpn_cli
     - qutebrowser

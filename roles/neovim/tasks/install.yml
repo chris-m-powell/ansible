@@ -13,7 +13,7 @@
       - python3-pip
       - neovim
 
-- name: configure | install or update pip add-ons
+- name: install | install or update pip add-ons
   become_user: "{{ user }}"
   ansible.builtin.pip:
     name: "{{ item }}"

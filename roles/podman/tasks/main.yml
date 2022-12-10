@@ -1,0 +1,15 @@
+---
+- when:
+    - podman.enable
+  tags:
+    - podman
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
+      tags:
+        - podman-install
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+      tags:
+        - podman-audit
+  rescue:
+    - ansible.builtin.meta: flush_handlers
+...

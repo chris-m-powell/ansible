@@ -1,0 +1,15 @@
+package:
+  podman:
+    installed: true
+    title: podman | packge installed
+  apache2-utils:
+    installed: true
+    title: podman | packge installed
+file:
+  {{ ansible_facts.user_dir + '/.local/bin/podman-compose' }}:
+    exists: true
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: "0775"
+    filetype: file
+    title: podman | podman-compose installed
