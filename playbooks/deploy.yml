@@ -35,7 +35,6 @@
     - bitwarden_cli
     - bpytop
     - cosmic
-    - crt
     - dircolors
     - discord
     - git
@@ -46,7 +45,6 @@
     - ncmpcpp
     - neofetch
     - neovim
-    - podman
     - protonmail_bridge
     - protonvpn_cli
     - qutebrowser

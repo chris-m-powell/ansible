@@ -3,8 +3,6 @@ cosmic:
   enable: false
 discord:
   enable: false
-virtualbox:
-  enable: false
 
 misc_pkgs:
   - cmatrix
@@ -21,7 +19,6 @@ hardening:
       - apache2
       - apache2-bin
       - apache2-data
-      - apache2-utils
       - libapr1
       - libaprutil1
       - libaprutil1-db

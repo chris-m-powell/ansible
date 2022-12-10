@@ -1,17 +1,11 @@
 ---
 bitwarden_cli:
   enable: false
-gtk:
-  enable: false
 protonmail_bridge:
   enable: false
 protonvpn_cli:
   enable: false
-signal_cli:
-  enable: false
 signal_desktop:
-  enable: false
-virtualbox:
   enable: false
 
 misc_pkgs:
