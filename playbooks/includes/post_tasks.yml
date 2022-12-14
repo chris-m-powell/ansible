@@ -4,9 +4,4 @@
     path: "{{ goss_dir + '/goss.yml' }}"
     format: documentation
     output_file: "{{ goss_dir + '/validate.log' }}"
-#
-# - name: post_tasks | apt upgrade
-#   apt:
-#     name: "*"
-#     state: latest
 ...
