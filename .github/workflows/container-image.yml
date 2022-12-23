@@ -8,13 +8,12 @@ on:
 
 jobs:
 
-  build:
-
+  push-store-image:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
-    - name: Build the image
-      run: docker build . --file Containerfile --tag ansible-controller
-    - name: Push the image
-      run: docker push ghcr.io/chris-m-powell/ansible-controller
+    - name: 'Build the image'
+      run: |
+        echo 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 | docker login ghcr.io -u chris-m-powell --password-stdin
+        docker build . --file Containerfile --tag ghcr.io/chris-m-powell/ansible-controller:latest
+        docker push ghcr.io/chris-m-powell/ansible-controller:latest
