@@ -14,5 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Build the image
       run: docker build . --file Containerfile --tag ansible-controller:$(date +%s)
+    - name: Push the image
+      run: docker push ansible-controller ghcr.io/chris-m-powell/ansible-controller
