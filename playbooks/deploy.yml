@@ -50,7 +50,6 @@
     - qutebrowser
     - ranger
     - signal_desktop
-    - tty_clock
     - zathura
   post_tasks:
     - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/post_tasks.yml' }}"
