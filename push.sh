@@ -30,7 +30,7 @@ END
 
 function display_help() {
   echo -e "\nUSAGE:\n"
-  echo -e "\tcurl -s https://raw.githubusercontent.com/chris-m-powell/ansible/master/deploy.sh | sudo bash -s -- [<options>]"
+  echo -e "\tcurl -s https://raw.githubusercontent.com/chris-m-powell/ansible/master/push.sh | sudo bash"
   echo -e "\nOPTIONS:\n"
   echo -e "\t-u               \tName of local user"
   echo -e "\t-k               \tComma-delimited list of tags (defaults to 'all')"
