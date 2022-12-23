@@ -1,6 +1,6 @@
 FROM docker.io/library/alpine:latest
 
-LABEL org.opencontainers.images.source https://github.com/chris-m-powell/podman.git
+LABEL org.opencontainers.images.source https://github.com/chris-m-powell/ansible.git
 
 ENV APP_USER=app
 ENV APP_DIR="/$APP_USER"
