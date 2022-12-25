@@ -4,7 +4,6 @@
     state: latest
     pkg:
       - podman
-      - apache2-utils
 
 - name: install | install or update podman-compose
   become_user: "{{ user }}"
