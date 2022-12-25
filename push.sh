@@ -197,10 +197,10 @@ function alert() {
 }
 
 function main() {
-  priv_check
-  parse_opts "${@}"
-  os_check
-  install_dependencies
+  # priv_check
+  # parse_opts "${@}"
+  # os_check
+  # install_dependencies
   deploy
 }
 
