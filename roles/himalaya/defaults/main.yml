@@ -2,7 +2,6 @@
 himalaya:
   enable: true
   installer: "github.com/soywod/himalaya/releases/latest/download/himalaya-linux.tar.gz"
-  dependency:
-    libssl: "security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_1.1.0l-1~deb9u6_amd64.deb"
+  libssl: "security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_1.1.0l-1~deb9u6_amd64.deb"
   config_dir: ".config/himalaya"
 ...
