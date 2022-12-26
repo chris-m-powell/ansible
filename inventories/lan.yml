@@ -2,5 +2,11 @@
 all:
   hosts:
     192.168.0.10:
+      protonvpn_cli:
+        enable: false
+      protonmail_bridge:
+        enable: false
+      signal_desktop:
+        enable: false
     192.168.0.14:
 ...
