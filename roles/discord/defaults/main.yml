@@ -1,5 +1,4 @@
 ---
 discord:
   enable: true
-  pkg: "discordapp.com/api/download?platform=linux&format=tar.gz"
 ...

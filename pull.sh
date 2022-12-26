@@ -203,13 +203,11 @@ function deploy() {
         -U ${repo_url} \
         -e user=${LOCAL_USER} \
         -t ${TAGS} \
-        -K \
         --purge"
   else
       cmd="sudo -u ${LOCAL_USER} ${home_dir}/.local/bin/ansible-pull playbooks/deploy.yml \
         -U ${repo_url} \
         -e user=${LOCAL_USER} \
-        -K \
         --purge"
   fi
   echo ""

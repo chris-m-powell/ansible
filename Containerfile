@@ -72,5 +72,5 @@ RUN find /bin /etc /lib /sbin /usr -xdev -type f -regex '.*apk.*' ! -name apk -e
 WORKDIR $DATA_DIR
 
 USER "$APP_USER"
-ENTRYPOINT ["ansible-playbook", "playbooks/deploy.yml", "-i", "inventories/lan.yml", "-kK", "-u"]
+ENTRYPOINT ["ansible-playbook", "playbooks/deploy.yml", "-i", "inventories/lan.yml", "-u"]
 CMD ["chris"]

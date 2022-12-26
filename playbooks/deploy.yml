@@ -13,19 +13,12 @@
 
 - name: Deploy custom configuration
   vars:
-    distributions:
-      - Pop!_OS
-      - Kali
     goss_dir: "/opt/goss"
-  hosts: "{{ distributions | join(',') }}"
+  hosts: "Pop!_OS"
   become: true
   gather_facts: false
   handlers:
     - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/handlers.yml' }}"
-  vars_prompt:
-    - name: user
-      prompt: Enter local username
-      private: false
   pre_tasks:
     - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/pre_tasks.yml' }}"
       tags:
@@ -35,6 +28,7 @@
     - bitwarden_cli
     - bpytop
     - dircolors
+    - discord
     - git
     - hardening
     - himalaya

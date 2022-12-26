@@ -1,4 +1,10 @@
 ---
+- name: pre_tasks | set local user
+  set_fact:
+    user: "{{ ansible_ssh_user }}"
+  when:
+    - user is undefined
+
 - name: pre_tasks | verify existence of resident user account {{ user }}
   ansible.builtin.getent:
     database: passwd

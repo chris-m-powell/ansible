@@ -4,15 +4,4 @@
     state: latest
     pkg:
       - bpytop
-  register: pkg_install
-
-- name: install | create desktop file
-  ansible.builtin.copy:
-    src: bpytop.desktop
-    dest: /usr/share/applications
-    owner: root
-    group: root
-    mode: 0644
-  notify:
-    - update-desktop-database
 ...

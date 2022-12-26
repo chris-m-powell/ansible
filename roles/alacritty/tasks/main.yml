@@ -4,14 +4,7 @@
   tags:
     - alacritty
   block:
-    - ansible.builtin.include_tasks: "install.yml"
-      when:
-        ansible_distribution == "Pop!_OS"
-      tags:
-        - alacritty-install
-    - ansible.builtin.include_tasks: "build.yml"
-      when:
-        ansible_distribution == "Kali"
+    - ansible.builtin.import_tasks: "install.yml"
       tags:
         - alacritty-install
     - ansible.builtin.import_tasks: "configure.yml"

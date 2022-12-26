@@ -7,9 +7,9 @@
     - ansible.builtin.import_tasks: "install.yml"
       tags:
         - discord-install
-    # - ansible.builtin.import_tasks: "configure.yml"
-    #   tags:
-    #     - discord-configure
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+      tags:
+        - discord-audit
   rescue:
     - ansible.builtin.meta: flush_handlers
 ...

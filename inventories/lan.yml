@@ -9,4 +9,6 @@ all:
       signal_desktop:
         enable: false
     192.168.0.14:
+      discord:
+        enable: false
 ...

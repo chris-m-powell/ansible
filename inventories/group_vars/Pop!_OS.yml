@@ -1,11 +1,7 @@
 ---
-cosmic:
-  enable: false
-discord:
-  enable: false
-
 misc_pkgs:
   - cmatrix
+  - gnome-tweaks
   - libsox-fmt-all
   - sox
   - tree
