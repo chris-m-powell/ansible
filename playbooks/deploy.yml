@@ -12,8 +12,8 @@
     - always
 
 - name: Deploy custom configuration
-  vars:
-    goss_dir: "/opt/goss"
+  vars_files:
+    - includes/vars.yml
   hosts: "Pop!_OS"
   become: true
   gather_facts: false

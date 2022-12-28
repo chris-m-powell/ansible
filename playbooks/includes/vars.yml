@@ -1,8 +1,11 @@
 ---
+goss_dir: "/opt/goss"
 misc_pkgs:
+  - antiword
+  - docx2txt
   - cmatrix
   - gnome-tweaks
   - libsox-fmt-all
   - sox
+  - network-manager-openvpn
   - tree
-...

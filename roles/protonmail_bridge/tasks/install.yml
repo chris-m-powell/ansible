@@ -76,14 +76,14 @@
         - "{{ gpg_key.dest }}"
         - "{{ deb.dest }}"
 
-- name: install | import GPG key binary to keyring
-  ansible.builtin.copy:
-    src: "{{ ansible_facts.user_dir + '/.config/protonmail/bridge/cert.pem' }}"
-    dest: /usr/local/share/ca-certificates/protonbridge.crt
-    owner: root
-    group: root
-    mode: 0644
-    remote_src: true
-  notify:
-    - update-ca-certificates
+# - name: install | import GPG key binary to keyring
+#   ansible.builtin.copy:
+#     src: "{{ ansible_facts.user_dir + '/.config/protonmail/bridge/cert.pem' }}"
+#     dest: /usr/local/share/ca-certificates/protonbridge.crt
+#     owner: root
+#     group: root
+#     mode: 0644
+#     remote_src: true
+#   notify:
+#     - update-ca-certificates
 ...

@@ -2,6 +2,6 @@
 protonmail_bridge:
   enable: true
   gpg_key: "proton.me/download/bridge_pubkey.gpg"
-  keyring: "E2C75D68E6234B07"
+  debsig_id: "E2C75D68E6234B07"
   policy: "proton.me/download/bridge.pol"
   deb: "proton.me/download/bridge/protonmail-bridge_2.3.0-1_amd64.deb"

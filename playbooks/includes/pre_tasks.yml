@@ -25,16 +25,42 @@
   ansible.builtin.setup:
     gather_subset: user_dir
 
-- name: pre_tasks | update APT cache
+- name: pre_tasks | apt upgrade (check mode)
   ansible.builtin.apt:
     update_cache: true
+    state: latest
+    name: "*"
+  changed_when: false
+  ignore_errors: "{{ ansible_check_mode }}"
+  when:
+    - ansible_check_mode
+
+- name: pre_tasks | apt upgrade
+  ansible.builtin.apt:
+    update_cache: true
+    state: latest
+    name: "*"
+  changed_when: false
+  async: 3600
+  poll: 0
+  register: apt_upgrade
+  when:
+    - not ansible_check_mode
+
+- name: pre_tasks | wait for apt upgrade
+  ansible.builtin.async_status:
+    jid: "{{ apt_upgrade.ansible_job_id }}"
+  register: job_result
+  until: job_result.finished
+  retries: 10
+  delay: 10
+  when:
+    - not ansible_check_mode
 
 - name: pre_tasks | install misc pkgs
   ansible.builtin.apt:
     state: latest
     pkg: "{{ misc_pkgs | default([]) }}"
-  tags:
-    - misc-pkgs
 
 - name: pre_tasks | install goss
   ansible.builtin.get_url:
