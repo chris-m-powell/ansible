@@ -1,22 +1,24 @@
+---
 name: Container Image CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: 'Login into Github Container Registry'
-      run: |
-        echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u chris-m-powell --password-stdin
+      - name: 'Login into Github Container Registry'
+        run: |
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u chris-m-powell --password-stdin
 
-    - name: 'Build the image'
-      run: |
-        docker build . --file Containerfile --tag ghcr.io/chris-m-powell/ansible-controller:latest
-        docker push ghcr.io/chris-m-powell/ansible-controller:latest
+      - name: 'Build the image'
+        run: |
+          docker build . --file Containerfile --tag ghcr.io/chris-m-powell/ansible-controller:latest
+          docker push ghcr.io/chris-m-powell/ansible-controller:latest
+...
