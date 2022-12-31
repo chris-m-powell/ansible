@@ -1,0 +1,5 @@
+---
+remmina:
+  enable: true
+  config_dir: ".config/remmina"
+...

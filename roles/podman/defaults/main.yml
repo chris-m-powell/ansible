@@ -1,4 +1,0 @@
----
-podman:
-  enable: true
-...

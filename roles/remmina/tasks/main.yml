@@ -1,15 +1,18 @@
 ---
 - when:
-    - podman.enable
+    - remmina.enable
   tags:
-    - podman
+    - remmina
   block:
     - ansible.builtin.import_tasks: "install.yml"
       tags:
-        - podman-install
+        - remmina-install
+    - ansible.builtin.import_tasks: "configure.yml"
+      tags:
+        - remmina-configure
     - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
-        - podman-audit
+        - remmina-audit
   rescue:
     - ansible.builtin.meta: flush_handlers
 ...

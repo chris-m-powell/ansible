@@ -1,0 +1,7 @@
+---
+- name: install | install package updates
+  ansible.builtin.apt:
+    state: latest
+    pkg:
+      - remmina
+...

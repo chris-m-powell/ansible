@@ -40,6 +40,7 @@
     - protonvpn_cli
     - qutebrowser
     - ranger
+    - remmina
     - signal_desktop
     - zathura
   post_tasks:
