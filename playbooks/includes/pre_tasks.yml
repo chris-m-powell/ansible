@@ -52,7 +52,7 @@
     jid: "{{ apt_upgrade.ansible_job_id }}"
   register: job_result
   until: job_result.finished
-  retries: 10
+  retries: 30
   delay: 10
   when:
     - not ansible_check_mode
