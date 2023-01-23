@@ -211,6 +211,7 @@ require('nvim-tree').setup({
       list = {
         { key = "h", cb = '<cmd>lua nvim_tree_go_out()<CR>' },
         { key = "l", cb = '<cmd>lua nvim_tree_go_in()<CR>' },
+        { key = "nN", action = "create" },
         { key = "cw", action = "rename" },
         { key = "yy", action = "copy" },
         { key = "dd", action = "cut" },
