@@ -201,7 +201,6 @@ require('nvim-tree').setup({
   sort_by = "case_sensitive",
   hijack_netrw = true,
   hijack_unnamed_buffer_when_opening = true,
-  open_on_setup = true,
   sync_root_with_cwd = true,
   reload_on_bufenter = true,
   view = {
