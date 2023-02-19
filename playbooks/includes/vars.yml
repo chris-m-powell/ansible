@@ -8,4 +8,5 @@ misc_pkgs:
   - libsox-fmt-all
   - sox
   - network-manager-openvpn
+  - virtualbox
   - tree
