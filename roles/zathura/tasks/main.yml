@@ -4,8 +4,6 @@
   tags:
     - zathura
   block:
-    # - set_fact:
-    #     zathura.config_dir: "{{ ansible_facts.user_dir + '/' zathura.config_dir }}"
     - ansible.builtin.import_tasks: "install.yml"
       tags:
         - zathura-install
@@ -14,7 +12,7 @@
         - zathura-configure
     - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
-        - zathura-configure
+        - zathura-audit
   rescue:
     - ansible.builtin.meta: flush_handlers
 ...
