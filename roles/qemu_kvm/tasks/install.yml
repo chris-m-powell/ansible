@@ -3,9 +3,10 @@
   ansible.builtin.apt:
     state: latest
     pkg:
-      - qemu-kvm
-      - libvirt-daemon-system
+      - bridge-utils
       - libvirt-clients
+      - libvirt-daemon-system
+      - qemu-kvm
       - virt-manager
 
 - name: install | add {{ user }} to kvm group
@@ -13,4 +14,5 @@
     name: "{{ user }}"
     groups: kvm
     append: true
+  notify: reboot
 ...
