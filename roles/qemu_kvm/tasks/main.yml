@@ -1,0 +1,16 @@
+---
+- when:
+    - qemu_kvm.enable
+    - ansible_virtualization_role != "guest"
+  tags:
+    - qemu-kvm
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
+      tags:
+        - qemu-kvm-install
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+      tags:
+        - qemu-kvm-audit
+  rescue:
+    - ansible.builtin.meta: flush_handlers
+...

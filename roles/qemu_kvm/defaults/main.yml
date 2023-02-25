@@ -1,0 +1,4 @@
+---
+qemu_kvm:
+  enable: true
+...

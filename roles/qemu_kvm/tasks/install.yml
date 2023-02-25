@@ -1,0 +1,16 @@
+---
+- name: install | install package updates
+  ansible.builtin.apt:
+    state: latest
+    pkg:
+      - qemu-kvm
+      - libvirt-daemon-system
+      - libvirt-clients
+      - virt-manager
+
+- name: install | add {{ user }} to kvm group
+  ansible.builtin.user:
+    name: "{{ user }}"
+    groups: kvm
+    append: true
+...
