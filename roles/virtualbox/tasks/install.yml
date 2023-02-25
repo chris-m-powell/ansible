@@ -3,6 +3,11 @@
   ansible.builtin.apt:
     state: latest
     pkg:
+<<<<<<< HEAD
       - virtualbox
       - virtualbox-ext-pack
+=======
+      - p7zip-full
+      - virtualbox
+>>>>>>> e9d3d5ce7efae59b56d187e5dbeb8b9527800da5
 ...
