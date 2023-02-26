@@ -30,7 +30,7 @@
     - dircolors
     - discord
     - git
-    - hardening
+    # - hardening
     - himalaya
     - mpd
     - ncmpcpp
