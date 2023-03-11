@@ -3,11 +3,17 @@
   ansible.builtin.apt:
     state: latest
     pkg:
-<<<<<<< HEAD
       - virtualbox
-      - virtualbox-ext-pack
-=======
       - p7zip-full
-      - virtualbox
->>>>>>> e9d3d5ce7efae59b56d187e5dbeb8b9527800da5
+
+- name: install | accept PUEL for virtual-ext-pack installation
+  ansible.builtin.shell: >
+    echo virtualbox-ext-pack virtualbox-ext-pack/license select true | sudo debconf-set-selections
+  changed_when: false
+
+- name: install | install virtual-ext-pack
+  ansible.builtin.apt:
+    state: latest
+    pkg:
+      - virtualbox-ext-pack
 ...

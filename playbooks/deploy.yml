@@ -43,6 +43,7 @@
     - ranger
     - remmina
     - signal_desktop
+    - virtualbox
     - zathura
   post_tasks:
     - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/post_tasks.yml' }}"
