@@ -1,51 +1,7 @@
 ---
-- name: install | check if installed
-  ansible.builtin.stat:
-    path: /usr/local/bin/tty-clock
-  register: tty_clock_bin
-
-- name: install | build from source
-  when:
-    - not tty_clock_bin.stat.exists
-  block:
-    - name: install | install package updates
-      ansible.builtin.apt:
-        state: latest
-        pkg:
-          - libncursesw5-dev
-
-    - name: install | clone project repository
-      ansible.builtin.git:
-        repo: "{{ 'https://' + tty_clock.repo }}"
-        dest: "{{ tty_clock.dest }}"
-        depth: 1
-      register: clone
-
-    - name: install | build from source
-      community.general.make:
-        chdir: "{{ tty_clock.dest }}"
-
-    - name: install | copy binary to /usr/local/bin
-      ansible.builtin.copy:
-        src: "{{ tty_clock.dest + '/tty-clock' }}"
-        dest: /usr/local/bin
-        owner: root
-        group: root
-        mode: 0755
-        remote_src: true
-
-    - name: install | remove local project repository
-      ansible.builtin.file:
-        path: "{{ tty_clock.dest }}"
-        state: absent
-
-- name: install | create desktop file
-  ansible.builtin.copy:
-    src: tty_clock.desktop
-    dest: /usr/share/applications
-    owner: root
-    group: root
-    mode: 0644
-  notify:
-    - update-desktop-database
+- name: install | install package updates
+  ansible.builtin.apt:
+    state: latest
+    pkg:
+      - tty-clock
 ...

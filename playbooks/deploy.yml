@@ -31,7 +31,6 @@
     - dircolors
     - discord
     - git
-    # - hardening
     - himalaya
     - mpd
     - ncmpcpp
@@ -44,6 +43,7 @@
     - ranger
     - remmina
     - signal_desktop
+    - tty_clock
     - virtualbox
     - zathura
   post_tasks:

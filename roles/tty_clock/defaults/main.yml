@@ -1,6 +1,4 @@
 ---
 tty_clock:
   enable: true
-  repo: "github.com/xorg62/tty-clock.git"
-  dest: "/tmp/tty-clock"
 ...

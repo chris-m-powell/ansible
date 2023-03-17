@@ -1,5 +1,0 @@
-[Desktop Entry]
-Icon=terminal
-Name=tty-clock
-Type=Application
-Exec=/usr/bin/alacritty -e "tty-clock" "-cs"
