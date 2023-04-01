@@ -11,4 +11,8 @@ all:
     192.168.0.14:
       discord:
         enable: false
+      qemu_kvm:
+        enable: false
+      virtualbox:
+        enable: false
 ...
