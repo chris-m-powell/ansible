@@ -40,7 +40,6 @@
     - ranger
     - remmina
     - signal_desktop
-    - tty_clock
     - virtualbox
     - zathura
   post_tasks:
