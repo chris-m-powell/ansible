@@ -4,7 +4,6 @@
   community.general.source_control.git_config:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
-    scope: file
-    file: "{{ ansible_facts.user_dir + '/.gitconfig' }}"
+    scope: global
   loop: "{{ git.gitconfig }}"
 ...

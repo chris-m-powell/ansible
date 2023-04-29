@@ -6,7 +6,6 @@
     dest: "{{ dircolors.theme.nord.dest }}"
     force: true
     depth: 1
-    single_branch: true
   changed_when: false
 
 - when:

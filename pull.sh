@@ -28,58 +28,31 @@ END
   sleep 1
 }
 
-function display_dragon() {
-  printf "\033c"
-  cat << END
-..............
-            ..,;:ccc,.
-          ......''';lxO.
-.....''''..........,:ld;
-           .';;;:::;,,.x,
-      ..'''.            0Xxoc:,.  ...
-  ....                ,ONkc;,;cokOdc',.
- .                   OMo           ':ddo.
-                    dMc               :OO;
-                    0M.                 .:o.
-                    ;Wd
-                     ;XO,
-                       ,d0Odlc;,..
-                           ..',;:cdOOd::,.
-                                    .:d;.':;.
-                                       'd,  .'
-                                         ;l   ..
-                                          .o
-                                            c
-                                            .'
-                                             .
-END
-  sleep 1
-}
-
 function display_help() {
   echo -e "\nUSAGE:\n"
   echo -e "\tcurl -s https://raw.githubusercontent.com/chris-m-powell/ansible/master/pull.sh | sudo bash -s -- [<options>]"
   echo -e "\nOPTIONS:\n"
   echo -e "\t-u               \tName of local user"
-  echo -e "\t-k               \tComma-delimited list of tags (defaults to 'all')"
   echo -e "\t-h               \tDisplays usage options"
   echo -e "\nSUPPORTED TAGS:\n"
   echo -e "\tall              \tApply all custom configurations"
   echo -e "\talacritty        \tFast, cross-platform, OpenGL terminal emulator"
   echo -e "\tbitwarden_cli    \tFull-featured CLI to access and manage Bitwarden vault"
   echo -e "\tbpytop           \tSystem activity monitoring tool"
+  echo -e "\tcrt              \t"
   echo -e "\tdircolors        \tColor setup for ls"
-  echo -e "\tgtk              \tApply GTK preferences"
-  echo -e "\thimalaya         \tCLI for email management"
+  echo -e "\tgit              \t"
   echo -e "\tmpd              \tAudio playback daemon with client-server architecture"
   echo -e "\tncmpcpp          \tNcurses client for MPD"
   echo -e "\tneofetch         \tFast, highly customizable system info script"
   echo -e "\tneovim           \tRefactor of Vim, focused on extensibility and usability"
-  echo -e "\tprotonvpn-bridge \tClient to seamlessly decrypt/encrypt incoming/outgoing ProtonMail"
+  echo -e "\tqemu-kvm         \t"
   echo -e "\tprotonvpn-cli    \tOfficial Proton VPN CLI"
   echo -e "\tqutebrowser      \tKeyboard-driven, vim-like browser based on PyQt5"
   echo -e "\tranger           \tTerminal-based, visual file manager inspired by Vim"
+  echo -e "\tremmina          \t"
   echo -e "\tsignal-desktop   \tPrivate messaging from your desktop"
+  echo -e "\tvirtual-box      \t"
   echo -e "\tzathura          \tLightweight document viewer"
   exit 1
 }
@@ -92,10 +65,10 @@ function detect_os() {
   then
     display_logo
     return 0
-  elif [[ "${OS_ID}" =~ ^(kali)$ ]]
-  then
-    display_dragon
-    return 0
+  #elif [[ "${OS_ID}" =~ ^(kali)$ ]]
+  #then
+  #  display_dragon
+  #  return 0
   else
     return 1
   fi
@@ -119,14 +92,14 @@ function detect_missing_deb_pkg() {
   fi
 }
 
-function detect_missing_pip_pkg() {
-  if [[ $(sudo -u "${LOCAL_USER}" python3.10 -m pip list --user | grep -c $1) -eq 0 ]]
-  then
-    return 0
-  else
-    return 1
-  fi
-}
+#function detect_missing_pip_pkg() {
+#  if [[ $(sudo -u "${LOCAL_USER}" python3.10 -m pip list --user | grep -c $1) -eq 0 ]]
+#  then
+#    return 0
+#  else
+#    return 1
+#  fi
+#}
 
 function detect_missing_deb_pkgs() {
   local a b
@@ -137,30 +110,30 @@ function detect_missing_deb_pkgs() {
   echo "${b[*]}"
 }
 
-function detect_missing_pip_pkgs() {
-  local a b
-  a=("$@")
-  for i in "${a[@]}"; do
-    if detect_missing_pip_pkg "$i"; then b+=("$i"); fi;
-  done
-  echo "${b[*]}"
-}
+#function detect_missing_pip_pkgs() {
+#  local a b
+#  a=("$@")
+#  for i in "${a[@]}"; do
+#    if detect_missing_pip_pkg "$i"; then b+=("$i"); fi;
+#  done
+#  echo "${b[*]}"
+#}
 
 function install_dependencies() {
-  declare -a DEB_DEPENDENCIES=( "git" "python3-pip" )
+  declare -a DEB_DEPENDENCIES=( "git" "ansible" )
   missing_deb_pkgs=$(detect_missing_deb_pkgs "${DEB_DEPENDENCIES[@]}")
   if [[ "${missing_deb_pkgs}" ]]; then
     alert -t warning -m "missing dependencies detected."
     alert -t info -m "attempting to install ${missing_deb_pkgs} ..."
     install_missing_pkgs apt "${missing_deb_pkgs[@]}"
   fi
-  declare -a PIP_DEPENDENCIES=( "ansible" )
-  missing_pip_pkgs=$(detect_missing_pip_pkgs "${PIP_DEPENDENCIES[@]}")
-  if [[ "${missing_pip_pkgs}" ]]; then
-    alert -t warning -m "missing dependencies detected."
-    alert -t info -m "attempting to install ${missing_pip_pkgs} ..."
-    install_missing_pkgs pip "${missing_pip_pkgs[@]}"
-  fi
+#  declare -a PIP_DEPENDENCIES=( "ansible" )
+#  missing_pip_pkgs=$(detect_missing_pip_pkgs "${PIP_DEPENDENCIES[@]}")
+#  if [[ "${missing_pip_pkgs}" ]]; then
+#    alert -t warning -m "missing dependencies detected."
+#    alert -t info -m "attempting to install ${missing_pip_pkgs} ..."
+#    install_missing_pkgs pip "${missing_pip_pkgs[@]}"
+#  fi
 }
 
 function install_missing_pkgs() {
@@ -170,11 +143,11 @@ function install_missing_pkgs() {
       apt update
       cmd="apt install -y ${missing_deb_pkgs}"
       ;;
-    pip)
-      cmd="sudo -u ${LOCAL_USER} python3.10 -m pip install ${missing_pip_pkgs} \
-        --user \
-        --no-warn-script-location"
-      ;;
+    #pip)
+    #  cmd="sudo -u ${LOCAL_USER} python3.10 -m pip install ${missing_pip_pkgs} \
+    #    --user \
+    #    --no-warn-script-location"
+    #  ;;
     *) return 1 ;;
   esac
   echo ""
@@ -199,13 +172,14 @@ function deploy() {
   home_dir=$(getent passwd ${LOCAL_USER} | cut -d: -f6) 
   alert -t info -m "executing playbook to deploy custom configurations..."
   if [[ "${TAGS}" ]]; then
-      cmd="sudo -u ${LOCAL_USER} ${home_dir}/.local/bin/ansible-pull playbooks/deploy.yml \
+      #cmd="sudo -u ${LOCAL_USER} ${home_dir}/.local/bin/ansible-pull playbooks/deploy.yml \
+      cmd="sudo -u ${LOCAL_USER} ansible-pull playbooks/deploy.yml \
         -U ${repo_url} \
         -e user=${LOCAL_USER} \
         -t ${TAGS} \
         --purge"
   else
-      cmd="sudo -u ${LOCAL_USER} ${home_dir}/.local/bin/ansible-pull playbooks/deploy.yml \
+      cmd="sudo -u ${LOCAL_USER} ansible-pull playbooks/deploy.yml \
         -U ${repo_url} \
         -e user=${LOCAL_USER} \
         --purge"

@@ -3,7 +3,6 @@
   ansible.builtin.unarchive:
     src: "{{ 'https://' + bitwarden_cli.pkg }}"
     dest: /usr/local/bin
-    include: bw
     owner: root
     group: root
     mode: 0755

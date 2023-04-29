@@ -19,21 +19,19 @@
     validate_certs: true
     owner: "{{ user }}"
     group: "{{ user }}"
-  when:
-    - neovim.vim_plug.enable
 
-- name: configure | install plug-in updates
-  become_user: "{{ user }}"
-  ansible.builtin.git:
-    repo: "{{ 'https://' + item.value.repo }}"
-    dest: "{{ ansible_facts.user_dir + '/.local/share/nvim/plugged/' + item.value.dest }}"
-    force: true
-    depth: 1
-    single_branch: true
-  when:
-    - neovim.vim_plug.enable
-    - neovim.vim_plug.preinstall_plugins
-  loop: "{{ neovim.plugins | dict2items }}"
+      #- name: configure | install plug-in updates
+      #  become_user: "{{ user }}"
+      #  ansible.builtin.git:
+      #    repo: "{{ 'https://' + item.value.repo }}"
+      #    dest: "{{ ansible_facts.user_dir + '/.local/share/nvim/plugged/' + item.value.dest }}"
+      #    force: true
+      #    depth: 1
+      #    single_branch: true
+      #  when:
+      #    - neovim.vim_plug.enable
+      #    - neovim.vim_plug.preinstall_plugins
+      #  loop: "{{ neovim.plugins | dict2items }}"
 
 - name: configure | deploy init
   ansible.builtin.copy:
