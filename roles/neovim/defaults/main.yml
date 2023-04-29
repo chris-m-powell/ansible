@@ -21,15 +21,15 @@ neovim:
     nvim_tree:
       repo: "github.com/chris-m-powell/nvim-tree.lua.git"
       dest: "nvim-tree.lua"
-    himalaya:
-      repo: "git.sr.ht/~soywod/himalaya-vim"
-      dest: "himalaya-vim"
+        #    himalaya:
+        #      repo: "git.sr.ht/~soywod/himalaya-vim"
+        #      dest: "himalaya-vim"
     indent_blankline:
       repo: "github.com/lukas-reineke/indent-blankline.nvim.git"
       dest: "indent-blankline.nvim"
-    comment:
-      repo: "github.com/numToStr/comment.nvim.git"
-      dest: "comment.nvim"
+        #    comment:
+        #      repo: "github.com/numToStr/comment.nvim.git"
+        #      dest: "comment.nvim"
     neoscroll:
       repo: "github.com/karb94/neoscroll.nvim.git"
       dest: "neoscroll.nvim"

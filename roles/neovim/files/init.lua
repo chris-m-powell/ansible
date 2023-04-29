@@ -7,7 +7,7 @@ Plug('chris-m-powell/nord.nvim')
 Plug('chris-m-powell/nvim-tree.lua')
 -- Plug('https://git.sr.ht/~soywod/himalaya-vim')
 Plug('lukas-reineke/indent-blankline.nvim')
-Plug('numToStr/comment.nvim')
+-- Plug('numToStr/comment.nvim')
 Plug('karb94/neoscroll.nvim')
 Plug('lewis6991/gitsigns.nvim')
 Plug('nvim-treesitter/nvim-treesitter')
@@ -293,7 +293,7 @@ require('nord').set()
 
 
 -- comment
-require('Comment').setup()
+-- require('Comment').setup()
 
 
 -- lualine
