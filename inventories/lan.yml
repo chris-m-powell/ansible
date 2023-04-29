@@ -1,7 +1,7 @@
 ---
 all:
   hosts:
-    192.168.0.10:
+    192.168.0.2:
       protonvpn_cli:
         enable: false
       qemu_kvm:
