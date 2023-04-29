@@ -4,11 +4,11 @@ all:
     192.168.0.10:
       protonvpn_cli:
         enable: false
+      qemu_kvm:
+        enable: false
       signal_desktop:
         enable: false
     192.168.0.14:
-      qemu_kvm:
-        enable: false
       virtualbox:
         enable: false
 ...
