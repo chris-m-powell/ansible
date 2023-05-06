@@ -1,3 +1,4 @@
 ---
 tmux:
   enable: true
+  tpm_repo: "github.com/tmux-plugins/tpm"
