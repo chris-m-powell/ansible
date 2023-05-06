@@ -1,0 +1,15 @@
+---
+- when:
+    - tmux.enable
+  tags:
+    - tmux
+  block:
+    - ansible.builtin.import_tasks: "install.yml"
+      tags:
+        - tmux-install
+    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+      tags:
+        - tmux-audit
+  rescue:
+    - ansible.builtin.meta: flush_handlers
+...

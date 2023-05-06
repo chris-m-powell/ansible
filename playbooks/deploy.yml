@@ -27,8 +27,6 @@
     - alacritty
     - bitwarden_cli
     - bpytop
-    - crt
-    - dircolors
     - git
     - mpd
     - ncmpcpp
@@ -40,6 +38,7 @@
     - ranger
     - remmina
     - signal_desktop
+    - tmux
     - virtualbox
     - zathura
   post_tasks:
