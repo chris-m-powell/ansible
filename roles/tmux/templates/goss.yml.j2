@@ -2,3 +2,11 @@ package:
   tmux:
     installed: true
     title: tmux | package installed
+file:
+  {{ [ansible_facts.user_dir,'.tmux.conf'] | join ('/') }}:
+    exists: true
+    owner: {{ user }}
+    group: {{ user }}
+    mode: "0640"
+    filetype: file
+    title: tmux | configuration file exists

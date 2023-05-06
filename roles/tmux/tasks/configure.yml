@@ -1,0 +1,9 @@
+---
+- name: configure | deploy config file
+  ansible.builtin.copy:
+    src: .tmux.conf
+    dest: "{{ ansible_facts.user_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0640
+...
