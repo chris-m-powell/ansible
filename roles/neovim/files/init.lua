@@ -3,8 +3,8 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.local/share/nvim/plugged')
 Plug('dense-analysis/ale')
 Plug('nvim-lualine/lualine.nvim')
-Plug('chris-m-powell/nord.nvim')
-Plug('chris-m-powell/nvim-tree.lua')
+Plug('shaunsingh/nord.nvim')
+Plug('kelly-lin/ranger.nvim')
 -- Plug('https://git.sr.ht/~soywod/himalaya-vim')
 Plug('lukas-reineke/indent-blankline.nvim')
 -- Plug('numToStr/comment.nvim')
@@ -71,6 +71,14 @@ vim.opt.termguicolors = true
 -- vim.opt.foldmethod = 'manual'
 -- vim.opt.foldenable = false
 
+-- ranger
+require("ranger-nvim").setup({ replace_netrw = true })
+vim.api.nvim_set_keymap("n", "<leader>f", "", {
+  noremap = true,
+  callback = function()
+    require("ranger-nvim").open(true)
+  end,
+})
 
 -- nvim-cmp
 vim.opt.completeopt=menu,menuone,noselect
@@ -157,130 +165,6 @@ require('neoscroll').setup()
 require('indent_blankline').setup {
   show_current_context = true,
 }
-
-
--- nvim-tree
-local nvim_tree = require('nvim-tree')
-local get_node = require('nvim-tree.lib').get_node_at_cursor
-local has_children = function(node) return type(node.nodes) == 'table' and vim.tbl_count(node.nodes) > 0 end
-local key_down = vim.api.nvim_replace_termcodes('<Down>', true, true, true)
-
-nvim_tree_go_out = function()
-  local node = get_node()
-
-  if node.name == '..' then
-    require('nvim-tree.lib').dir_up()
-    return
-  end
-
-  nvim_tree.on_keypress('close_node')
-end
-
-nvim_tree_go_in = function()
-  local node = get_node()
-
-  if node.name == '..' then
-    vim.fn.feedkeys(key_down)
-    return
-  end
-
-  if has_children(node) and node.open == true then
-    vim.fn.feedkeys(key_down)
-    return
-  end
-
-  nvim_tree.on_keypress('edit')
-
-  if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'NvimTree' then return end
-
-  node = get_node()
-  if has_children(node) then vim.fn.feedkeys(key_down) end
-end
-
-require('nvim-tree').setup({
-  sort_by = "case_sensitive",
-  hijack_netrw = true,
-  hijack_unnamed_buffer_when_opening = true,
-  sync_root_with_cwd = true,
-  reload_on_bufenter = true,
-  view = {
-    adaptive_size = false,
-    mappings = {
-      custom_only = false,
-      list = {
-        { key = "h", cb = '<cmd>lua nvim_tree_go_out()<CR>' },
-        { key = "l", cb = '<cmd>lua nvim_tree_go_in()<CR>' },
-        { key = "nN", action = "create" },
-        { key = "cw", action = "rename" },
-        { key = "yy", action = "copy" },
-        { key = "dd", action = "cut" },
-        { key = "pp", action = "paste" },
-        { key = "dD", action = "remove" },
-        { key = "zh", action = "toggle_dotfiles" },
-        { key = "ii", action = "toggle_file_info" },
-        { key = "<Tab>", action = "preview" },
-      },
-    },
-  },
-  renderer = {
-    highlight_opened_files = "all",
-    indent_markers = {
-      enable = true,
-      icons = {
-        corner = "└",
-        edge = "│",
-        item = "├",
-        none = " ",
-      }
-    },
-    icons = {
-      show = {
-        file = false,
-        folder = false,
-        folder_arrow = false,
-        git = false,
-      },
-    },
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
-
-local function open_nvim_tree(data)
-
-  -- buffer is a [No Name]
-  local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
-
-  -- buffer is a directory
-  local directory = vim.fn.isdirectory(data.file) == 1
-
-  if not no_name and not directory then
-    return
-  end
-
-  -- change to the directory
-  if directory then
-    vim.cmd.cd(data.file)
-  end
-
-  -- open the tree
-  require("nvim-tree.api").tree.open()
-end
-
-vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
-
-
-function toggle_replace()
-  local view = require"nvim-tree.view"
-  if view.is_visible() then
-    view.close()
-  else
-    require"nvim-tree".open()
-  end
-end
-
-vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua toggle_replace()<CR>", {noremap = true, silent = true})
 
 
 -- nord
