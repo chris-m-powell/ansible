@@ -39,7 +39,6 @@
     - remmina
     - signal_desktop
     - tmux
-    - virtualbox
     - zathura
     - zsh
   post_tasks:
