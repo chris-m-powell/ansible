@@ -8,6 +8,7 @@
       - libvirt-daemon-system
       - qemu-kvm
       - virt-manager
+      - p7zip-full
 
 - name: install | add {{ user }} to kvm group
   ansible.builtin.user:

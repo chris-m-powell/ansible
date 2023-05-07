@@ -5,7 +5,6 @@ misc_pkgs:
   - docx2txt
   - gnome-tweaks
   - libsox-fmt-all
-  - p7zip-full
   - sox
   - network-manager-openvpn
   - tree
