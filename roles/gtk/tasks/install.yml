@@ -1,4 +1,10 @@
 ---
+- name: install | install package updates
+  ansible.builtin.apt:
+    state: latest
+    pkg:
+      - gnome-shell-extensions
+
 - name: install | create necessary directories
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir + '/.themes' }}"
@@ -8,10 +14,10 @@
     mode: 0750
 
 - name: install | clone project repository
+  become_user: "{{ user }}"
   ansible.builtin.git:
     repo: "{{ 'https://' + item.repo }}"
     dest: "{{ ansible_facts.user_dir + '/' + item.dest }}"
     depth: 1
-    single_branch: true
   loop: "{{ gtk.theme }}"
 ...

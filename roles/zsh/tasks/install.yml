@@ -3,5 +3,7 @@
   ansible.builtin.apt:
     state: latest
     pkg:
-      - tty-clock
+      - zsh
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
 ...

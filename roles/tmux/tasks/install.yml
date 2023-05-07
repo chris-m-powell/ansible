@@ -4,4 +4,5 @@
     state: latest
     pkg:
       - tmux
+      - cmatrix
 ...

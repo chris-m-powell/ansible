@@ -1,15 +1,18 @@
 ---
 - when:
-    - tty_clock.enable
+    - zsh.enable
   tags:
-    - tty_clock
+    - zsh
   block:
     - ansible.builtin.import_tasks: "install.yml"
       tags:
-        - tty_clock-install
+        - zsh-install
+    - ansible.builtin.import_tasks: "configure.yml"
+      tags:
+        - zsh-configure
     - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
-        - tty_clock-audit
+        - zsh-audit
   rescue:
     - ansible.builtin.meta: flush_handlers
 ...

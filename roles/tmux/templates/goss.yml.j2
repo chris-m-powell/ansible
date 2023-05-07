@@ -1,7 +1,8 @@
 package:
   tmux:
     installed: true
-    title: tmux | package installed
+  cmatrix:
+    installed: true
 file:
   {{ [ansible_facts.user_dir,'.tmux.conf'] | join ('/') }}:
     exists: true

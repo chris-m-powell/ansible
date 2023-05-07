@@ -3,7 +3,6 @@ goss_dir: "/opt/goss"
 misc_pkgs:
   - antiword
   - docx2txt
-  - cmatrix
   - gnome-tweaks
   - libsox-fmt-all
   - p7zip-full
