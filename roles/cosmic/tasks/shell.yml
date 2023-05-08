@@ -10,7 +10,7 @@
   block:
     - name: install | install build dependencies
       ansible.builtin.apt:
-        state: latest
+        state: present
         pkg:
           - node-typescript
           - make
@@ -23,7 +23,6 @@
         dest: "{{ '/tmp/' + cosmic.extensions.shell.dest }}"
         force: true
         depth: 1
-        single_branch: true
 
     - name: install | build shell extension
       become_user: "{{ user }}"

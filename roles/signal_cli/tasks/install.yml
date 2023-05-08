@@ -1,7 +1,7 @@
 ---
 - name: install | install dependencies
   ansible.builtin.apt:
-    state: latest
+    state: present
     pkg:
       - openjdk-18-jre
       - qrencode

@@ -7,7 +7,7 @@
 
 - name: install | install package updates
   ansible.builtin.apt:
-    state: latest
+    state: present
     pkg:
       - yamllint
       - python3-pip
@@ -17,7 +17,7 @@
   become_user: "{{ user }}"
   ansible.builtin.pip:
     name: "{{ item }}"
-    state: latest
+    state: present
     extra_args: --user
   loop:
     - flake8

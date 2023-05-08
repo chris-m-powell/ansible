@@ -1,7 +1,7 @@
 ---
 - name: ssh | install package updates
   ansible.builtin.apt:
-    state: latest
+    state: present
     pkg:
       - ssh
   register: ssh_install

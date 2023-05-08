@@ -27,7 +27,6 @@
       #    dest: "{{ ansible_facts.user_dir + '/.local/share/nvim/plugged/' + item.value.dest }}"
       #    force: true
       #    depth: 1
-      #    single_branch: true
       #  when:
       #    - neovim.vim_plug.enable
       #    - neovim.vim_plug.preinstall_plugins

@@ -11,7 +11,7 @@
   block:
     - name: install | install build dependencies
       ansible.builtin.apt:
-        state: latest
+        state: present
         pkg:
           - cargo
           - rustc
@@ -24,7 +24,6 @@
         dest: "{{ '/tmp/' + cosmic.extensions.shell_shortcuts.dest }}"
         force: true
         depth: 1
-        single_branch: true
 
     - name: install | build shell shortcuts extension
       become_user: "{{ user }}"

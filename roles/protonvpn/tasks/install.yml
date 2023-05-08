@@ -30,7 +30,7 @@
 - name: install | install or update Proton VPN CLI
   ansible.builtin.apt:
     update_cache: true
-    state: latest
+    state: present
     pkg:
       - protonvpn-cli
 ...

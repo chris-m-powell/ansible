@@ -1,7 +1,7 @@
 ---
 - name: install | install package updates
   ansible.builtin.apt:
-    state: latest
+    state: present
     pkg:
       - virtualbox
       - p7zip-full
@@ -13,7 +13,7 @@
 
 - name: install | install virtual-ext-pack
   ansible.builtin.apt:
-    state: latest
+    state: present
     pkg:
       - virtualbox-ext-pack
 ...
