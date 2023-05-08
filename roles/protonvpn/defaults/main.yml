@@ -1,5 +1,5 @@
 ---
-protonvpn_cli:
+protonvpn:
   enable: true
   pkg: "repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb"
   config_dir: ".config/protonvpn"

@@ -1,15 +1,15 @@
 ---
 - when:
-    - protonvpn_cli.enable
+    - protonvpn.enable
   tags:
-    - protonvpn_cli
+    - protonvpn
   block:
     - ansible.builtin.import_tasks: "install.yml"
       tags:
-        - protonvpn_cli-install
+        - protonvpn-install
     - ansible.builtin.import_tasks: "configure.yml"
       tags:
-        - protonvpn_cli-configure
+        - protonvpn-configure
   rescue:
     - ansible.builtin.meta: flush_handlers
 ...

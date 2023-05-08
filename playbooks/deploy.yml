@@ -25,14 +25,13 @@
         - always
   roles:
     - alacritty
-    - bitwarden_cli
     - bpytop
     - git
     - mpd
     - ncmpcpp
     - neofetch
     - neovim
-    - protonvpn_cli
+    - protonvpn
     - qemu_kvm
     - qutebrowser
     - ranger

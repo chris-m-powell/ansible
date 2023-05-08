@@ -5,7 +5,7 @@
   block:
     - name: install | download Proton VPN stable release repository installer
       ansible.builtin.get_url:
-        url: "{{ 'https://' + protonvpn_cli.pkg }}"
+        url: "{{ 'https://' + protonvpn.pkg }}"
         dest: /tmp
         owner: root
         group: root
