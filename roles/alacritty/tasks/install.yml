@@ -1,7 +1,7 @@
 ---
 - name: install | install package updates
   ansible.builtin.apt:
-    state: latest
+    state: present
     pkg:
       - alacritty
 
@@ -9,7 +9,7 @@
   ansible.builtin.apt:
     pkg:
       - fonts-jetbrains-mono
-    state: latest
+    state: present
   notify:
     - fc-cache
 ...

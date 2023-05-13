@@ -7,7 +7,6 @@ Plug('shaunsingh/nord.nvim')
 Plug('kelly-lin/ranger.nvim')
 -- Plug('https://git.sr.ht/~soywod/himalaya-vim')
 Plug('lukas-reineke/indent-blankline.nvim')
--- Plug('numToStr/comment.nvim')
 Plug('karb94/neoscroll.nvim')
 Plug('lewis6991/gitsigns.nvim')
 Plug('nvim-treesitter/nvim-treesitter')
@@ -174,10 +173,6 @@ vim.g.nord_disable_background = true
 vim.g.nord_italic = true
 vim.g.nord_uniform_diff_background = true
 require('nord').set()
-
-
--- comment
--- require('Comment').setup()
 
 
 -- lualine

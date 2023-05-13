@@ -1,7 +1,7 @@
 ---
 - name: ufw | ensure ufw is installed
   ansible.builtin.apt:
-    state: latest
+    state: present
     pkg: ufw
 
 - name: ufw | default deny all incoming traffic

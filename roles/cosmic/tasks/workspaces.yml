@@ -16,7 +16,6 @@
         dest: "{{ '/tmp/' + cosmic.extensions.workspaces.dest }}"
         force: true
         depth: 1
-        single_branch: true
 
     - name: install | make workspaces extension
       community.general.make:

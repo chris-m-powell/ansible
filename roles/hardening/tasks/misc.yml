@@ -1,12 +1,12 @@
 ---
 - name: misc | install rootkit detection
   ansible.builtin.apt:
-    state: latest
+    state: present
     pkg: rkhunter
 
 - name: misc | install auditing tools
   ansible.builtin.apt:
-    state: latest
+    state: present
     pkg: lynis
 
 - name: misc | remove unnecessary packages

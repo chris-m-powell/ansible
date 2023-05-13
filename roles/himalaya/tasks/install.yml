@@ -26,7 +26,7 @@
 
 - name: install |  install pass
   ansible.builtin.apt:
-    state: latest
+    state: present
     pkg:
       - pass
 
