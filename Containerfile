@@ -18,7 +18,7 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
 
 USER "$APP_USER"
 
-RUN python3.10 -m pip install ansible-core --user \
+RUN python3.11 -m pip install ansible-core --user \
   && ansible-galaxy collection install community.general ansible.posix \
   && git clone https://github.com/chris-m-powell/ansible.git "$DATA_DIR" \
     --single-branch \
