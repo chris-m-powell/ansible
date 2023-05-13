@@ -8,3 +8,4 @@ misc_pkgs:
   - sox
   - network-manager-openvpn
   - tree
+  - p7zip-full

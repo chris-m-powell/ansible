@@ -1,7 +1,6 @@
 package:
   remmina:
     installed: true
-    title: remmina | package installed
 file:
   {{ ansible_facts.user_dir + '/' + remmina.config_dir }}:
     exists: true
@@ -9,11 +8,9 @@ file:
     group: {{ user }}
     mode: "0750"
     filetype: directory
-    title: remmina | configuration directory exists
   {{ [ansible_facts.user_dir,remmina.config_dir,'remmina.pref'] | join ('/') }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
     mode: "0640"
     filetype: file
-    title: remmina | configuration file exists

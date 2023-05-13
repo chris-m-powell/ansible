@@ -1,7 +1,6 @@
 package:
   mpd:
     installed: true
-    title: mpd | package installed
 file:
   {{ ansible_facts.user_dir + '/' + mpd.config_dir }}:
     exists: true
@@ -9,49 +8,42 @@ file:
     owner: {{ user }}
     group: {{ user }}
     mode: "0750"
-    title: mpd | configuration directory exists
   {{ ansible_facts.user_dir + '/' + mpd.playlist_dir }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
     mode: "0750"
     filetype: directory
-    title: mpd | playlist directory exists
   {{ ansible_facts.user_dir + '/' + mpd.db_file }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
     mode: "0640"
     filetype: file
-    title: mpd | db file exists
   {{ ansible_facts.user_dir + '/' + mpd.log_file }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
     mode: "0640"
     filetype: file
-    title: mpd | log file exists
   {{ ansible_facts.user_dir + '/' + mpd.pid_file }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
     mode: "0640"
     filetype: file
-    title: mpd | pid file exists
   {{ ansible_facts.user_dir + '/' + mpd.state_file }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
     mode: "0640"
     filetype: file
-    title: mpd | state file exists
   {{ [ansible_facts.user_dir,mpd.config_dir,'mpd.conf'] | join ('/') }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
     mode: "0640"
     filetype: file
-    title: mpd | configuration file exists
 process:
   mpd:
     running: true

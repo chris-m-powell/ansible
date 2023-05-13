@@ -1,12 +1,8 @@
 package:
-{% if ansible_distribution == "Pop!_OS" %}
   alacritty:
     installed: true
-    title: alacritty | package installed
-{% endif %}
   fonts-jetbrains-mono:
     installed: true
-    title: alacritty | fonts-jetbrains-mono font installed
 file:
   {{ ansible_facts.user_dir + '/' + alacritty.config_dir }}:
     exists: true
@@ -14,18 +10,15 @@ file:
     group: {{ user }}
     mode: "0750"
     filetype: directory
-    title: alacritty | configuration directory exists
   {{ [ansible_facts.user_dir,alacritty.config_dir,'alacritty.yml'] | join ('/') }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
     mode: "0640"
     filetype: file
-    title: alacritty | configuration file exists
   {{ [ansible_facts.user_dir,alacritty.config_dir,'nord.yml'] | join ('/') }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
     mode: "0640"
     filetype: file
-    title: alacritty | nord theme file exists

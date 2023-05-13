@@ -8,12 +8,20 @@
       - libvirt-daemon-system
       - qemu-kvm
       - virt-manager
-      - p7zip-full
+      - virtinst
 
 - name: install | add {{ user }} to kvm group
   ansible.builtin.user:
     name: "{{ user }}"
-    groups: kvm
+    groups:
+      - kvm
+      - libvirt
     append: true
   notify: reboot
+
+- name: configure | start & enable service
+  ansible.builtin.systemd:
+    name: libvirtd
+    state: started
+    enabled: true
 ...

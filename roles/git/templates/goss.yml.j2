@@ -1,9 +1,7 @@
 package:
   git:
     installed: true
-    title: git | packge installed
 file:
   {{ ansible_facts.user_dir + '/.gitconfig' }}:
     exists: true
     filetype: file
-    title: git | git config exists

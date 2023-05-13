@@ -1,7 +1,6 @@
 package:
   bpytop:
     installed: true
-    title: bpytop | package installed
 file:
   {{ ansible_facts.user_dir + '/' + bpytop.config_dir }}:
     exists: true
@@ -9,11 +8,9 @@ file:
     group: {{ user }}
     mode: "0750"
     filetype: directory
-    title: bpytop | configuration directory exists
   {{ [ansible_facts.user_dir,bpytop.config_dir,'bpytop.conf'] | join ('/') }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
     mode: "0640"
     filetype: file
-    title: bpytop | configuration file exists
