@@ -62,6 +62,11 @@
     state: latest
     pkg: "{{ misc_pkgs | default([]) }}"
 
+- name: pre_tasks | uninstall unwanted pkgs
+  ansible.builtin.apt:
+    state: present
+    pkg: "{{ misc_pkgs | default([]) }}"
+
 - name: pre_tasks | install goss
   ansible.builtin.get_url:
     url: "https://github.com/aelsabbahy/goss/releases/latest/download/goss-linux-amd64"

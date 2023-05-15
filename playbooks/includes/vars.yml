@@ -9,3 +9,5 @@ misc_pkgs:
   - network-manager-openvpn
   - tree
   - p7zip-full
+unwanted_pkgs:
+  - libreoffice*
