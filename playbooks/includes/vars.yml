@@ -3,6 +3,7 @@ goss_dir: "/opt/goss"
 misc_pkgs:
   - antiword
   - docx2txt
+  - ffmpeg
   - gnome-tweaks
   - libsox-fmt-all
   - sox
