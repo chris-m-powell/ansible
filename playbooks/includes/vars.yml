@@ -8,6 +8,7 @@ misc_pkgs:
   - gparted
   - ffmpeg
   - gnome-tweaks
+  - gridsite-clients  # urlencode/urldecode
   - libsox-fmt-all
   - sox
   - network-manager-openvpn
