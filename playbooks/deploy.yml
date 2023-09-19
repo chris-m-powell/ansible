@@ -18,9 +18,11 @@
   become: true
   gather_facts: false
   handlers:
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/handlers.yml' }}"
+    - ansible.builtin.import_tasks:
+        file: "{{ playbook_dir + '/includes/handlers.yml' }}"
   pre_tasks:
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/pre_tasks.yml' }}"
+    - ansible.builtin.import_tasks:
+        file: "{{ playbook_dir + '/includes/pre_tasks.yml' }}"
       tags:
         - always
   roles:
@@ -41,7 +43,8 @@
     - zathura
     - zsh
   post_tasks:
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/post_tasks.yml' }}"
+    - ansible.builtin.import_tasks:
+        file: "{{ playbook_dir + '/includes/post_tasks.yml' }}"
       tags:
         - always
 ...

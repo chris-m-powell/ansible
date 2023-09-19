@@ -4,13 +4,16 @@
   tags:
     - neofetch
   block:
-    - ansible.builtin.import_tasks: "install.yml"
+    - ansible.builtin.import_tasks:
+        file: "install.yml"
       tags:
         neofetch-install
-    - ansible.builtin.import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks:
+        file: "configure.yml"
       tags:
         neofetch-configure
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+    - ansible.builtin.import_tasks:
+        file: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
         neofetch-audit
   rescue:

@@ -5,10 +5,12 @@
   tags:
     - qemu_kvm
   block:
-    - ansible.builtin.import_tasks: "install.yml"
+    - ansible.builtin.import_tasks:
+        file: "install.yml"
       tags:
         - qemu_kvm-install
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+    - ansible.builtin.import_tasks:
+        file: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
         - qemu_kvm-audit
   rescue:

@@ -4,10 +4,12 @@
   tags:
     - bitwarden_cli
   block:
-    - ansible.builtin.import_tasks: "install.yml"
+    - ansible.builtin.import_tasks:
+        file: "install.yml"
       tags:
         - bitwarden_cli-install
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+    - ansible.builtin.import_tasks:
+        file: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
         - bitwarden_cli-audit
   rescue:

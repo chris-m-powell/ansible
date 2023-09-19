@@ -4,13 +4,16 @@
   tags:
     - alacritty
   block:
-    - ansible.builtin.import_tasks: "install.yml"
+    - ansible.builtin.import_tasks:
+        file: "install.yml"
       tags:
         - alacritty-install
-    - ansible.builtin.import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks:
+        file: "configure.yml"
       tags:
         - alacritty-configure
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+    - ansible.builtin.import_tasks:
+        file: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
         - alacritty-audit
   rescue:

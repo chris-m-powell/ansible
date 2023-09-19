@@ -4,13 +4,16 @@
   tags:
     - zathura
   block:
-    - ansible.builtin.import_tasks: "install.yml"
+    - ansible.builtin.import_tasks:
+        file: "install.yml"
       tags:
         - zathura-install
-    - ansible.builtin.import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks:
+        file: "configure.yml"
       tags:
         - zathura-configure
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+    - ansible.builtin.import_tasks:
+        file: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
         - zathura-audit
   rescue:

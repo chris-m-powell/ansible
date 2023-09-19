@@ -4,13 +4,16 @@
   tags:
     - bpytop
   block:
-    - ansible.builtin.import_tasks: "install.yml"
+    - ansible.builtin.import_tasks:
+        file: "install.yml"
       tags:
         - bpytop-install
-    - ansible.builtin.import_tasks: "configure.yml"
+    - ansible.builtin.import_tasks:
+        file: "configure.yml"
       tags:
         - bpytop-configure
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+    - ansible.builtin.import_tasks:
+        file: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
         - bpytop-audit
   rescue:

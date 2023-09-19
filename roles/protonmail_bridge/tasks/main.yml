@@ -4,7 +4,8 @@
   tags:
     - protonmail_bridge
   block:
-    - ansible.builtin.import_tasks: "install.yml"
+    - ansible.builtin.import_tasks:
+        file: "install.yml"
       tags:
         - protonmail_bridge-install
   rescue:

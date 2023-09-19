@@ -4,16 +4,20 @@
   tags:
     - cosmic
   block:
-    - ansible.builtin.import_tasks: "shell.yml"
+    - ansible.builtin.import_tasks:
+        file: "shell.yml"
       tags:
         - cosmic-shell
-    - ansible.builtin.import_tasks: "shell_shortcuts.yml"
+    - ansible.builtin.import_tasks:
+        file: "shell_shortcuts.yml"
       tags:
         - cosmic-shortcuts
-    - ansible.builtin.import_tasks: "workspaces.yml"
+    - ansible.builtin.import_tasks:
+        file: "workspaces.yml"
       tags:
         - cosmic-workspaces
-    - ansible.builtin.import_tasks: "{{ playbook_dir + '/includes/audit.yml' }}"
+    - ansible.builtin.import_tasks:
+        file: "{{ playbook_dir + '/includes/audit.yml' }}"
       tags:
         - cosmic-audit
   rescue:
