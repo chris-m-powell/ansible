@@ -37,7 +37,6 @@
     - qemu_kvm
     - qutebrowser
     - ranger
-    - remmina
     - signal_desktop
     - tmux
     - zathura

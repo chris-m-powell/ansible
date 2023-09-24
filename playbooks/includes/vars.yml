@@ -14,5 +14,6 @@ misc_pkgs:
   - network-manager-openvpn
   - tree
   - p7zip-full
+  - freerdp2-x11
 unwanted_pkgs:
   - libreoffice*
