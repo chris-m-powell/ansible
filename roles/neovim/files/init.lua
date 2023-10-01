@@ -145,10 +145,7 @@ cmp.setup.cmdline(':', {
 -- nvim-treesitter
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "c", "lua", "bash", "python", "cpp", "yaml", "latex", "json", "markdown", "regex" },
-  auto_install = true,
-  highlight = {
-    enable = true,
-  },
+  auto_install = true
 }
 
 
@@ -161,9 +158,9 @@ require('neoscroll').setup()
 
 
 -- indent_blankline
-require('indent_blankline').setup {
-  show_current_context = true,
-}
+-- require('ibl').setup {
+--   show_current_context = true,
+-- }
 
 
 -- nord
