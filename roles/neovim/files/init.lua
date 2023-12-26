@@ -1,24 +1,34 @@
--- plug-ins
-local Plug = vim.fn['plug#']
-vim.call('plug#begin', '~/.local/share/nvim/plugged')
-Plug('dense-analysis/ale')
-Plug('nvim-lualine/lualine.nvim')
-Plug('shaunsingh/nord.nvim')
-Plug('kelly-lin/ranger.nvim')
--- Plug('https://git.sr.ht/~soywod/himalaya-vim')
-Plug('lukas-reineke/indent-blankline.nvim')
-Plug('karb94/neoscroll.nvim')
-Plug('lewis6991/gitsigns.nvim')
-Plug('nvim-treesitter/nvim-treesitter')
-Plug('akinsho/toggleterm.nvim', {['tag'] = '*'})
-Plug('neovim/nvim-lspconfig')
-Plug('hrsh7th/cmp-nvim-lsp')
-Plug('hrsh7th/cmp-buffer')
-Plug('hrsh7th/cmp-path')
-Plug('hrsh7th/cmp-cmdline')
-Plug('hrsh7th/nvim-cmp')
-Plug('samjwill/nvim-unception')
-vim.call('plug#end')
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+"dense-analysis/ale",
+"nvim-lualine/lualine.nvim",
+"shaunsingh/nord.nvim",
+"kelly-lin/ranger.nvim",
+"karb94/neoscroll.nvim",
+"lewis6991/gitsigns.nvim",
+"nvim-treesitter/nvim-treesitter",
+"akinsho/toggleterm.nvim",
+"neovim/nvim-lspconfig",
+"hrsh7th/cmp-nvim-lsp",
+"hrsh7th/cmp-buffer",
+"hrsh7th/cmp-path",
+"hrsh7th/cmp-cmdline",
+"hrsh7th/nvim-cmp",
+"samjwill/nvim-unception"
+})
+
 
 -- basic options
 vim.g.mapleader = " "
@@ -145,7 +155,10 @@ cmp.setup.cmdline(':', {
 -- nvim-treesitter
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "c", "lua", "bash", "python", "cpp", "yaml", "latex", "json", "markdown", "regex" },
-  auto_install = true
+  auto_install = true,
+  highlight = {
+    enable = true,
+  },
 }
 
 
@@ -155,12 +168,6 @@ require('gitsigns').setup()
 
 -- neoscroll
 require('neoscroll').setup()
-
-
--- indent_blankline
--- require('ibl').setup {
---   show_current_context = true,
--- }
 
 
 -- nord
