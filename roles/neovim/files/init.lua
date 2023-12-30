@@ -26,7 +26,10 @@ require("lazy").setup({
 "hrsh7th/cmp-path",
 "hrsh7th/cmp-cmdline",
 "hrsh7th/nvim-cmp",
-"samjwill/nvim-unception"
+"samjwill/nvim-unception",
+"lukas-reineke/indent-blankline.nvim",
+{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+"HiPhish/rainbow-delimiters.nvim",
 })
 
 
@@ -232,6 +235,10 @@ require("toggleterm").setup {
     border = "curved",
   },
 }
+
+
+-- indent-blankline
+require("ibl").setup()
 
 function _G.set_terminal_keymaps()
   local opts = {buffer = 0}
