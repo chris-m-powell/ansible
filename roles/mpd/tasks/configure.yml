@@ -17,7 +17,7 @@
     state: touch
     owner: "{{ user }}"
     group: "{{ user }}"
-    mode: 0640
+    mode: 0660
   changed_when: false
   loop:
     - "{{ mpd.db_file }}"

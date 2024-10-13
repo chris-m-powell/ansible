@@ -1,0 +1,8 @@
+---
+terraform:
+  enable: true
+  repo:
+    url: "https://apt.releases.hashicorp.com"
+    key: "apt.releases.hashicorp.com/gpg"
+    keyring: "/usr/share/keyrings/hashicorp-archive-keyring.gpg"
+    release: "jammy"

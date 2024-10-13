@@ -15,5 +15,7 @@ misc_pkgs:
   - tree
   - p7zip-full
   - freerdp2-x11
+  - packer
+  - awscli
 unwanted_pkgs:
   - libreoffice*

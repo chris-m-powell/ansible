@@ -1,0 +1,13 @@
+---
+- when:
+    - terraform.enable
+  tags:
+    - terraform
+  block:
+    - ansible.builtin.import_tasks:
+        file: "install.yml"
+      tags:
+        - terraform-install
+  rescue:
+    - ansible.builtin.meta: flush_handlers
+...

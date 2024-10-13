@@ -18,25 +18,25 @@ file:
     exists: true
     owner: {{ user }}
     group: {{ user }}
-    mode: "0640"
+    mode: "0660"
     filetype: file
   {{ ansible_facts.user_dir + '/' + mpd.log_file }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
-    mode: "0640"
+    mode: "0660"
     filetype: file
   {{ ansible_facts.user_dir + '/' + mpd.pid_file }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
-    mode: "0640"
+    mode: "0660"
     filetype: file
   {{ ansible_facts.user_dir + '/' + mpd.state_file }}:
     exists: true
     owner: {{ user }}
     group: {{ user }}
-    mode: "0640"
+    mode: "0660"
     filetype: file
   {{ [ansible_facts.user_dir,mpd.config_dir,'mpd.conf'] | join ('/') }}:
     exists: true
