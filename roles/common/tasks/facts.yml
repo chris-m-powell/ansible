@@ -1,0 +1,11 @@
+---
+- name: pre_tasks | gather service facts
+  ansible.builtin.service_facts:
+
+- name: pre_tasks | gather package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: pre_tasks | gather listening ports facts
+  community.general.system.listen_ports_facts:
+...

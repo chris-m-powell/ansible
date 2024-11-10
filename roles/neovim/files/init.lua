@@ -157,7 +157,7 @@ cmp.setup.cmdline(':', {
 
 -- nvim-treesitter
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "lua", "bash", "python", "cpp", "yaml", "latex", "json", "markdown", "regex" },
+  ensure_installed = { "c", "lua", "bash", "python", "cpp", "yaml", "json", "markdown", "regex" },
   auto_install = true,
   highlight = {
     enable = true,

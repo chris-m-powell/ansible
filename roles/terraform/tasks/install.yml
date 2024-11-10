@@ -51,4 +51,23 @@
     state: present
     pkg:
       - terraform
+  register: install_flag
+
+- when:
+    - install_flag.changed
+  block:
+    - name: install | touch bashrc and zshrc
+      become_user: "{{ user }}"
+      ansible.builtin.file:
+        path: "{{ ansible_facts.user_dir + '/' + item }}"
+        state: touch
+      loop:
+        - '.bashrc'
+        - '.zshrc'
+
+    - name: install | enable tab completion
+      ansible.builtin.shell:
+        cmd: terraform -install-autocomplete
+      ignore_errors: true
+
 ...
