@@ -1,0 +1,17 @@
+---
+- name: Distribute SSH public key 
+  hosts: all,!localhost
+  gather_facts: true
+  gather_subset:
+    - user
+  become: true
+  tasks:
+    - name: OpenSSH public key is distrubted
+      ansible.posix.authorized_key:
+        user: "{{ user | default(ansible_user) }}"
+        state: present
+        key: >-
+          {{ lookup('ansible.builtin.file',
+               lookup('ansible.builtin.env', 'HOME') + '/.ssh/id_rsa.pub') }}
+      ignore_errors: "{{ ansible_check_mode }}"
+...

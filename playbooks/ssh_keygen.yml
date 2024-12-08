@@ -1,0 +1,35 @@
+---
+- name: Generate OpenSSH keypair
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  gather_subset:
+    - user_dir
+    - user_id
+  vars_prompt:
+    - name: type
+      prompt: Enter key type 
+      default: 'rsa'
+    - name: size
+      prompt: Enter key size 
+      default: '4096'
+    - name: comment
+      prompt: Enter key comment
+      default: ''
+  tasks:
+    - name: Ensure ~/.ssh directory exists
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir + '/.ssh' }}"
+        state: directory
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        mode: '0700'
+        
+    - name: Ensure OpenSSH keypair is generated
+      community.crypto.openssh_keypair:
+        path: "{{ [ansible_user_dir, '.ssh', 'id_rsa'] | join('/') }}"
+        state: present
+        type: "{{ type }}"
+        size: "{{ size }}"
+        comment: "{{ comment }}"
+...
