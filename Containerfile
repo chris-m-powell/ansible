@@ -18,56 +18,12 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
 
 USER "$APP_USER"
 
-RUN python3.11 -m pip install ansible-core --user --break-system-packages \
+RUN python3.12 -m pip install ansible-core --user --break-system-packages \
   && ansible-galaxy collection install community.general ansible.posix \
   && git clone https://github.com/chris-m-powell/ansible.git "$DATA_DIR" \
     --single-branch \
     --branch master \
     --depth 1
-
-USER root
-
-RUN find /bin /etc /lib /sbin /usr -xdev -type f -regex '.*apk.*' ! -name apk -exec rm -fr {} + \
-  && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd \
-  && while IFS=: read -r username _; do passwd -l "$username"; done < /etc/passwd || true \
-  && rm -rf /var/spool/cron /etc/crontabs /etc/periodic \
-  && find /sbin /usr/sbin ! -type d -a ! -name ln -delete \
-  && find /bin /etc /lib /sbin /usr -xdev \( \
-    -iname hexdump -o \
-    -iname chgrp -o \
-    -iname ln -o \
-    -iname od -o \
-    -iname strings -o \
-    -iname su -o \
-    -iname sudo \
-    \) -delete \
-  && sed -i -r "/^($APP_USER|root|nobody)/!d" /etc/group \
-  && sed -i -r "/^($APP_USER|root|nobody)/!d" /etc/passwd \
-  && find /bin /etc /lib /sbin /usr -xdev -type f -regex '.*-$' -exec rm -f {} + \
-  && find /bin /etc /lib /sbin /usr -xdev -type d \
-    -exec chown root:root {} \; \
-    -exec chmod 0755 {} \; \
-  && find / -xdev -type d -perm +0002 -exec chmod o-w {} + \
-	&& find / -xdev -type f -perm +0002 -exec chmod o-w {} + \
-	&& chmod 777 /tmp \
-  && chown $APP_USER:root /tmp \
-  && find /bin /etc /lib /sbin /usr -xdev -type f -a \( -perm +4000 -o -perm +2000 \) -delete \
-  &&  rm -rf /etc/init.d \
-    /lib/rc \
-    /etc/conf.d \
-    /etc/inittab \
-    /etc/runlevels \
-    /etc/rc.conf \
-    /etc/logrotate.d \
-    /etc/sysctl* \
-    /etc/modprobe.d \
-    /etc/modules \
-    /etc/mdev.conf \
-    /etc/acpi \
-    /root \
-    /etc/fstab \
-  && chmod -R u=rwx "$DATA_DIR/" \
-  && find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete
 
 WORKDIR $DATA_DIR
 
